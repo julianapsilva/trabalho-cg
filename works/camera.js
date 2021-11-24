@@ -200,32 +200,30 @@ function handleCamera() {
     let idealOffset
     let idealLookAt
 
-    if (position == 1) {
-        idealOffset = new THREE.Vector3(20, 17, -30)
-        idealLookAt = new THREE.Vector3(10, 7, -10)
-        camera.zoom = 1.3
-        camera.updateProjectionMatrix();
+    switch (position) {
+        case 1:
+            idealOffset = new THREE.Vector3(20, 17, -30)
+            idealLookAt = new THREE.Vector3(10, 7, -10)
+            camera.zoom = 1.3
+            break;
+        case 2:
+            idealOffset = new THREE.Vector3(-25, 10, -20)
+            idealLookAt = new THREE.Vector3(25, -5, 5)
+            camera.zoom = 0.9
+            break;
+        case 3:
+            idealOffset = new THREE.Vector3(-15, 10, 20)
+            idealLookAt = new THREE.Vector3(5, -5, 0)
+            camera.zoom = 0.5
+            break;
+        case 4:
+            idealOffset = new THREE.Vector3(35, 15, 30)
+            idealLookAt = new THREE.Vector3(17, 5, 0)
+            camera.zoom = 0.5
+            break;
     }
-    if (position == 2) {
-        idealOffset = new THREE.Vector3(-25, 10, -20)
-        idealLookAt = new THREE.Vector3(25, -5, 5)
-        camera.zoom = 0.9
-        camera.updateProjectionMatrix();
-    }
-    if (position == 3) {
-        idealOffset = new THREE.Vector3(-15, 10, 20)
-        idealLookAt = new THREE.Vector3(5, -5, 0)
-        camera.zoom = 0.5
-        camera.updateProjectionMatrix();
-    }
+    camera.updateProjectionMatrix();
 
-    if (position == 4) {
-        idealOffset = new THREE.Vector3(35, 15, 30)
-        idealLookAt = new THREE.Vector3(17, 5, 0)
-        camera.zoom = 0.5
-        camera.updateProjectionMatrix();
-
-    }
     idealOffset.applyQuaternion(group.quaternion)
     idealOffset.add(group.position)
 
