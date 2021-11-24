@@ -262,14 +262,7 @@ function keyboardUpdate() {
     if (keyboard.pressed("left")) group.rotateY(angle);
     if (keyboard.pressed("right")) group.rotateY(-angle);
     if (keyboard.pressed("2")) {
-        // upVec.x = Math.sin(degreesToRadians(-45));
-        // upVec.y = Math.cos(degreesToRadians(-45));
-        // camera.up.copy(upVec);
-        // camera.fov = 90
-        // console.log(camera)
-        // console.log(group.position)
         position = 2;
-
     }
 
     if (keyboard.pressed("3")) {
