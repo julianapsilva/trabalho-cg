@@ -152,13 +152,6 @@ group.add(atras);
 // Add group to the scene
 scene.add(group);
 
-// Move all to the start position
-// group.translateZ(2.6);
-// group.translateY(-50);
-// group.rotateY(degreesToRadians(-90));
-// group.rotateZ(degreesToRadians(-90));
-// group.position.set(0, -50, 2.6);
-// camera.lookAt(group.position);
 
 group.translateY(2.3);
 group.rotateY(degreesToRadians(-90));
@@ -222,14 +215,14 @@ function handleCamera() {
     if (position == 3) {
         idealOffset = new THREE.Vector3(-15, 10, 20)
         idealLookAt = new THREE.Vector3(5, -5, 0)
-        camera.zoom = 0.9
+        camera.zoom = 0.5
         camera.updateProjectionMatrix();
     }
 
     if (position == 4) {
         idealOffset = new THREE.Vector3(35, 15, 30)
         idealLookAt = new THREE.Vector3(17, 5, 0)
-        camera.zoom = 1.1
+        camera.zoom = 0.5
         camera.updateProjectionMatrix();
 
     }
@@ -330,4 +323,3 @@ function render() {
     requestAnimationFrame(render); // Show events
     renderer.render(scene, camera) // Render scene
 }
-  // renderer.render(scene, camera) // Render scene
