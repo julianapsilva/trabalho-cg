@@ -18,7 +18,7 @@ var renderer = initRenderer();    // View function in util/utils
   // Main camera
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
 camera.lookAt(0.0, 0.0, 0.0);
-camera.position.set(0, -80.0, 50);
+camera.position.set(0, -240.0, 150);
 camera.up.set(0.0, 1.0, 0.0);
 
 // Enable mouse rotation, pan, zoom etc.
@@ -29,8 +29,8 @@ var trackballControls = new TrackballControls(camera, renderer.domElement);
 // Listen window size changes
 window.addEventListener( 'resize', function(){onWindowResize(camera, renderer)}, false );
 
-/*--------------------------------------- CRIANDO PLANO E PISTA ---------------------------------------*/
-var planeGeometry = new THREE.PlaneGeometry(120, 120);
+//================================== Modelagem da pista ==================================
+var planeGeometry = new THREE.PlaneGeometry(360, 360);
 planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
 var planeMaterial = new THREE.MeshBasicMaterial({
     color:'rgb(211, 154, 8)',
@@ -39,6 +39,7 @@ var planeMaterial = new THREE.MeshBasicMaterial({
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 // add the plane to the scene
 scene.add(plane);
+
 // Show text information onscreen
 showInformation();
 
@@ -46,108 +47,121 @@ showInformation();
 var keyboard = new KeyboardState();
 
 
-var p1 = [];
-var p2 = [];
+var pista1_obj = [];
+var pista2_obj = [];
 
-//Pista 1
-function pista1(){
-  
-// create a cube
-var cubeGeometry = new THREE.BoxGeometry(10, 10, 0.3);
-var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
-var cube;
+var isPista = 0; // true >> Modo pista 1 || false >> Modo pista 2
 
-for (let i = -50; i < 51; i+=10) {
-    for(let j = -50; j < 51; j+=10){
-      if(i == -50 || i == 50 || j == -50 || j == 50){
-        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        // position the cube
-        cube.position.set(i, j, 0.15);
-        // add the cube to the scene
-        scene.add(cube);
-      } 
+function mudarPista(){
+  //Pista 1
+  // create a cube
+  var cubeGeometry = new THREE.BoxGeometry(50, 50, 0.3);
+  var cube;
+
+  if(isPista == 1)
+  {
+      for (let i = -150; i < 151; i+=30) {
+          for(let j = -150; j < 151; j+=30){
+            if(i == -150 || i == 150 || j == -150 || j == 150){
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              pista1_obj = cube;
+              
+             scene.add(cube);
+            } 
+            if(i == -30 && j==-150){
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(255, 0, 0)',});
+
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+              cube.position.set(i, j, 0.15);
+
+              scene.add(cube);
+            }
+          }
+      }
+     console.log(cube);
+      
+      isPista = 0;
+  }
+  //Pista 2
+  if(isPista == 2)
+    {      
+      for (let i = -150; i < 151; i+=30) {
+          for(let j = -150; j < 151; j+=30){
+            if(i == -150) // reta 1
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            } 
+            if(j == 150 && i<=0 ) // reta 2
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            } 
+              
+            if(i == 0 && j>=0 ) // reta 3
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            } 
+            
+            if(j == 0 && i>=0 ) // reta 4
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            }
+            if(i == 150 && j<=0 ) // reta 5
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            } 
+            if(j == -150) // reta 6
+            {
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+              // position the cube
+              cube.position.set(i, j, 0.15);
+              // add the cube to the scene
+              scene.add(cube);
+            } 
+            if(i == -30 && j==-150){
+              var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(255, 0, 0)',});
+
+              cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+              cube.position.set(i, j, 0.15);
+
+              scene.add(cube);
+            }
+            isPista =0;
+          }
+      }
     }
 }
-var cubeInitGeometry = new THREE.BoxGeometry(10, 10, 0.3);
-var cubeInitMaterial = new THREE.MeshBasicMaterial({color:'rgb(255, 0, 0)',});
-var cubeInit;
-cubeInit = new THREE.Mesh(cubeInitGeometry, cubeInitMaterial);
-// position the cube
-cubeInit.position.set(-10, -50, 0.15);
-// add the cube to the scene
-scene.add(cubeInit);
-}
-//Pista 2
-function pista2(){
-  
-  // create a cube
-  var cubeGeometry = new THREE.BoxGeometry(10, 10, 0.3);
-  var cubeMaterial = new THREE.MeshBasicMaterial({color:'rgb(50,50,50)'});
-  var cube;
-  
-  for (let i = -50; i < 51; i+=10) {
-      for(let j = -50; j < 51; j+=10){
-        if(i == -50) // reta 1
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          p2 = cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        } 
-        if(j == 50 && i<=0 ) // reta 2
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        } 
-           
-        if(i == 0 && j>=0 ) // reta 3
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        } 
-        
-        if(j == 0 && i>=0 ) // reta 4
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        }
-        if(i == 50 && j<=0 ) // reta 5
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        } 
-        if(j == -50) // reta 6
-        {
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
-        } 
-      }
-  }
-  var cubeInitGeometry = new THREE.BoxGeometry(10, 10, 0.3);
-  var cubeInitMaterial = new THREE.MeshBasicMaterial({color:'rgb(255, 0, 0)',});
-  var cubeInit;
-  cubeInit = new THREE.Mesh(cubeInitGeometry, cubeInitMaterial);
-  // position the cube
-  cubeInit.position.set(-10, -50, 0.15);
-  // add the cube to the scene
-  scene.add(cubeInit);
-  }
 //-------------------------------------------------------------------
 
 
@@ -216,10 +230,10 @@ scene.add(group);
 
 // Move all to the start position
 group.translateZ(2.6);
-group.translateY(-50);
+group.translateY(-150);
 group.rotateY(degreesToRadians(-90));
 group.rotateZ(degreesToRadians(-90));
-group.position.set(0, -50, 2.6);
+group.position.set(-30, -150, 2.6);
 camera.lookAt(group.position);
 
 render();
@@ -270,6 +284,15 @@ function keyboardUpdate() {
 
   keyboard.update();
 
+  // Muda o tipo de pista
+  if (keyboard.down("1")) {
+    isPista = 1;
+    mudarPista();
+  }
+  if (keyboard.down("2")) {
+    isPista = 2;
+    mudarPista();
+  }
   if ( keyboard.down("A") ) axesHelper.visible = !axesHelper.visible;
 
   if ( keyboard.pressed("up") )    group.translateZ(  1 );
@@ -291,17 +314,16 @@ function showInformation()
     controls.add("Up / Arrow to walk");
     controls.add("Left / Right arrow to turn");
     controls.add("Press 'A' to show/hide axes");
+    controls.add(" 1 / 2 - Pista 1 / Pista 2");
     controls.show();
 }
 
 function render()
 {
   stats.update(); // Update FPS
-  trackballControls.update();
   keyboardUpdate();
   camera.lookAt(group.position);
-  //pista1();
-  pista2();
   requestAnimationFrame(render); // Show events
-  renderer.render(scene, camera) // Render scene
+  renderer.render(scene, camera) // Render scene   
+  trackballControls.update(); 
 }
