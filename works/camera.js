@@ -34,7 +34,7 @@ scene.add(lightSphere);
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 
-var planeGeometry = new THREE.PlaneGeometry(130, 130);
+var planeGeometry = new THREE.PlaneGeometry(150, 150);
 // planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
 var planeMaterial = new THREE.MeshBasicMaterial({
     color: 'rgb(211, 154, 8)',
@@ -155,7 +155,9 @@ scene.add(group);
 
 group.translateY(2.3);
 group.rotateY(degreesToRadians(-90));
-group.position.set(44, 2.3, -42)
+group.position.set(65, 2.3, -64)
+camera.position.set(97,19,-91)
+
 
 render();
 
@@ -202,14 +204,14 @@ function handleCamera() {
 
     switch (position) {
         case 1:
-            idealOffset = new THREE.Vector3(20, 17, -30)
+            idealOffset = new THREE.Vector3(30, 17, -30)
             idealLookAt = new THREE.Vector3(10, 7, -10)
-            camera.zoom = 1.3
+            camera.zoom = 1
             break;
         case 2:
             idealOffset = new THREE.Vector3(-25, 10, -20)
             idealLookAt = new THREE.Vector3(25, -5, 5)
-            camera.zoom = 0.9
+            camera.zoom = 0.6
             break;
         case 3:
             idealOffset = new THREE.Vector3(-15, 10, 20)
@@ -217,9 +219,9 @@ function handleCamera() {
             camera.zoom = 0.5
             break;
         case 4:
-            idealOffset = new THREE.Vector3(35, 15, 30)
-            idealLookAt = new THREE.Vector3(17, 5, 0)
-            camera.zoom = 0.5
+            idealOffset = new THREE.Vector3(20, 9, 30)
+            idealLookAt = new THREE.Vector3(-20, -5, 0)
+            camera.zoom = 0.7
             break;
     }
     camera.updateProjectionMatrix();
@@ -236,6 +238,8 @@ function handleCamera() {
 
     camera.position.copy(currentPosition)
     camera.lookAt(currentLookAt)
+    console.log(camera)
+
 }
 
 function keyboardUpdate() {
@@ -265,7 +269,9 @@ function keyboardUpdate() {
     }
     if (keyboard.pressed("1")) {
         position = 1;
-
+    }
+    if (keyboard.pressed("5")) {
+        console.log(group.position)
     }
 
 }
@@ -277,9 +283,6 @@ function verifyPosition() {
     // }
 
     // if (group.position.x > -43 && group.position.x < -37) {
-    //   // upVec.x = Math.sin(degreesToRadians(90));
-    //   // upVec.y = Math.cos(degreesToRadians(-90));
-    //   // camera.up.copy(upVec);
     //   position = 2
     // }
     // if (group.position.x >= -35 && group.position.x <= 33) {
