@@ -158,9 +158,11 @@ var trackballControls = new TrackballControls(inspectionCamera, renderer.domElem
 var group = mountCar()
 scene.add(group)
 camera.position.set(97, 19, -91)
-
+console.log(group);
 render()
 
+var pressionadoLeft = false;
+var pressionadoRight = false;
 
 function keyboardUpdate() {
 
@@ -169,13 +171,23 @@ function keyboardUpdate() {
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
     if (keyboard.pressed("up")) {
-        group.translateZ(0.5);
+        group.translateZ(0.75);
     }
-    if (keyboard.pressed("down")) group.translateZ(-0.5);
+    if (keyboard.pressed("down")) group.translateZ(-0.75);
 
-    var angle = degreesToRadians(5);
-    if (keyboard.pressed("left")) group.rotateY(angle);
-    if (keyboard.pressed("right")) group.rotateY(-angle);
+    var angleCar = degreesToRadians(0.75);
+    var angleRoda = degreesToRadians(0.75);
+    
+    if (keyboard.pressed("left")){
+        pressionadoLeft = true;
+        group.rotateY(angleCar);
+        group.children[11].rotateY(angleRoda);
+        }
+    if (keyboard.pressed("right")){ 
+        pressionadoRight = true;
+        group.rotateY(-angleCar);
+        group.children[11].rotateY(-angleRoda)
+    }
     if (keyboard.pressed("2")) {
         position = 2;
     }
@@ -210,9 +222,39 @@ function keyboardUpdate() {
         isPista = 2;
         mudarPista();
     }
+    // Guarda a mudança de estado das teclas
+    if (keyboard.up("left")) {
+        pressionadoLeft = false;
+    }
+    if (keyboard.up("right")) {
+        pressionadoRight = false;
+    }
 
 }
+//Faz o movimento das rodas
+function moveRoda() {
+    /*var angleRoda = degreesToRadians(0.75);
 
+    if (pressionadoLeft) { // Gira para esquerda
+        if (group.children[11].rotateY() < 0.45) {
+            group.children[11].rotateY(angleRoda)
+        }
+    }else{
+        if (group.children[11].rotateY() > 0) {
+            group.children[11].rotateY(angleRoda)
+        }
+    }
+    
+    if (pressionadoRight) { // Gira para direita
+        if (group.children[11].rotateY() > -0.45) {
+            group.children[11].rotateY()
+        }
+    }else{
+        if (group.children[11].rotateY() < 0) {
+            group.children[11].rotateY(angleRoda)
+        }
+    }*/
+}
 
 
 function verifyPosition() {
@@ -241,7 +283,7 @@ function colision() {
     //   }
     // })
 }
-
+ 
 function showInformation() {
     // Use this to show information onscreen
     var controls = new InfoBox();
@@ -263,6 +305,7 @@ function render() {
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
+        moveRoda();
     }
     else
         renderer.render(newScene, inspectionCamera) // Render scene
