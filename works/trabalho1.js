@@ -33,7 +33,7 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 
 //================================== Modelagem da pista ==================================
 var planeGeometry = new THREE.PlaneGeometry(360, 360);
-planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
+//planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
 var planeMaterial = new THREE.MeshBasicMaterial({
   color: 'rgb(211, 154, 8)',
   side: THREE.DoubleSide,
@@ -52,116 +52,78 @@ var keyboard = new KeyboardState();
 var pista1_obj = [];
 var pista2_obj = [];
 
-var isPista = 0; // true >> Modo pista 1 || false >> Modo pista 2
-
-function mudarPista() {
-  //Pista 1
-  // create a cube
+var isPista = true; // true >> Modo pista 1 || false >> Modo pista 2
+function blocoComum(x, y){
   var cubeGeometry = new THREE.BoxGeometry(50, 50, 0.3);
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
   var cube;
 
-  if (isPista == 1) {
+  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cube.position.set(x, y, 0.15);
+  //pista1_obj = cube;
+  scene.add(cube);
+}
+function blocoInicio(x, y){
+  var cubeGeometry = new THREE.BoxGeometry(50, 50, 0.3);
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
+  var cube;
+
+  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cube.position.set(x, y, 0.15);
+
+  pista1_obj = cube;
+
+  scene.add(cube);
+}
+function mudarPista() {
+  //Pista 1
+  if (isPista == true) {
     for (let i = -150; i < 151; i += 30) {
       for (let j = -150; j < 151; j += 30) {
         if (i == -150 || i == 150 || j == -150 || j == 150) {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          pista1_obj = cube;
-
-          scene.add(cube);
+          blocoComum(i,j);
         }
         if (i == -30 && j == -150) {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
-
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-          cube.position.set(i, j, 0.15);
-
-          scene.add(cube);
+          blocoInicio(i,j);
         }
       }
     }
-
-    isPista = 0;
   }
   //Pista 2
-  if (isPista == 2) {
+  if (isPista == false) {
     for (let i = -150; i < 151; i += 30) {
       for (let j = -150; j < 151; j += 30) {
         if (i == -150) // reta 1
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
         if (j == 150 && i <= 0) // reta 2
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
-
         if (i == 0 && j >= 0) // reta 3
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
-
         if (j == 0 && i >= 0) // reta 4
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
         if (i == 150 && j <= 0) // reta 5
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
         if (j == -150) // reta 6
         {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-          // position the cube
-          cube.position.set(i, j, 0.15);
-          // add the cube to the scene
-          scene.add(cube);
+          blocoComum(i,j);
         }
         if (i == -30 && j == -150) {
-          var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
-
-          cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-          cube.position.set(i, j, 0.15);
-
-          scene.add(cube);
+          blocoInicio(i,j);
         }
-        isPista = 0;
       }
     }
     scene.children[4].userData.teste = 'um teste'
     // scene.children.map(child => console.table(child.position))
-
   }
 }
 //-------------------------------------------------------------------
@@ -285,12 +247,10 @@ function keyboardUpdate() {
 
   // Muda o tipo de pista
   if (keyboard.down("1")) {
-    isPista = 1;
-    mudarPista();
+    isPista = true;
   }
   if (keyboard.down("2")) {
-    isPista = 2;
-    mudarPista();
+    isPista = false;
   }
   if (keyboard.pressed("5")) {
     console.log(group.position)
@@ -335,6 +295,14 @@ function render() {
   keyboardUpdate();
   verifyPosition();
   requestAnimationFrame(render); // Show events
-  renderer.render(scene, camera) // Render scene   
+  renderer.render(scene, camera) // Render scene
+  if(isPista==false){
+    renderer.render(scene, camera) // Render scene
+    mudarPista();
+  }else{
+    renderer.render(scene, camera) // Render scene
+    mudarPista();
+  }   
+
   trackballControls.update();
 }

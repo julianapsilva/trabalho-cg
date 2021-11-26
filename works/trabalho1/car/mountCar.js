@@ -60,9 +60,9 @@ export default function mountCar() {
 
     // Add group to the scene
 
-    group.translateY(2.3)
+    group.translateY(2.6)
     group.rotateY(degreesToRadians(-90))
-    group.position.set(65, 2.3, -64)
+    group.position.set(65, 2.6, -64)
     return group
 
     function createCylinder(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, color) {

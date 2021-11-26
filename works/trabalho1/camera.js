@@ -76,115 +76,76 @@ showInformation();
 var pista1_obj = [];
 var pista2_obj = [];
 
-var isPista = 0; // true >> Modo pista 1 || false >> Modo pista 2
+var isPista = 0; // 1 >> Modo pista 1 || 2 >> Modo pista 2
+function blocoComum(x, z){
+  var cubeGeometry = new THREE.BoxGeometry(50, 0.3, 50);
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
+  var cube;
 
+  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cube.position.set(x, 0.15, z);
+  scene.add(cube);
+}
+function blocoInicio(x, z){
+  var cubeGeometry = new THREE.BoxGeometry(50, 0.4, 50);
+  var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
+  var cube;
+
+  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cube.position.set(x, 0.15, z);
+
+  scene.add(cube);
+}
 function mudarPista() {
-    //Pista 1
-    // create a cube
-    var cubeGeometry = new THREE.BoxGeometry(50, 50, 0.3);
-    var cube;
-
-    if (isPista == 1) {
-        for (let i = -150; i < 151; i += 30) {
-            for (let j = -150; j < 151; j += 30) {
-                if (i == -150 || i == 150 || j == -150 || j == 150) {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    pista1_obj = cube;
-
-                    scene.add(cube);
-                }
-                if (i == -30 && j == -150) {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
-
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-                    cube.position.set(i, j, 0.15);
-
-                    scene.add(cube);
-                }
-            }
+  //Pista 1
+  if (isPista == 1) {
+    for (let i = -150; i < 151; i += 30) {
+      for (let j = -150; j < 151; j += 30) {
+        if (i == -150 || i == 150 || j == -150 || j == 150) {
+          blocoComum(i,j);
         }
-        console.log(cube);
-
-        isPista = 0;
-    }
-    //Pista 2
-    if (isPista == 2) {
-        for (let i = -150; i < 151; i += 30) {
-            for (let j = -150; j < 151; j += 30) {
-                if (i == -150) // reta 1
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-                if (j == 150 && i <= 0) // reta 2
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-
-                if (i == 0 && j >= 0) // reta 3
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-
-                if (j == 0 && i >= 0) // reta 4
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-                if (i == 150 && j <= 0) // reta 5
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-                if (j == -150) // reta 6
-                {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-                    // position the cube
-                    cube.position.set(i, j, 0.15);
-                    // add the cube to the scene
-                    scene.add(cube);
-                }
-                if (i == -30 && j == -150) {
-                    var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
-
-                    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-                    cube.position.set(i, j, 0.15);
-
-                    scene.add(cube);
-                }
-                isPista = 0;
-            }
+        if (i == -30 && j == -150) {
+          blocoInicio(i,j);
         }
+      }
     }
+  }
+  //Pista 2
+  if (isPista == 2) {
+    for (let i = -150; i < 151; i += 30) {
+      for (let j = -150; j < 151; j += 30) {
+        if (i == -150) // reta 1
+        {
+          blocoComum(i,j);
+        }
+        if (j == 150 && i <= 0) // reta 2
+        {
+          blocoComum(i,j);
+        }
+        if (i == 0 && j >= 0) // reta 3
+        {
+          blocoComum(i,j);
+        }
+        if (j == 0 && i >= 0) // reta 4
+        {
+          blocoComum(i,j);
+        }
+        if (i == 150 && j <= 0) // reta 5
+        {
+          blocoComum(i,j);
+        }
+        if (j == -150) // reta 6
+        {
+          blocoComum(i,j);
+        }
+        if (i == -30 && j == -150) {
+          blocoInicio(i,j);
+        }
+      }
+    }
+    scene.children[4].userData.teste = 'um teste'
+    // scene.children.map(child => console.table(child.position))
+  }
 }
 
 
