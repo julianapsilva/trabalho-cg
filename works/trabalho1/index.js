@@ -87,13 +87,13 @@ function keyboardUpdate() {
 
     var angleCar = degreesToRadians(0.75);
     var angleRoda = degreesToRadians(0.75);
-    
-    if (keyboard.pressed("left")){
+
+    if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
         group.children[11].rotateY(angleRoda);
-        }
-    if (keyboard.pressed("right")){ 
+    }
+    if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
         group.children[11].rotateY(-angleRoda)
@@ -119,6 +119,10 @@ function keyboardUpdate() {
             scene.visible = false
         else
             scene.visible = true
+    }
+
+    if (keyboard.down("6")) {
+        console.log(group.position)
     }
 
     // Muda o tipo de pista
@@ -163,21 +167,29 @@ function moveRoda() {
 }
 
 
+
 function verifyPosition() {
 
-    // if (group.position.x <= 28 && group.position.x >= -43.5) {
-    //   position = 1
-    // }
+    if (group.position.x >= -180 && group.position.z >= -145
+        && group.position.x <= -154 && group.position.z <= -168 ||
+        group.position.x <= 156 && group.position.z >= -169
+        && group.position.x <= 141 && group.position.z <= -131
+    ) {
+        console.log("reta1")
+    }
 
-    // if (group.position.x > -43 && group.position.x < -37) {
-    //   position = 2
-    // }
-    // if (group.position.x >= -35 && group.position.x <= 33) {
-    //   position = 3;
-    // }
+    else if ((group.position.x <= 170 && group.position.z >= -148
+        && group.position.x >= 135 && group.position.z <= -122)
+        || (group.position.x <= 169 && group.position.z <= 118
+            && group.position.x >= 133 && group.position.z >= 114)) {
+        console.log("reta2")
+    }
+
+
+
 
 }
- 
+
 function showInformation() {
     // Use this to show information onscreen
     var controls = new InfoBox();
