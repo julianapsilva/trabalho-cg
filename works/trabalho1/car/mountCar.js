@@ -120,8 +120,8 @@ export default function mountCar() {
             openEnded
         )
         var material
-        if (!color) material = new THREE.MeshBasicMaterial({ color: "rgb(25,25,25)" })
-        else material = new THREE.MeshBasicMaterial({ color: "rgb(150,0,0)" })
+        if (!color) material = new THREE.MeshBasicMaterial({ color: "rgb(0,0,0)" })
+        else material = new THREE.MeshPhongMaterial({ color: "rgb(115, 187, 254)" })
         var object = new THREE.Mesh(geometry, material)
         object.castShadow = true
         return object
@@ -129,7 +129,7 @@ export default function mountCar() {
 
     function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
         var geometry = new THREE.TorusGeometry(radius, tube, radialSegments, tubularSegments, arc)
-        var material = new THREE.MeshBasicMaterial({ color: "rgb(10,10,10)" })
+        var material = new THREE.MeshPhongMaterial({ color: "rgb(10,10,10)" })
         var object = new THREE.Mesh(geometry, material)
         object.castShadow = true
         object.rotateY(degreesToRadians(90))
@@ -138,14 +138,14 @@ export default function mountCar() {
 
     function createBody(width, height, depth) {
         var geometry = new THREE.BoxGeometry(width, height, depth)
-        var material = new THREE.MeshBasicMaterial({ color: "rgb(150,0,0)" })
+        var material = new THREE.MeshPhongMaterial({ color: "rgb(103, 182, 239)" })
         var object = new THREE.Mesh(geometry, material)
         object.castShadow = true
         return object
     }
     function createAsa(width, height, depth) {
         var geometry = new THREE.BoxGeometry(width, height, depth)
-        var material = new THREE.MeshBasicMaterial({ color: "rgb(200,200,200)" })
+        var material = new THREE.MeshPhongMaterial({ color: "rgb(200,200,200)" })
         var object = new THREE.Mesh(geometry, material)
         object.castShadow = true
         return object
