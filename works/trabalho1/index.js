@@ -18,6 +18,7 @@ let currentLookAt = new THREE.Vector3()
 let position = 1
 let saveCameraState
 let toggleCamera = true
+let path = []
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -167,6 +168,10 @@ function moveRoda() {
     }*/
 }
 
+function pathAlreadyExists(number) {
+    return path.some(n => { return n == number })
+}
+
 
 
 function verifyPosition() {
@@ -174,21 +179,33 @@ function verifyPosition() {
     if (group.position.z >= -170 && group.position.z <= -125
         && group.position.x >= -171 && group.position.x <= 162) {
         console.log("reta1")
+        if (!pathAlreadyExists(1)) {
+            path.push(1)
+        }
     }
 
     if (group.position.z >= -125 && group.position.z <= 136
         && group.position.x >= 133 && group.position.x <= 171) {
         console.log("reta2")
+        if (!pathAlreadyExists(2)) {
+            path.push(2)
+        }
     }
 
     else if (group.position.z >= 130 && group.position.z <= 170
         && group.position.x >= -138 && group.position.x <= 125) {
         console.log("reta3")
+        if (!pathAlreadyExists(3)) {
+            path.push(3)
+        }
     }
 
     else if (group.position.z >= -130 && group.position.z <= 136
         && group.position.x >= -171 && group.position.x <= -131) {
         console.log("reta4")
+        if (!pathAlreadyExists(4)) {
+            path.push(4)
+        }
     }
 
 }
