@@ -35,12 +35,13 @@ let car = mountCar()
 car.position.set(0, 0, 0)
 newScene.add(car)
 
+
 inspectionCamera.lookAt(0, 0, 0)
 inspectionCamera.position.set(47, 0, 0)
 
 
 var clock = new THREE.Clock();
-var light = initDefaultSpotlight(scene, new THREE.Vector3(35, 20, 30)); // Use default light
+var light = initDefaultSpotlight(scene, new THREE.Vector3(200, 200, 200)); // Use default light
 var lightSphere = createSphere(0.3, 10, 10);
 lightSphere.position.copy(light.position);
 scene.add(lightSphere);
