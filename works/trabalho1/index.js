@@ -82,12 +82,12 @@ function keyboardUpdate() {
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
     if (keyboard.pressed("up")) {
-        group.translateZ(0.75);
+        group.translateZ(2);
     }
-    if (keyboard.pressed("down")) group.translateZ(-0.75);
+    if (keyboard.pressed("down")) group.translateZ(-2);
 
-    var angleCar = degreesToRadians(0.75);
-    var angleRoda = degreesToRadians(0.75);
+    var angleCar = degreesToRadians(2);
+    var angleRoda = degreesToRadians(2);
 
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
@@ -171,23 +171,25 @@ function moveRoda() {
 
 function verifyPosition() {
 
-    if (group.position.x >= -180 && group.position.z >= -145
-        && group.position.x <= -154 && group.position.z <= -168 ||
-        group.position.x <= 156 && group.position.z >= -169
-        && group.position.x <= 141 && group.position.z <= -131
-    ) {
+    if (group.position.z >= -170 && group.position.z <= -125
+        && group.position.x >= -171 && group.position.x <= 162) {
         console.log("reta1")
     }
 
-    else if ((group.position.x <= 170 && group.position.z >= -148
-        && group.position.x >= 135 && group.position.z <= -122)
-        || (group.position.x <= 169 && group.position.z <= 118
-            && group.position.x >= 133 && group.position.z >= 114)) {
+    if (group.position.z >= -125 && group.position.z <= 136
+        && group.position.x >= 133 && group.position.x <= 171) {
         console.log("reta2")
     }
 
+    else if (group.position.z >= 130 && group.position.z <= 170
+        && group.position.x >= -138 && group.position.x <= 125) {
+        console.log("reta3")
+    }
 
-
+    else if (group.position.z >= -130 && group.position.z <= 136
+        && group.position.x >= -171 && group.position.x <= -131) {
+        console.log("reta4")
+    }
 
 }
 
