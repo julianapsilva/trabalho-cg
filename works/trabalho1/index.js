@@ -76,7 +76,8 @@ render()
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
-
+var group1 = mudaPista(scene, 1);
+var group2 = mudaPista(scene, 2);
 function keyboardUpdate() {
 
     keyboard.update();
@@ -93,15 +94,28 @@ function keyboardUpdate() {
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
-        group.children[11].rotateY(.02);
-        group.children[12].rotateY(.02);
-        
+        if(group.children[11].rotateY(.02) < 0.45 && group.children[12].rotateY(.02)< 0.45){
+            group.children[11].rotateY(.02);
+            group.children[12].rotateY(.02);
+        }else{
+            if (group.children[11].rotateY(.02) > 0 && group.children[12].rotateY(.02) > 0) {
+                group.children[11].rotateY(-.02);
+                group.children[12].rotateY(-.02)
+            }
+        }
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
-        group.children[11].rotateY(-.02)
-        group.children[12].rotateY(-.02);
+        if(group.children[11].rotateY(.02) > -0.45 && group.children[12].rotateY(.02) > -0.45){
+            group.children[11].rotateY(-.02);
+            group.children[12].rotateY(-.02);
+            }else{
+                if (group.children[11].rotateY(.02) < 0 && group.children[12].rotateY(.02) < 0) {
+                    group.children[11].rotateY(.02);
+                    group.children[12].rotateY(.02);
+                }
+            }
     }
     if (keyboard.pressed("2")) {
         position = 2;
@@ -133,24 +147,31 @@ function keyboardUpdate() {
     // Muda o tipo de pista
     if (keyboard.down("7")) {
         isPista = 1;
-        mudaPista(scene, 1);
+        restartCar()
+        scene.add(group1);
+        group2.visible = false
+        group1.visible = true
     }
     if (keyboard.down("8")) {
         isPista = 2;
-        mudaPista(scene, 2);
+        restartCar()
+        scene.add(group2);
+        group1.visible = false
+        group2.visible = true
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
-        group.children[11].rotateY(-0.4);
-        group.children[12].rotateY(-0.4);
+        
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
-        group.children[11].rotateY(0.4);
-        group.children[12].rotateY(0.4);
     }
+}
 
+function restartCar(){
+    position = 1;
+    group.position.set(-30, 2.6, -150)
 }
 //Faz o movimento das rodas
 function moveRoda() {
