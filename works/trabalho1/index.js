@@ -6,6 +6,7 @@ import mountCar from './car/mountCar.js';
 import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import mudaPista from './pistas/pistas.js';
+import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock } from './clock/clock.js';
 import {
     initRenderer,
     InfoBox,
@@ -29,6 +30,9 @@ let velocidade = 0;
 let velocidadeMaxima = 2;
 let velocidadeMinima = 0.5;
 
+var clockTotal = new THREE.Clock();
+var clockVolta = new THREE.Clock();
+
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -51,8 +55,7 @@ inspectionCamera.lookAt(0, 0, 0)
 inspectionCamera.position.set(47, 0, 0)
 
 
-var clockTotal = new THREE.Clock();
-var clockVolta = new THREE.Clock();
+
 
 var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
 var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
@@ -75,6 +78,8 @@ function createSphere(radius, widthSegments, heightSegments) {
 createPlane(scene);
 // Show text information onscreen
 showInformation();
+criaBoxRelogio(clockTotal);
+criaBoxRelogioCorrente(clockVolta)
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -100,28 +105,25 @@ function keyboardUpdate() {
 
     if (keyboard.pressed("up")) {
         group.translateZ(velocidade);
-        if(velocidade <= velocidadeMaxima)
+        if (velocidade <= velocidadeMaxima)
             velocidade += 0.01;
-        if(saiuPista1 || saiuPista2)
-        {
-            if(velocidade >= velocidadeMinima)
-                velocidade -=0.02;
+        if (saiuPista1 || saiuPista2) {
+            if (velocidade >= velocidadeMinima)
+                velocidade -= 0.02;
         }
     }
-    if (keyboard.pressed("down")) 
-    {
+    if (keyboard.pressed("down")) {
         group.translateZ(-velocidade);
-        if(velocidade <= velocidadeMinima)
+        if (velocidade <= velocidadeMinima)
             velocidade -= 0.01;
-        if(saiuPista1 || saiuPista2)
-        {
-            if(velocidade >= velocidadeMaxima)
-                velocidade +=0.02;
+        if (saiuPista1 || saiuPista2) {
+            if (velocidade >= velocidadeMaxima)
+                velocidade += 0.02;
         }
 
     }
     var angleCar = degreesToRadians(2);
-    
+
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
@@ -245,8 +247,7 @@ function verifyPosition() {
                 path.push(4)
             }
         }
-        else 
-        {
+        else {
             saiuPista1 = true;
             console.log("saiu");
         }
@@ -303,8 +304,7 @@ function verifyPosition() {
                 path2.push(6)
             }
         }
-        else 
-        {
+        else {
             saiuPista2 = true;
             console.log(group.position.z, "z");
             console.log(group.position.x, "x");
@@ -351,12 +351,15 @@ function checkVoltaPista2() {
 }
 
 function checkStartPosition() {
-    if (group.position.x >= -64 && group.position.x <= -20 && group.position.z >= -169 && group.position.z <= -130) {
+    if (group.position.x >= -64 && group.position.x <= -20
+        && group.position.z >= -169 && group.position.z <= -130) {
         return true;
     }
     else
         return false;
 }
+
+
 
 function showInformation() {
     // Use this to show information onscreen
@@ -371,6 +374,7 @@ function showInformation() {
     controls.show();
 }
 
+
 function render() {
     stats.update(); // Update FPS
     trackballControls.update();
@@ -380,6 +384,7 @@ function render() {
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
+    updateClock(clockTotal, clockVolta);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
