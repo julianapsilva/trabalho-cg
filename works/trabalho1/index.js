@@ -19,7 +19,10 @@ let position = 1
 let saveCameraState
 let toggleCamera = true
 let path = []
-var isPista
+let volta = 0;
+let fim = false;
+let saiu = false;
+let velocidade = 1.5;
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -36,14 +39,16 @@ var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / windo
 let car = mountCar()
 car.position.set(0, 0, 0)
 newScene.add(car)
-
+newScene.add(lightSphere);
 
 inspectionCamera.lookAt(0, 0, 0)
 inspectionCamera.position.set(47, 0, 0)
 
 
 var clock = new THREE.Clock();
-var light = initDefaultSpotlight(scene, new THREE.Vector3(200, 200, 200)); // Use default light
+var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
+var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
+
 var lightSphere = createSphere(0.3, 10, 10);
 lightSphere.position.copy(light.position);
 scene.add(lightSphere);
@@ -62,7 +67,6 @@ function createSphere(radius, widthSegments, heightSegments) {
 createPlane(scene);
 // Show text information onscreen
 showInformation();
-
 // To use the keyboard
 var keyboard = new KeyboardState();
 
@@ -84,24 +88,22 @@ function keyboardUpdate() {
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
     if (keyboard.pressed("up")) {
-        group.translateZ(1.5);
+        group.translateZ(velocidade);
     }
-    if (keyboard.pressed("down")) group.translateZ(-1.5);
+    if (keyboard.pressed("down")) group.translateZ(-2);
 
     var angleCar = degreesToRadians(2);
+    var angleRoda = degreesToRadians(2);
 
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
-        group.children[11].rotateY(.02);
-        group.children[12].rotateY(.02);
-        
+        group.children[11].rotateY(angleRoda);
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
-        group.children[11].rotateY(-.02)
-        group.children[12].rotateY(-.02);
+        group.children[11].rotateY(-angleRoda)
     }
     if (keyboard.pressed("2")) {
         position = 2;
@@ -132,23 +134,17 @@ function keyboardUpdate() {
 
     // Muda o tipo de pista
     if (keyboard.down("7")) {
-        isPista = 1;
         mudaPista(scene, 1);
     }
     if (keyboard.down("8")) {
-        isPista = 2;
         mudaPista(scene, 2);
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
-        group.children[11].rotateY(-0.4);
-        group.children[12].rotateY(-0.4);
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
-        group.children[11].rotateY(0.4);
-        group.children[12].rotateY(0.4);
     }
 
 }
@@ -181,99 +177,100 @@ function pathAlreadyExists(number) {
     return path.some(n => { return n == number })
 }
 
-
-
 function verifyPosition() {
-    if(isPista==1){
-        if (group.position.z >= -170 && group.position.z <= -125
-            && group.position.x >= -171 && group.position.x <= 162) {
-            console.log("Pista1 - reta1")
-            if (!pathAlreadyExists(1)) {
-                path.push(1)
-            }
-        }
 
-        if (group.position.z >= -125 && group.position.z <= 136
-            && group.position.x >= 133 && group.position.x <= 171) {
-            console.log("Pista1 - reta2")
-            if (!pathAlreadyExists(2)) {
-                path.push(2)
-            }
-        }
-
-        else if (group.position.z >= 130 && group.position.z <= 170
-            && group.position.x >= -138 && group.position.x <= 125) {
-            console.log("Pista1 - reta3")
-            if (!pathAlreadyExists(3)) {
-                path.push(3)
-            }
-        }
-
-        else if (group.position.z >= -130 && group.position.z <= 136
-            && group.position.x >= -171 && group.position.x <= -131) {
-            console.log("Pista1 - reta4")
-            if (!pathAlreadyExists(4)) {
-                path.push(4)
-            }
+    if (group.position.z >= -170 && group.position.z <= -125
+        && group.position.x >= -171 && group.position.x <= 162) {
+        console.log("reta1")
+        
+        saiu = false;
+        if (!pathAlreadyExists(1)) {
+            path.push(1)
         }
     }
-    if(isPista==2){
-        if (group.position.z >= -170 && group.position.z <= -125
-            && group.position.x >= -171 && group.position.x <= 162) {
-            console.log("Pista2 - reta1")
-            if (!pathAlreadyExists(1)) {
-                path.push(1)
-            }
+    
+    else if (group.position.z >= -125 && group.position.z <= 136
+        && group.position.x >= 133 && group.position.x <= 171) {
+        console.log("reta2")
+        saiu = false;
+        if (!pathAlreadyExists(2)) {
+            path.push(2)
         }
+    }
 
-        if (group.position.z >= -125 && group.position.z <= 136
-            && group.position.x >= 133 && group.position.x <= 171) {
-            console.log("Pista2 - reta2")
-            if (!pathAlreadyExists(2)) {
-                path.push(2)
-            }
+    else if (group.position.z >= 130 && group.position.z <= 170
+        && group.position.x >= -138 && group.position.x <= 125) {
+        console.log("reta3")
+        saiu = false;
+        if (!pathAlreadyExists(3)) {
+            path.push(3)
         }
-        else if (group.position.z >= -30 && group.position.z <= 30
-            && group.position.x >= 30 && group.position.x <= 170) {
-            console.log("Pista2 - reta3")
-            if (!pathAlreadyExists(3)) {
-                path.push(3)
-            }
+    }
+
+    else if (group.position.z >= -130 && group.position.z <= 136
+        && group.position.x >= -171 && group.position.x <= -131) {
+        console.log("reta4")
+        saiu = false;
+        if (!pathAlreadyExists(4)) {
+            path.push(4)
         }
-        else if (group.position.z >= -30 && group.position.z <= 170
-            && group.position.x >= -30 && group.position.x <= 30) {
-            console.log("Pista2 - reta4")
-            if (!pathAlreadyExists(4)) {
-                path.push(4)
-            }
-        }
-        else if (group.position.z >= 150 && group.position.z <= 170
-            && group.position.x >= -170 && group.position.x <= 30) {
-            console.log("Pista2 - reta5")
-            if (!pathAlreadyExists(5)) {
-                path.push(5)
-            }
-        }
-        else if (group.position.z >= -130 && group.position.z <= 136
-            && group.position.x >= -171 && group.position.x <= -131) {
-            console.log("Pista2 - reta6")
-            if (!pathAlreadyExists(6)) {
-                path.push(6)
-            }
-        }
+    }
+    else 
+    {
+        saiu = true;
+        console.log("saiu");
     }
 }
 
+function checkVolta() 
+{
+    if (path.length == 4)
+    {
+        volta++;
+        path = [];
+        console.log(path);
+        console.log(volta);
+    }
+
+    if (volta == 4 && checkStartPosition()) {
+        console.log("fim");
+    }  
+ }
+
+function checkVelocity()
+{
+    if (saiu == true)
+    {
+        velocidade = 0.75;
+    }
+    else
+    {
+        velocidade = 1.5;
+    } 
+
+}
+
+function checkStartPosition()
+{
+    if (group.position.x >= -64 && group.position.x <=-20 && group.position.z >= -169 && group.position.z <=-130)
+    {
+        return true;
+    }
+    else 
+        return false;
+}
+
 function showInformation() {
-    // Use this to show information onscreen
-    var controls = new InfoBox();
-    controls.add("Group Example");
-    controls.addParagraph();
-    controls.add("Use mouse to rotate/pan/zoom the camera");
-    controls.add("Up / Arrow to walk");
-    controls.add("Left / Right arrow to turn");
-    controls.add("Press 'A' to show/hide axes");
-    controls.show();
+  // Use this to show information onscreen
+  var controls = new InfoBox();
+  controls.add("Rockin Roll Racing");
+  controls.addParagraph();
+  controls.add("Use o mouse para controlar camera");
+  controls.add("Up / Acelera");
+  controls.add("Left / Right curvas");
+  controls.add("Pressione 'A' para exibir ou esconder Axis");
+  controls.add(" 1 / 2 - Pista 1 / Pista 2");
+  controls.show();
 }
 
 function render() {
@@ -281,7 +278,10 @@ function render() {
     trackballControls.update();
     keyboardUpdate();
     handleCamera(position, camera, group, currentPosition, currentLookAt);
-    verifyPosition()
+    verifyPosition();
+    checkVolta();
+    checkVelocity();
+    checkStartPosition();
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
