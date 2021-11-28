@@ -26,8 +26,8 @@ let fim = false;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
-let velocidadeMaxima = 2;
-let velocidadeMinima = 0.5;
+let velocidadeMaxima = 1.5;
+let velocidadeMinima = 0.75;
 
 
 var scene = new THREE.Scene();    // Create main scene
@@ -98,7 +98,7 @@ function keyboardUpdate() {
 
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
-    if (keyboard.pressed("up")) {
+    if (keyboard.pressed("X")) {
         group.translateZ(velocidade);
         if(velocidade <= velocidadeMaxima)
             velocidade += 0.01;
@@ -306,8 +306,6 @@ function verifyPosition() {
         else 
         {
             saiuPista2 = true;
-            console.log(group.position.z, "z");
-            console.log(group.position.x, "x");
             console.log("saiu");
         }
     }
@@ -343,6 +341,7 @@ function checkVoltaPista2() {
         if (volta == 4 && checkStartPosition()) {
             console.log("fim");
             clockTotal.stop;
+            velocidade = 0;
             clockTotal.getElapsedTime();
             console.log(clockTotal);
 
@@ -364,7 +363,7 @@ function showInformation() {
     controls.add("Rockin Roll Racing");
     controls.addParagraph();
     controls.add("Use o mouse para controlar camera");
-    controls.add("Up / Acelera");
+    controls.add("X / Acelera");
     controls.add("Left / Right curvas");
     controls.add("Pressione 'A' para exibir ou esconder Axis");
     controls.add(" 1 / 2 - Pista 1 / Pista 2");
