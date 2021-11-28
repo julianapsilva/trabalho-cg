@@ -51,7 +51,9 @@ inspectionCamera.lookAt(0, 0, 0)
 inspectionCamera.position.set(47, 0, 0)
 
 
-var clock = new THREE.Clock();
+var clockTotal = new THREE.Clock();
+var clockVolta = new THREE.Clock();
+
 var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
 var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
 
@@ -162,7 +164,8 @@ function keyboardUpdate() {
     // Muda o tipo de pista
     if (keyboard.down("7")) {
         isPista = 1;
-        clock.start();
+        clockTotal.start();
+        clockVolta.start();
 
         restartCar()
         scene.add(group1);
@@ -171,7 +174,8 @@ function keyboardUpdate() {
     }
     if (keyboard.down("8")) {
         isPista = 2;
-        clock.start();
+        clockTotal.start();
+        clockVolta.start();
 
         restartCar()
         scene.add(group2);
@@ -314,14 +318,15 @@ function checkVoltaPista1() {
         if (path.length == 4) {
             volta++;
             path = [];
-            console.log(path);
-            console.log(volta);
+            clockVolta.getElapsedTime()
+            console.log(clockVolta);
         }
 
         if (volta == 4 && checkStartPosition()) {
             console.log("fim");
-            clock.stop;
-            clock.elapsedTime();
+            clockTotal.stop;
+            clockTotal.getElapsedTime();
+            console.log(clockTotal);
         }
     }
 }
@@ -331,26 +336,19 @@ function checkVoltaPista2() {
         if (path2.length == 6) {
             volta++;
             path2 = [];
-            console.log(path2);
-            console.log(volta);
+            clockVolta.getElapsedTime();
+            console.log(clockVolta);
         }
 
         if (volta == 4 && checkStartPosition()) {
             console.log("fim");
-            clock.stop;
-            clock.elapsedTime();
+            clockTotal.stop;
+            clockTotal.getElapsedTime();
+            console.log(clockTotal);
+
         }
     }
 }
-
-// function checkVelocity() {
-//     if (saiuPista1 || saiuPista2) {
-//         velocidade = 0.75;
-//     }
-//     else {
-//         //velocidade = 1.5;
-//     }
-// }
 
 function checkStartPosition() {
     if (group.position.x >= -64 && group.position.x <= -20 && group.position.z >= -169 && group.position.z <= -130) {
@@ -381,7 +379,6 @@ function render() {
     verifyPosition();
     checkVoltaPista1();
     checkVoltaPista2();
-   // checkVelocity();
     checkStartPosition();
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
