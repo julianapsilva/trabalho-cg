@@ -19,6 +19,7 @@ let position = 1
 let saveCameraState
 let toggleCamera = true
 let path = []
+var isPista
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -83,22 +84,24 @@ function keyboardUpdate() {
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
     if (keyboard.pressed("up")) {
-        group.translateZ(2);
+        group.translateZ(1.5);
     }
-    if (keyboard.pressed("down")) group.translateZ(-2);
+    if (keyboard.pressed("down")) group.translateZ(-1.5);
 
     var angleCar = degreesToRadians(2);
-    var angleRoda = degreesToRadians(2);
 
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
-        group.children[11].rotateY(angleRoda);
+        group.children[11].rotateY(.02);
+        group.children[12].rotateY(.02);
+        
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
-        group.children[11].rotateY(-angleRoda)
+        group.children[11].rotateY(-.02)
+        group.children[12].rotateY(-.02);
     }
     if (keyboard.pressed("2")) {
         position = 2;
@@ -129,17 +132,23 @@ function keyboardUpdate() {
 
     // Muda o tipo de pista
     if (keyboard.down("7")) {
+        isPista = 1;
         mudaPista(scene, 1);
     }
     if (keyboard.down("8")) {
+        isPista = 2;
         mudaPista(scene, 2);
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
+        group.children[11].rotateY(-0.4);
+        group.children[12].rotateY(-0.4);
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
+        group.children[11].rotateY(0.4);
+        group.children[12].rotateY(0.4);
     }
 
 }
@@ -175,39 +184,84 @@ function pathAlreadyExists(number) {
 
 
 function verifyPosition() {
+    if(isPista==1){
+        if (group.position.z >= -170 && group.position.z <= -125
+            && group.position.x >= -171 && group.position.x <= 162) {
+            console.log("Pista1 - reta1")
+            if (!pathAlreadyExists(1)) {
+                path.push(1)
+            }
+        }
 
-    if (group.position.z >= -170 && group.position.z <= -125
-        && group.position.x >= -171 && group.position.x <= 162) {
-        console.log("reta1")
-        if (!pathAlreadyExists(1)) {
-            path.push(1)
+        if (group.position.z >= -125 && group.position.z <= 136
+            && group.position.x >= 133 && group.position.x <= 171) {
+            console.log("Pista1 - reta2")
+            if (!pathAlreadyExists(2)) {
+                path.push(2)
+            }
+        }
+
+        else if (group.position.z >= 130 && group.position.z <= 170
+            && group.position.x >= -138 && group.position.x <= 125) {
+            console.log("Pista1 - reta3")
+            if (!pathAlreadyExists(3)) {
+                path.push(3)
+            }
+        }
+
+        else if (group.position.z >= -130 && group.position.z <= 136
+            && group.position.x >= -171 && group.position.x <= -131) {
+            console.log("Pista1 - reta4")
+            if (!pathAlreadyExists(4)) {
+                path.push(4)
+            }
         }
     }
+    if(isPista==2){
+        if (group.position.z >= -170 && group.position.z <= -125
+            && group.position.x >= -171 && group.position.x <= 162) {
+            console.log("Pista2 - reta1")
+            if (!pathAlreadyExists(1)) {
+                path.push(1)
+            }
+        }
 
-    if (group.position.z >= -125 && group.position.z <= 136
-        && group.position.x >= 133 && group.position.x <= 171) {
-        console.log("reta2")
-        if (!pathAlreadyExists(2)) {
-            path.push(2)
+        if (group.position.z >= -125 && group.position.z <= 136
+            && group.position.x >= 133 && group.position.x <= 171) {
+            console.log("Pista2 - reta2")
+            if (!pathAlreadyExists(2)) {
+                path.push(2)
+            }
+        }
+        else if (group.position.z >= -30 && group.position.z <= 30
+            && group.position.x >= 30 && group.position.x <= 170) {
+            console.log("Pista2 - reta3")
+            if (!pathAlreadyExists(3)) {
+                path.push(3)
+            }
+        }
+        else if (group.position.z >= -30 && group.position.z <= 170
+            && group.position.x >= -30 && group.position.x <= 30) {
+            console.log("Pista2 - reta4")
+            if (!pathAlreadyExists(4)) {
+                path.push(4)
+            }
+        }
+        else if (group.position.z >= 150 && group.position.z <= 170
+            && group.position.x >= -170 && group.position.x <= 30) {
+            console.log("Pista2 - reta5")
+            if (!pathAlreadyExists(5)) {
+                path.push(5)
+            }
+        }
+        else if (group.position.z >= -130 && group.position.z <= 136
+            && group.position.x >= -171 && group.position.x <= -131) {
+            console.log("Pista2 - reta6")
+            if (!pathAlreadyExists(6)) {
+                path.push(6)
+            }
         }
     }
-
-    else if (group.position.z >= 130 && group.position.z <= 170
-        && group.position.x >= -138 && group.position.x <= 125) {
-        console.log("reta3")
-        if (!pathAlreadyExists(3)) {
-            path.push(3)
-        }
-    }
-
-    else if (group.position.z >= -130 && group.position.z <= 136
-        && group.position.x >= -171 && group.position.x <= -131) {
-        console.log("reta4")
-        if (!pathAlreadyExists(4)) {
-            path.push(4)
-        }
-    }
-
 }
 
 function showInformation() {

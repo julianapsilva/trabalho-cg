@@ -19,27 +19,27 @@ export default function mudaPista(scene, isPista) {
     if (isPista == 2) {
         for (let i = -150; i < 151; i += 30) {
             for (let j = -150; j < 151; j += 30) {
-                if (i == -150) // reta 1
+                if (j == -150) // reta 1
                 {
                     blocoComum(i, j);
                 }
-                if (j == 150 && i <= 0) // reta 2
+                if (i == 150 && j <= 0) // reta 2
                 {
                     blocoComum(i, j);
                 }
-                if (i == 0 && j >= 0) // reta 3
+                if (j == 0 && i >= 0) // reta 3
                 {
                     blocoComum(i, j);
                 }
-                if (j == 0 && i >= 0) // reta 4
+                if (i == 0 && j >= 0) // reta 4
                 {
                     blocoComum(i, j);
                 }
-                if (i == 150 && j <= 0) // reta 5
+                if (j == 150 && i <= 0) // reta 5
                 {
                     blocoComum(i, j);
                 }
-                if (j == -150) // reta 6
+                if (i == -150) // reta 6
                 {
                     blocoComum(i, j);
                 }
