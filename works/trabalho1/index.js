@@ -18,7 +18,7 @@ let currentLookAt = new THREE.Vector3()
 let position = 1
 let toggleCamera = true
 let path = []
-let switchPista = 2
+let switchPista = 1
 let acc = false
 
 var scene = new THREE.Scene();    // Create main scene
@@ -74,7 +74,7 @@ scene.add(group)
 camera.position.set(97, 19, -91)
 render()
 
-mudaPista(scene, 2);
+mudaPista(scene, 1);
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
@@ -140,12 +140,12 @@ function keyboardUpdate() {
     }
 
     if (keyboard.down("6")) {
-        acc = false
+        console.log(group.quaternion)
     }
 
     // Muda o tipo de pista
     if (keyboard.down("7")) {
-        mudaPista(scene, 1);
+        console.log('position', group.position)
     }
     if (keyboard.down("8")) {
         mudaPista(scene, 2);
@@ -230,7 +230,9 @@ function verifyPosition() {
 
     if (switchPista == 2) {
         if (group.position.z >= -20 && group.position.z <= 23
-            && group.position.x >= 22.2 && group.position.x <= 26
+            && group.position.x >= 10 && group.position.x <= 26
+            && group.quaternion.w >= 0.81 && group.quaternion.w <= 0.98
+            && group.quaternion.y >= -0.57 && group.quaternion.y <= -0.18
         ) {
             // console.log("INTERSEÇÃO 2") 
             position = 2
@@ -249,7 +251,8 @@ function verifyPosition() {
             && group.position.x >= -20 && group.position.x <= 17
         ) {
             // console.log("INTERSEÇÃO 2") 
-            position = 3
+            console.log('3 um')
+            position = 5
         }
     }
 
@@ -310,7 +313,7 @@ function render() {
     stats.update(); // Update FPS
     trackballControls.update();
     keyboardUpdate();
-    handleCamera(position, camera, group, currentPosition, currentLookAt, acc);
+    handleCamera(position, camera, group, currentPosition, currentLookAt, acc, switchPista);
     verifyPosition()
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
