@@ -36,7 +36,7 @@ export default function handleCamera(position, camera, group, currentPosition, c
 
             break;
         case 2:
-            console.log("POSICAO 2")
+            // console.log("POSICAO 2")
             f = -15, g = 5, h = 20, m = 12
             if (acc) {
                 if (a <= -15) a += 0.03
@@ -48,8 +48,8 @@ export default function handleCamera(position, camera, group, currentPosition, c
                 if (c > 5) c -= 0.045
             }
 
-            console.log('zoom2', zoom2)
-            console.log('a', a, 'b', b, 'c', c)
+            // console.log('zoom2', zoom2)
+            // console.log('a', a, 'b', b, 'c', c)
 
             idealPosition = new THREE.Vector3(a, 10, b)
             lookAt = new THREE.Vector3(c, -5, 5)
@@ -122,7 +122,7 @@ export default function handleCamera(position, camera, group, currentPosition, c
             zoom2 = 0.5
 
             if (acc) {
-                if (f < 20) f += 0.18
+                if (f < 20) f += 0.14
 
                 if (g > -20) g -= 0.1
 

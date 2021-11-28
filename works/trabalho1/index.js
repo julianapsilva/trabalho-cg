@@ -18,7 +18,7 @@ let currentLookAt = new THREE.Vector3()
 let position = 1
 let toggleCamera = true
 let path = []
-let switchPista = 1
+let switchPista = 2
 let acc = false
 
 var scene = new THREE.Scene();    // Create main scene
@@ -74,7 +74,7 @@ scene.add(group)
 camera.position.set(97, 19, -91)
 render()
 
-mudaPista(scene, 1);
+mudaPista(scene, 2);
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
@@ -157,6 +157,11 @@ function keyboardUpdate() {
     if (keyboard.up("right")) {
         pressionadoRight = false;
     }
+    if (keyboard.up("9")) {
+        console.log('ZOOM', camera.zoom)
+        console.log('POSITION', group.position)
+        console.log('QUA', group.quaternion)
+    }
 
 }
 //Faz o movimento das rodas
@@ -220,7 +225,7 @@ function verifyPosition() {
     if (switchPista == 1) {
         if (group.position.z >= 134 && group.position.z <= 162
             && group.position.x >= 130 && group.position.x <= 171
-            && group.quaternion.w <= 0.81 && group.quaternion.y >= -0.81
+            && group.quaternion.w <= 1 && group.quaternion.y >= -0.81
         ) {
             // console.log("INTERSEÇÃO 2") 
             position = 3
