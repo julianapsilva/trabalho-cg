@@ -16,9 +16,10 @@ import {
 let currentPosition = new THREE.Vector3()
 let currentLookAt = new THREE.Vector3()
 let position = 1
-let saveCameraState
 let toggleCamera = true
 let path = []
+let switchPista = 2
+let acc = false
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -73,6 +74,8 @@ scene.add(group)
 camera.position.set(97, 19, -91)
 render()
 
+mudaPista(scene, 2);
+
 var pressionadoLeft = false;
 var pressionadoRight = false;
 
@@ -82,13 +85,22 @@ function keyboardUpdate() {
 
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
-    if (keyboard.pressed("up")) {
-        group.translateZ(2);
-    }
-    if (keyboard.pressed("down")) group.translateZ(-2);
 
-    var angleCar = degreesToRadians(2);
-    var angleRoda = degreesToRadians(2);
+    if (keyboard.pressed("up")) {
+        group.translateZ(0.8);
+
+    }
+    if (keyboard.down("up")) {
+        acc = true
+        console.log(camera.position)
+    }
+    if (keyboard.up("up")) {
+        acc = false
+    }
+    if (keyboard.pressed("down")) group.translateZ(-1);
+
+    var angleCar = degreesToRadians(1);
+    var angleRoda = degreesToRadians(1);
 
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
@@ -123,8 +135,12 @@ function keyboardUpdate() {
             scene.visible = true
     }
 
+    if (keyboard.down("5")) {
+        position = 5
+    }
+
     if (keyboard.down("6")) {
-        console.log(group.position)
+        acc = false
     }
 
     // Muda o tipo de pista
@@ -177,16 +193,84 @@ function pathAlreadyExists(number) {
 function verifyPosition() {
 
     if (group.position.z >= -170 && group.position.z <= -125
+        && group.position.x >= 117 && group.position.x <= 162
+        && group.quaternion.w >= -1 && group.quaternion.w <= 1.01
+        && group.quaternion.y >= -0.18 && group.quaternion.y <= 0.13
+    ) {
+        // console.log("INTERSEÇÃO 1")
+        position = 2
+    }
+
+    if (group.position.z >= 130 && group.position.z <= 160
+        && group.position.x >= -160 && group.position.x <= -120
+        && group.quaternion.w >= -0.23 && group.quaternion.w <= 0.42
+        && group.quaternion.y >= -0.98 && group.quaternion.y <= 1
+    ) {
+        // console.log("INTERSEÇÃO 3")
+        position = 4
+    }
+
+    if (group.position.z >= -171 && group.position.z <= -138
+        && group.position.x >= -164 && group.position.x <= -120) {
+        console.log("INTERSEÇÃO 4")
+        position = 1
+    }
+
+
+    if (switchPista == 1) {
+        if (group.position.z >= 134 && group.position.z <= 162
+            && group.position.x >= 130 && group.position.x <= 171
+            && group.quaternion.w <= 0.81 && group.quaternion.y >= -0.81
+        ) {
+            // console.log("INTERSEÇÃO 2") 
+            position = 3
+        }
+    }
+
+
+    if (switchPista == 2) {
+        if (group.position.z >= -20 && group.position.z <= 23
+            && group.position.x >= 22.2 && group.position.x <= 26
+        ) {
+            // console.log("INTERSEÇÃO 2") 
+            position = 2
+        }
+
+
+        if (group.position.z >= -24 && group.position.z <= 8
+            && group.position.x >= 127 && group.position.x <= 162
+        ) {
+            // console.log("INTERSEÇÃO 2") 
+            console.log(group.quaternion)
+            position = 3
+        }
+
+        if (group.position.z >= 120 && group.position.z <= 154
+            && group.position.x >= -20 && group.position.x <= 17
+        ) {
+            // console.log("INTERSEÇÃO 2") 
+            position = 3
+        }
+    }
+
+
+
+
+
+    if (group.position.z >= -170 && group.position.z <= -125
         && group.position.x >= -171 && group.position.x <= 162) {
-        console.log("reta1")
+        // console.log("reta1")
+        if (group.position.x >= 73 && group.position.x <= 87
+            && group.position.z >= -171 && group.position.z <= -132)
+            position = 1  // AQUI TAVA 5
         if (!pathAlreadyExists(1)) {
             path.push(1)
         }
     }
 
-    if (group.position.z >= -125 && group.position.z <= 136
+    else if (group.position.z >= -125 && group.position.z <= 136
         && group.position.x >= 133 && group.position.x <= 171) {
-        console.log("reta2")
+        // console.log("reta2")
         if (!pathAlreadyExists(2)) {
             path.push(2)
         }
@@ -226,7 +310,7 @@ function render() {
     stats.update(); // Update FPS
     trackballControls.update();
     keyboardUpdate();
-    handleCamera(position, camera, group, currentPosition, currentLookAt);
+    handleCamera(position, camera, group, currentPosition, currentLookAt, acc);
     verifyPosition()
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
