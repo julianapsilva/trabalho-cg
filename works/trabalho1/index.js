@@ -25,7 +25,9 @@ let volta = 0;
 let fim = false;
 let saiuPista1 = false;
 let saiuPista2 = false;
-let velocidade = 1.5;
+let velocidade = 0;
+let velocidadeMaxima = 2;
+let velocidadeMinima = 0.5;
 
 
 var scene = new THREE.Scene();    // Create main scene
@@ -91,13 +93,31 @@ function keyboardUpdate() {
 
     keyboard.update();
 
+
     if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
 
     if (keyboard.pressed("up")) {
         group.translateZ(velocidade);
+        if(velocidade <= velocidadeMaxima)
+            velocidade += 0.01;
+        if(saiuPista1 || saiuPista2)
+        {
+            if(velocidade >= velocidadeMinima)
+                velocidade -=0.02;
+        }
     }
-    if (keyboard.pressed("down")) group.translateZ(velocidade);
+    if (keyboard.pressed("down")) 
+    {
+        group.translateZ(-velocidade);
+        if(velocidade <= velocidadeMinima)
+            velocidade -= 0.01;
+        if(saiuPista1 || saiuPista2)
+        {
+            if(velocidade >= velocidadeMaxima)
+                velocidade +=0.02;
+        }
 
+    }
     var angleCar = degreesToRadians(2);
     
     if (keyboard.pressed("left")) {
@@ -142,6 +162,8 @@ function keyboardUpdate() {
     // Muda o tipo de pista
     if (keyboard.down("7")) {
         isPista = 1;
+        clock.start();
+
         restartCar()
         scene.add(group1);
         group2.visible = false
@@ -149,6 +171,8 @@ function keyboardUpdate() {
     }
     if (keyboard.down("8")) {
         isPista = 2;
+        clock.start();
+
         restartCar()
         scene.add(group2);
         group1.visible = false
@@ -217,7 +241,8 @@ function verifyPosition() {
                 path.push(4)
             }
         }
-        else {
+        else 
+        {
             saiuPista1 = true;
             console.log("saiu");
         }
@@ -232,7 +257,7 @@ function verifyPosition() {
             }
         }
 
-        if (group.position.z >= -170 && group.position.z <= 25
+        else if (group.position.z >= -170 && group.position.z <= 25
             && group.position.x >= 133 && group.position.x <= 171) {
             console.log("Pista2 - reta2")
             saiuPista2 = false;
@@ -256,9 +281,11 @@ function verifyPosition() {
                 path2.push(4)
             }
         }
-        else if (group.position.z >= 150 && group.position.z <= 170
+        else if (group.position.z >= 140 && group.position.z <= 170
             && group.position.x >= -170 && group.position.x <= 30) {
             console.log("Pista2 - reta5")
+            console.log(group.position.z, "z");
+            console.log(group.position.x, "x");
             saiuPista2 = false;
             if (!pathAlreadyExists2(5)) {
                 path2.push(5)
@@ -275,6 +302,8 @@ function verifyPosition() {
         else 
         {
             saiuPista2 = true;
+            console.log(group.position.z, "z");
+            console.log(group.position.x, "x");
             console.log("saiu");
         }
     }
@@ -292,6 +321,7 @@ function checkVoltaPista1() {
         if (volta == 4 && checkStartPosition()) {
             console.log("fim");
             clock.stop;
+            clock.elapsedTime();
         }
     }
 }
@@ -308,28 +338,19 @@ function checkVoltaPista2() {
         if (volta == 4 && checkStartPosition()) {
             console.log("fim");
             clock.stop;
+            clock.elapsedTime();
         }
     }
-
 }
 
-function checkVelocityPista1() {
-    if (saiuPista1 == true) {
-        velocidade = 0.5;
-    }
-    else {
-        velocidade = 1.5;
-    }
-}
-
-function checkVelocityPista2() {
-    if (saiuPista2 == true) {
-        velocidade = 0.5;
-    }
-    else {
-        velocidade = 1.5;
-    }
-}
+// function checkVelocity() {
+//     if (saiuPista1 || saiuPista2) {
+//         velocidade = 0.75;
+//     }
+//     else {
+//         //velocidade = 1.5;
+//     }
+// }
 
 function checkStartPosition() {
     if (group.position.x >= -64 && group.position.x <= -20 && group.position.z >= -169 && group.position.z <= -130) {
@@ -355,14 +376,12 @@ function showInformation() {
 function render() {
     stats.update(); // Update FPS
     trackballControls.update();
-    clock.start();
     keyboardUpdate();
     handleCamera(position, camera, group, currentPosition, currentLookAt);
     verifyPosition();
     checkVoltaPista1();
-    checkVoltaPista2
-    checkVelocityPista1();
-    checkVelocityPista2();
+    checkVoltaPista2();
+   // checkVelocity();
     checkStartPosition();
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
