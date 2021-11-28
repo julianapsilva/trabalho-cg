@@ -19,6 +19,7 @@ let position = 1
 let saveCameraState
 let toggleCamera = true
 let path = []
+let path2 = []
 var isPista;
 let volta = 0;
 let fim = false;
@@ -98,33 +99,18 @@ function keyboardUpdate() {
     if (keyboard.pressed("down")) group.translateZ(velocidade);
 
     var angleCar = degreesToRadians(2);
-    var angleRoda = degreesToRadians(2);
-
+    
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
-        if (group.children[11].rotateY(.02) < 0.45 && group.children[12].rotateY(.02) < 0.45) {
-            group.children[11].rotateY(.02);
-            group.children[12].rotateY(.02);
-        } else {
-            if (group.children[11].rotateY(.02) > 0 && group.children[12].rotateY(.02) > 0) {
-                group.children[11].rotateY(-.02);
-                group.children[12].rotateY(-.02)
-            }
-        }
+        group.children[11].rotateY(.02);
+        group.children[12].rotateY(.02);
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
-        if (group.children[11].rotateY(.02) > -0.45 && group.children[12].rotateY(.02) > -0.45) {
-            group.children[11].rotateY(-.02);
-            group.children[12].rotateY(-.02);
-        } else {
-            if (group.children[11].rotateY(.02) < 0 && group.children[12].rotateY(.02) < 0) {
-                group.children[11].rotateY(.02);
-                group.children[12].rotateY(.02);
-            }
-        }
+        group.children[11].rotateY(-.02);
+        group.children[12].rotateY(-.02);
     }
     if (keyboard.pressed("2")) {
         position = 2;
@@ -171,9 +157,13 @@ function keyboardUpdate() {
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
+        group.children[11].rotateY(-.02);
+        group.children[12].rotateY(-.02);
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
+        group.children[11].rotateY(.02);
+        group.children[12].rotateY(.02);
     }
 }
 
@@ -181,34 +171,14 @@ function restartCar() {
     position = 1;
     group.position.set(-30, 2.6, -150)
 }
-//Faz o movimento das rodas
-function moveRoda() {
-    /*var angleRoda = degreesToRadians(0.75);
-    if (pressionadoLeft) { // Gira para esquerda
-        if (group.children[11].rotateY() < 0.45) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }else{
-        if (group.children[11].rotateY() > 0) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }
-    
-    if (pressionadoRight) { // Gira para direita
-        if (group.children[11].rotateY() > -0.45) {
-            group.children[11].rotateY()
-        }
-    }else{
-        if (group.children[11].rotateY() < 0) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }*/
-}
 
 function pathAlreadyExists(number) {
     return path.some(n => { return n == number })
 }
 
+function pathAlreadyExists2(number) {
+    return path2.some(n => { return n == number })
+}
 function verifyPosition() {
     if (isPista == 1) {
 
@@ -253,53 +223,53 @@ function verifyPosition() {
         }
     }
     if (isPista == 2) {
-        if (group.position.z >= -170 && group.position.z <= -125
-            && group.position.x >= -171 && group.position.x <= 162) {
+        if (group.position.z >= -170 && group.position.z <= -120
+            && group.position.x >= -171 && group.position.x <= 170) {
             console.log("Pista2 - reta1")
             saiuPista2 = false;
-            if (!pathAlreadyExists(1)) {
-                path.push(1)
+            if (!pathAlreadyExists2(1)) {
+                path2.push(1)
             }
         }
 
-        if (group.position.z >= -125 && group.position.z <= 136
+        if (group.position.z >= -170 && group.position.z <= 25
             && group.position.x >= 133 && group.position.x <= 171) {
             console.log("Pista2 - reta2")
             saiuPista2 = false;
-            if (!pathAlreadyExists(2)) {
-                path.push(2)
+            if (!pathAlreadyExists2(2)) {
+                path2.push(2)
             }
         }
         else if (group.position.z >= -30 && group.position.z <= 30
             && group.position.x >= 30 && group.position.x <= 170) {
             console.log("Pista2 - reta3")
             saiuPista2 = false;
-            if (!pathAlreadyExists(3)) {
-                path.push(3)
+            if (!pathAlreadyExists2(3)) {
+                path2.push(3)
             }
         }
         else if (group.position.z >= -30 && group.position.z <= 170
             && group.position.x >= -30 && group.position.x <= 30) {
             console.log("Pista2 - reta4")
             saiuPista2 = false;
-            if (!pathAlreadyExists(4)) {
-                path.push(4)
+            if (!pathAlreadyExists2(4)) {
+                path2.push(4)
             }
         }
         else if (group.position.z >= 150 && group.position.z <= 170
             && group.position.x >= -170 && group.position.x <= 30) {
             console.log("Pista2 - reta5")
             saiuPista2 = false;
-            if (!pathAlreadyExists(5)) {
-                path.push(5)
+            if (!pathAlreadyExists2(5)) {
+                path2.push(5)
             }
         }
         else if (group.position.z >= -130 && group.position.z <= 136
             && group.position.x >= -171 && group.position.x <= -131) {
             console.log("Pista2 - reta6")
             saiuPista2 = false;
-            if (!pathAlreadyExists(6)) {
-                path.push(6)
+            if (!pathAlreadyExists2(6)) {
+                path2.push(6)
             }
         }
         else 
@@ -328,10 +298,10 @@ function checkVoltaPista1() {
 
 function checkVoltaPista2() {
     if (isPista == 2) {
-        if (path.length == 6) {
+        if (path2.length == 6) {
             volta++;
-            path = [];
-            console.log(path);
+            path2 = [];
+            console.log(path2);
             console.log(volta);
         }
 
@@ -397,7 +367,6 @@ function render() {
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
-        moveRoda();
     }
     else
         renderer.render(newScene, inspectionCamera) // Render scene
