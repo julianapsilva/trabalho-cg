@@ -73,7 +73,7 @@ var group = mountCar()
 scene.add(group)
 camera.position.set(97, 19, -91)
 render()
-
+console.log(group);
 var pressionadoLeft = false;
 var pressionadoRight = false;
 var group1 = mudaPista(scene, 1);
@@ -94,28 +94,15 @@ function keyboardUpdate() {
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
-        if(group.children[11].rotateY(.02) < 0.45 && group.children[12].rotateY(.02)< 0.45){
-            group.children[11].rotateY(.02);
-            group.children[12].rotateY(.02);
-        }else{
-            if (group.children[11].rotateY(.02) > 0 && group.children[12].rotateY(.02) > 0) {
-                group.children[11].rotateY(-.02);
-                group.children[12].rotateY(-.02)
-            }
-        }
+        group.children[11].rotateY(.03);
+        group.children[12].rotateY(.03);
+        
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
         group.rotateY(-angleCar);
-        if(group.children[11].rotateY(.02) > -0.45 && group.children[12].rotateY(.02) > -0.45){
-            group.children[11].rotateY(-.02);
-            group.children[12].rotateY(-.02);
-            }else{
-                if (group.children[11].rotateY(.02) < 0 && group.children[12].rotateY(.02) < 0) {
-                    group.children[11].rotateY(.02);
-                    group.children[12].rotateY(.02);
-                }
-            }
+        group.children[11].rotateY(-.03);
+        group.children[12].rotateY(-.03)
     }
     if (keyboard.pressed("2")) {
         position = 2;
@@ -162,40 +149,20 @@ function keyboardUpdate() {
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
+        group.children[11].rotateY(-.3);
+        group.children[12].rotateY(-.3);
         
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
+        group.children[11].rotateY(.3);
+        group.children[12].rotateY(.3);
     }
 }
 
 function restartCar(){
     position = 1;
     group.position.set(-30, 2.6, -150)
-}
-//Faz o movimento das rodas
-function moveRoda() {
-    /*var angleRoda = degreesToRadians(0.75);
-
-    if (pressionadoLeft) { // Gira para esquerda
-        if (group.children[11].rotateY() < 0.45) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }else{
-        if (group.children[11].rotateY() > 0) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }
-    
-    if (pressionadoRight) { // Gira para direita
-        if (group.children[11].rotateY() > -0.45) {
-            group.children[11].rotateY()
-        }
-    }else{
-        if (group.children[11].rotateY() < 0) {
-            group.children[11].rotateY(angleRoda)
-        }
-    }*/
 }
 
 function pathAlreadyExists(number) {
@@ -294,6 +261,9 @@ function showInformation() {
     controls.add("Up / Arrow to walk");
     controls.add("Left / Right arrow to turn");
     controls.add("Press 'A' to show/hide axes");
+    controls.add("Press '7' pista 1");
+    controls.add("Press '8' pista 2");
+
     controls.show();
 }
 
@@ -306,7 +276,6 @@ function render() {
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
-        moveRoda();
     }
     else
         renderer.render(newScene, inspectionCamera) // Render scene
