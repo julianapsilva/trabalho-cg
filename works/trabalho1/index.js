@@ -17,7 +17,6 @@ import {
 let currentPosition = new THREE.Vector3()
 let currentLookAt = new THREE.Vector3()
 let position = 1
-let saveCameraState
 let toggleCamera = true
 let path = []
 let path2 = []
@@ -27,12 +26,13 @@ let fim = false;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
-let velocidadeMaxima = 1.5;
-let velocidadeMinima = 0.75;
+let velocidadeMaxima = 1;
+let velocidadeMinima = 0.5;
 
 var clockTotal = new THREE.Clock();
 var clockVolta = new THREE.Clock();
 
+let acc = false
 
 var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
@@ -91,6 +91,8 @@ scene.add(group)
 camera.position.set(97, 19, -91)
 render()
 
+mudaPista(scene, 2);
+
 var pressionadoLeft = false;
 var pressionadoRight = false;
 var group1 = mudaPista(scene, 1);
@@ -100,9 +102,6 @@ function keyboardUpdate() {
 
     keyboard.update();
 
-
-    if (keyboard.down("A")) axesHelper.visible = !axesHelper.visible;
-
     if (keyboard.pressed("X")) {
         group.translateZ(velocidade);
         if (velocidade <= velocidadeMaxima)
@@ -111,6 +110,12 @@ function keyboardUpdate() {
             if (velocidade >= velocidadeMinima)
                 velocidade -= 0.02;
         }
+    }
+    if (keyboard.down("X")) {
+        acc = true
+    }
+    if (keyboard.up("X")) {
+        acc = false
     }
     if (keyboard.pressed("down")) {
         group.translateZ(-velocidade);
@@ -124,6 +129,7 @@ function keyboardUpdate() {
     }
     var angleCar = degreesToRadians(2);
 
+
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
         group.rotateY(angleCar);
@@ -136,20 +142,6 @@ function keyboardUpdate() {
         group.children[11].rotateY(-.02);
         group.children[12].rotateY(-.02);
     }
-    if (keyboard.pressed("2")) {
-        position = 2;
-    }
-
-    if (keyboard.pressed("3")) {
-        position = 3;
-    }
-
-    if (keyboard.pressed("4")) {
-        position = 4;
-    }
-    if (keyboard.pressed("1")) {
-        position = 1;
-    }
 
     if (keyboard.down("space")) {
         toggleCamera = !toggleCamera
@@ -159,12 +151,8 @@ function keyboardUpdate() {
             scene.visible = true
     }
 
-    if (keyboard.down("6")) {
-        console.log(group.position)
-    }
-
     // Muda o tipo de pista
-    if (keyboard.down("7")) {
+    if (keyboard.down("1")) {
         isPista = 1;
         clockTotal.start();
         clockVolta.start();
@@ -174,7 +162,7 @@ function keyboardUpdate() {
         group2.visible = false
         group1.visible = true
     }
-    if (keyboard.down("8")) {
+    if (keyboard.down("2")) {
         isPista = 2;
         clockTotal.start();
         clockVolta.start();
@@ -311,6 +299,71 @@ function verifyPosition() {
     }
 }
 
+function getIntersections() {
+    if (group.position.z >= -170 && group.position.z <= -125
+        && group.position.x >= 117 && group.position.x <= 162
+        && group.quaternion.w >= -1 && group.quaternion.w <= 1.01
+        && group.quaternion.y >= -0.18 && group.quaternion.y <= 0.13
+    ) {
+        position = 2
+    }
+
+    if (group.position.z >= 130 && group.position.z <= 160
+        && group.position.x >= -160 && group.position.x <= -120
+        && group.quaternion.w >= -0.23 && group.quaternion.w <= 0.42
+        && group.quaternion.y >= -0.98 && group.quaternion.y <= 1
+    ) {
+        position = 4
+    }
+
+    if (group.position.z >= -171 && group.position.z <= -138
+        && group.position.x >= -164 && group.position.x <= -120) {
+        position = 1
+    }
+
+    if (isPista == 1) {
+        if (group.position.z >= 134 && group.position.z <= 162
+            && group.position.x >= 130 && group.position.x <= 171
+            && group.quaternion.w <= 1 && group.quaternion.y >= -0.81
+        ) {
+            position = 3
+        }
+    }
+
+
+    if (isPista == 2) {
+        if (group.position.z >= -20 && group.position.z <= 23
+            && group.position.x >= 10 && group.position.x <= 26
+            && group.quaternion.w >= 0.81 && group.quaternion.w <= 0.98
+            && group.quaternion.y >= -0.57 && group.quaternion.y <= -0.18
+        ) {
+            position = 2
+        }
+
+
+        if (group.position.z >= -24 && group.position.z <= 8
+            && group.position.x >= 127 && group.position.x <= 162
+        ) {
+            position = 3
+        }
+
+        if (group.position.z >= 120 && group.position.z <= 154
+            && group.position.x >= -20 && group.position.x <= 17
+        ) {
+
+            position = 5
+        }
+    }
+
+    if (group.position.z >= -170 && group.position.z <= -125
+        && group.position.x >= -171 && group.position.x <= 162) {
+        if (group.position.x >= 73 && group.position.x <= 87
+            && group.position.z >= -171 && group.position.z <= -132)
+            position = 1
+
+    }
+}
+
 function checkVoltaPista1() {
     if (isPista == 1) {
         if (path.length == 4) {
@@ -378,12 +431,13 @@ function render() {
     stats.update(); // Update FPS
     trackballControls.update();
     keyboardUpdate();
-    handleCamera(position, camera, group, currentPosition, currentLookAt);
     verifyPosition();
+    getIntersections();
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
+    handleCamera(position, camera, group, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
