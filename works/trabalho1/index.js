@@ -202,7 +202,6 @@ function verifyPosition() {
 
         if (group.position.z >= -170 && group.position.z <= -125
             && group.position.x >= -171 && group.position.x <= 162) {
-            console.log("Pista1 - reta1")
             saiuPista1 = false;
             if (!pathAlreadyExists(1)) {
                 path.push(1)
@@ -211,7 +210,6 @@ function verifyPosition() {
 
         else if (group.position.z >= -125 && group.position.z <= 136
             && group.position.x >= 133 && group.position.x <= 171) {
-            console.log("Pista1 - reta2")
             saiuPista1 = false;
             if (!pathAlreadyExists(2)) {
                 path.push(2)
@@ -220,7 +218,6 @@ function verifyPosition() {
 
         else if (group.position.z >= 130 && group.position.z <= 170
             && group.position.x >= -138 && group.position.x <= 125) {
-            console.log("Pista1 - reta3")
             saiuPista1 = false;
             if (!pathAlreadyExists(3)) {
                 path.push(3)
@@ -229,7 +226,6 @@ function verifyPosition() {
 
         else if (group.position.z >= -130 && group.position.z <= 136
             && group.position.x >= -171 && group.position.x <= -131) {
-            console.log("Pista1 - reta4")
             saiuPista1 = false;
             if (!pathAlreadyExists(4)) {
                 path.push(4)
@@ -237,13 +233,11 @@ function verifyPosition() {
         }
         else {
             saiuPista1 = true;
-            console.log("saiu");
         }
     }
     if (isPista == 2) {
         if (group.position.z >= -170 && group.position.z <= -120
             && group.position.x >= -171 && group.position.x <= 170) {
-            console.log("Pista2 - reta1")
             saiuPista2 = false;
             if (!pathAlreadyExists2(1)) {
                 path2.push(1)
@@ -252,7 +246,6 @@ function verifyPosition() {
 
         else if (group.position.z >= -170 && group.position.z <= 25
             && group.position.x >= 133 && group.position.x <= 171) {
-            console.log("Pista2 - reta2")
             saiuPista2 = false;
             if (!pathAlreadyExists2(2)) {
                 path2.push(2)
@@ -260,7 +253,6 @@ function verifyPosition() {
         }
         else if (group.position.z >= -30 && group.position.z <= 30
             && group.position.x >= 30 && group.position.x <= 170) {
-            console.log("Pista2 - reta3")
             saiuPista2 = false;
             if (!pathAlreadyExists2(3)) {
                 path2.push(3)
@@ -268,7 +260,6 @@ function verifyPosition() {
         }
         else if (group.position.z >= -30 && group.position.z <= 170
             && group.position.x >= -30 && group.position.x <= 30) {
-            console.log("Pista2 - reta4")
             saiuPista2 = false;
             if (!pathAlreadyExists2(4)) {
                 path2.push(4)
@@ -276,9 +267,6 @@ function verifyPosition() {
         }
         else if (group.position.z >= 140 && group.position.z <= 170
             && group.position.x >= -170 && group.position.x <= 30) {
-            console.log("Pista2 - reta5")
-            console.log(group.position.z, "z");
-            console.log(group.position.x, "x");
             saiuPista2 = false;
             if (!pathAlreadyExists2(5)) {
                 path2.push(5)
@@ -286,7 +274,6 @@ function verifyPosition() {
         }
         else if (group.position.z >= -130 && group.position.z <= 136
             && group.position.x >= -171 && group.position.x <= -131) {
-            console.log("Pista2 - reta6")
             saiuPista2 = false;
             if (!pathAlreadyExists2(6)) {
                 path2.push(6)
@@ -294,7 +281,6 @@ function verifyPosition() {
         }
         else {
             saiuPista2 = true;
-            console.log("saiu");
         }
     }
 }
@@ -370,14 +356,11 @@ function checkVoltaPista1() {
             volta++;
             path = [];
             clockVolta.getElapsedTime()
-            console.log(clockVolta);
         }
 
         if (volta == 4 && checkStartPosition()) {
-            console.log("fim");
             clockTotal.stop;
             clockTotal.getElapsedTime();
-            console.log(clockTotal);
         }
     }
 }
@@ -388,16 +371,12 @@ function checkVoltaPista2() {
             volta++;
             path2 = [];
             clockVolta.getElapsedTime();
-            console.log(clockVolta);
         }
 
         if (volta == 4 && checkStartPosition()) {
-            console.log("fim");
             clockTotal.stop;
             velocidade = 0;
             clockTotal.getElapsedTime();
-            console.log(clockTotal);
-
         }
     }
 }
