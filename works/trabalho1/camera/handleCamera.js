@@ -4,7 +4,6 @@ let a = -25, b = -20, c = 15
 let d = 30, e = -20
 let f = -15, g = 5, h = 20, m = 12
 let n = -5, o = 0
-let zoom = 1
 let zoom2 = 0.5
 
 
@@ -17,7 +16,6 @@ export default function handleCamera(position, camera, group, currentPosition, c
 
     switch (position) {
         case 1:
-            console.log("POSICAO 1")
             if (acc) {
                 if (i >= -25) i -= 0.2;
 
@@ -36,7 +34,6 @@ export default function handleCamera(position, camera, group, currentPosition, c
 
             break;
         case 2:
-            // console.log("POSICAO 2")
             f = -15, g = 5, h = 20, m = 12
             if (acc) {
                 if (a <= -15) a += 0.03
@@ -48,22 +45,17 @@ export default function handleCamera(position, camera, group, currentPosition, c
                 if (c > 5) c -= 0.045
             }
 
-            // console.log('zoom2', zoom2)
-            // console.log('a', a, 'b', b, 'c', c)
-
             idealPosition = new THREE.Vector3(a, 10, b)
             lookAt = new THREE.Vector3(c, -5, 5)
             camera.zoom = zoom2
             break;
         case 3:
-            console.log("POSICAO 3")
             a = -25, b = -20, c = 15
             zoom2 = 0.5
 
             if (acc) {
 
                 if (pista == 1) {
-                    console.log('ESTA NA PISTA 1')
                     if (f < 20) f += 0.09
 
                     if (g > -20) g -= 0.05
@@ -72,10 +64,8 @@ export default function handleCamera(position, camera, group, currentPosition, c
 
                     if (m > 0) m -= 0.01
 
-                    console.log('chegar em 20', f, 'chegar em 30', h, 'chegar em -20', g, 'chegar em 0', m)
                 }
                 else {
-                    console.log("POSICAO 3 INDO PRA 2")
 
                     if (f > -25) f -= 0.045
 
@@ -84,7 +74,6 @@ export default function handleCamera(position, camera, group, currentPosition, c
                     if (h > -20) h -= 0.25
 
                     if (m > 5) m -= 0.035
-                    console.log('chegar em -25', f, 'chegar em -20', h, 'chegar em 15', g, 'chegar em 5', m)
                 }
 
             }
@@ -104,20 +93,14 @@ export default function handleCamera(position, camera, group, currentPosition, c
                 if (n < 7) n += 0.027
 
                 if (o > -10) o -= 0.022
-                if(camera.zoom < 0.6 ) camera.zoom += 0.0006
-                console.log(camera.zoom)
+                if (camera.zoom < 0.6) camera.zoom += 0.0006
             }
-
-            // console.log('chegar em -30', d, 'chegar em 10', e, 'chegar em 7', n, 'chegar em -10', o)
 
             idealPosition = new THREE.Vector3(20, 9, d)
             lookAt = new THREE.Vector3(e, n, o)
-            // camera.zoom = 0.7
             break;
 
         case 5:         // posicao 3 adaptada para pista 2
-            console.log('POSICAO 5')
-
             a = -25, b = -20, c = 15
             zoom2 = 0.5
 
