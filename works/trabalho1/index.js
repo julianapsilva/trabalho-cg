@@ -187,13 +187,13 @@ function keyboardUpdate() {
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
         pressionadoLeft = false;
-        group.children[11].rotateY(-.02);
-        group.children[12].rotateY(-.02);
+        group.children[11].rotateY(-.5);
+        group.children[12].rotateY(-.5);
     }
     if (keyboard.up("right")) {
         pressionadoRight = false;
-        group.children[11].rotateY(.02);
-        group.children[12].rotateY(.02);
+        group.children[11].rotateY(.5);
+        group.children[12].rotateY(.5);
     }
 }
 
