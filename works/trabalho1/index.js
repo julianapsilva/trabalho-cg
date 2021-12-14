@@ -22,7 +22,6 @@ let path = []
 let path2 = []
 var isPista;
 let volta = 0;
-let fim = false;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
@@ -352,14 +351,16 @@ function getIntersections() {
 
 function checkVoltaPista1() {
     if (isPista == 1) {
-        if (path.length == 4) {
+        if (path.length == 4 && checkStartPosition()) {
             volta++;
             path = [];
-            clockVolta.getElapsedTime()
+            clockVolta.stop();
+            clockVolta.getElapsedTime();
+            clockVolta.start();
         }
 
         if (volta == 4 && checkStartPosition()) {
-            clockTotal.stop;
+            clockTotal.stop();
             clockTotal.getElapsedTime();
         }
     }
@@ -367,14 +368,17 @@ function checkVoltaPista1() {
 
 function checkVoltaPista2() {
     if (isPista == 2) {
-        if (path2.length == 6) {
+        if (path2.length == 6 && checkStartPosition()) {
             volta++;
             path2 = [];
+            clockVolta.stop();
             clockVolta.getElapsedTime();
+            clockVolta.start();
+            
         }
 
         if (volta == 4 && checkStartPosition()) {
-            clockTotal.stop;
+            clockTotal.stop();
             velocidade = 0;
             clockTotal.getElapsedTime();
         }
@@ -399,7 +403,7 @@ function showInformation() {
     controls.addParagraph();
     controls.add("Use o mouse para controlar camera");
     controls.add("X / Acelera");
-    controls.add("Left / Right curvas");
+    controls.add("<- / -> curvas");
     controls.add("Pressione 'A' para exibir ou esconder Axis");
     controls.add(" 1 / 2 - Pista 1 / Pista 2");
     controls.show();
