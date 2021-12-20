@@ -106,8 +106,8 @@ function keyboardUpdate() {
         if (velocidade <= velocidadeMaxima)
             velocidade += 0.01;
         if (saiuPista1 || saiuPista2) {
-            if (velocidade >= velocidadeMinima)
-                velocidade -= 0.02;
+            // if (velocidade >= velocidadeMinima)
+            //     velocidade -= 0.02;
         }
     }
     if (keyboard.down("X")) {
@@ -131,15 +131,19 @@ function keyboardUpdate() {
 
     if (keyboard.pressed("left")) {
         pressionadoLeft = true;
-        group.rotateY(angleCar);
-        group.children[11].rotateY(.02);
-        group.children[12].rotateY(.02);
+        if(acc == true){
+            group.rotateY(angleCar);
+            group.children[11].rotateY(.02);
+            group.children[12].rotateY(.02);
+        }
     }
     if (keyboard.pressed("right")) {
         pressionadoRight = true;
-        group.rotateY(-angleCar);
-        group.children[11].rotateY(-.02);
-        group.children[12].rotateY(-.02);
+        if(acc == true){
+            group.rotateY(-angleCar);
+            group.children[11].rotateY(-.02);
+            group.children[12].rotateY(-.02);
+        }
     }
 
     if (keyboard.down("space")) {
@@ -173,20 +177,24 @@ function keyboardUpdate() {
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
-        pressionadoLeft = false;
-        group.children[11].rotateY(-.5);
-        group.children[12].rotateY(-.5);
+        if(acc == true){
+            pressionadoLeft = false;
+            group.children[11].rotateY(-.5);
+            group.children[12].rotateY(-.5);
+        }
     }
     if (keyboard.up("right")) {
-        pressionadoRight = false;
-        group.children[11].rotateY(.5);
-        group.children[12].rotateY(.5);
+        if(acc == true){
+            pressionadoRight = false;
+            group.children[11].rotateY(.5);
+            group.children[12].rotateY(.5);
+        }
     }
 }
 
 function restartCar() {
     position = 1;
-    group.position.set(-30, 2.6, -150)
+    group.position.set(-100, 2.6, -600)
 }
 
 function pathAlreadyExists(number) {

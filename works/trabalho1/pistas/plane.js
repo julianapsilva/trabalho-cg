@@ -5,7 +5,7 @@ import {
 } from "../../../libs/util/util.js"
 
 export default function createPlane(scene) {
-    var planeGeometry = new THREE.PlaneGeometry(360, 360);
+    var planeGeometry = new THREE.PlaneGeometry(1440, 1440);
     // planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
     var planeMaterial = new THREE.MeshBasicMaterial({
         color: 'rgb(211, 154, 8)',

@@ -107,7 +107,7 @@ export default function mountCar() {
 
     group.translateY(2.6)
     group.rotateY(degreesToRadians(90))
-    group.position.set(-30, 2.6, -150)
+    group.position.set(-100, 2.6, -600)
     return group
 
     function createCylinder(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, color) {

@@ -7,12 +7,12 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
-        for (let i = -150; i < 151; i += 30) {
-            for (let j = -150; j < 151; j += 30) {
-                if (i == -150 || i == 150 || j == -150 || j == 150) {
+        for (let i = -600; i < 602; i += 100) {
+            for (let j = -600; j < 602; j += 100) {
+                if (i == -600 || i == 600 || j == -600 || j == 600) {
                     group.add(blocoComum(i, j));
                 }
-                if (i == -30 && j == -150) {
+                if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
                 }
             }
@@ -20,13 +20,13 @@ export default function mudaPista(scene, isPista) {
     }
     //Pista 2
     if (isPista == 2) {
-        for (let i = -150; i < 151; i += 30) {
-            for (let j = -150; j < 151; j += 30) {
-                if (j == -150) // reta 1
+        for (let i = -600; i < 601; i += 100) {
+            for (let j = -600; j < 601; j += 100) {
+                if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
                 }
-                if (i == 150 && j <= 0) // reta 2
+                if (i == 600 && j <= 0) // reta 2
                 {
                     group.add(blocoComum(i, j));
                 }
@@ -38,15 +38,15 @@ export default function mudaPista(scene, isPista) {
                 {
                     group.add(blocoComum(i, j));
                 }
-                if (j == 150 && i <= 0) // reta 5
+                if (j == 600 && i <= 0) // reta 5
                 {
                     group.add(blocoComum(i, j));
                 }
-                if (i == -150) // reta 6
+                if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
                 }
-                if (i == -30 && j == -150) {
+                if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
                 }
             }
@@ -55,7 +55,7 @@ export default function mudaPista(scene, isPista) {
     }
   return group;
     function blocoComum(x, z) {
-        var cubeGeometry = new THREE.BoxGeometry(50, 0.3, 50);
+        var cubeGeometry = new THREE.BoxGeometry(99.75, 0.3, 99.75);
         var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
         var cube;
 
@@ -64,7 +64,7 @@ export default function mudaPista(scene, isPista) {
         return cube;
     }
     function blocoInicio(x, z) {
-        var cubeGeometry = new THREE.BoxGeometry(50, 0.4, 50);
+        var cubeGeometry = new THREE.BoxGeometry(99.75, 0.4, 99.75);
         var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
         var cube;
 
