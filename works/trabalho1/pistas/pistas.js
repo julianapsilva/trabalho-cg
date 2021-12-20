@@ -96,6 +96,56 @@ export default function mudaPista(scene, isPista) {
         }
 
     }
+    if (isPista == 4) {
+        for (let i = -600; i < 601; i += 100) {
+            for (let j = -600; j < 601; j += 100) {
+                if (j == -600 && i>=300) // reta 1
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j <= -300 && i==600) // reta 2
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j == -300 && i>=400) // reta 3
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j <= 0 && i==300) // reta 4
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j == -300 && i>=-100 && i <=200) // reta 5
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j == 0 && i>=-100 && i <=200) // reta 5
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (i == -100 && j>=-200) // reta 2/4
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (i <= -100 && j == 600) // reta 6
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (i <= -100 && j == 0) // reta 6
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (j >= 0 && i == -600) // reta 2
+                {
+                    group.add(blocoComum(i, j));
+                }
+                if (i == -600 && j == 300) {
+                    group.add(blocoInicio(i, j));
+                }
+            }
+        }
+
+    }
   return group;
     function blocoComum(x, z) {
         var cubeGeometry = new THREE.BoxGeometry(99.75, 0.3, 99.75);

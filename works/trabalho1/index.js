@@ -167,6 +167,7 @@ function keyboardUpdate() {
         group1.visible = true
         group2.visible = false
         group3.visible = false
+        group4.visible = false
     }
     if (keyboard.down("2")) {
         isPista = 2;
@@ -178,6 +179,7 @@ function keyboardUpdate() {
         group1.visible = false
         group2.visible = true
         group3.visible = false
+        group4.visible = false
     }
     if (keyboard.down("3")) {
         isPista = 3;
@@ -189,6 +191,19 @@ function keyboardUpdate() {
         group1.visible = false
         group2.visible = false
         group3.visible = true
+        group4.visible = false
+    }
+    if (keyboard.down("4")) {
+        isPista = 4;
+        clockTotal.start();
+        clockVolta.start();
+
+        restartCar(4)
+        scene.add(group4);
+        group1.visible = false
+        group2.visible = false
+        group3.visible = false
+        group4.visible = true
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
@@ -211,6 +226,8 @@ function restartCar(direcao) {
     position = 1;
     if(direcao == 3){
         group.position.set(100, 2.6, -600)
+    }if(direcao == 4){
+        group.position.set(-600, 2.6, 300)
     }else{
     group.position.set(-100, 2.6, -600)
     }
