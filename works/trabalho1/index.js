@@ -96,6 +96,8 @@ var pressionadoLeft = false;
 var pressionadoRight = false;
 var group1 = mudaPista(scene, 1);
 var group2 = mudaPista(scene, 2);
+var group3 = mudaPista(scene, 3);
+var group4 = mudaPista(scene, 4);
 
 function keyboardUpdate() {
 
@@ -162,8 +164,9 @@ function keyboardUpdate() {
 
         restartCar()
         scene.add(group1);
-        group2.visible = false
         group1.visible = true
+        group2.visible = false
+        group3.visible = false
     }
     if (keyboard.down("2")) {
         isPista = 2;
@@ -174,6 +177,18 @@ function keyboardUpdate() {
         scene.add(group2);
         group1.visible = false
         group2.visible = true
+        group3.visible = false
+    }
+    if (keyboard.down("3")) {
+        isPista = 3;
+        clockTotal.start();
+        clockVolta.start();
+
+        restartCar(3)
+        scene.add(group3);
+        group1.visible = false
+        group2.visible = false
+        group3.visible = true
     }
     // Guarda a mudança de estado das teclas
     if (keyboard.up("left")) {
@@ -192,9 +207,13 @@ function keyboardUpdate() {
     }
 }
 
-function restartCar() {
+function restartCar(direcao) {
     position = 1;
+    if(direcao == 3){
+        group.position.set(100, 2.6, -600)
+    }else{
     group.position.set(-100, 2.6, -600)
+    }
 }
 
 function pathAlreadyExists(number) {
