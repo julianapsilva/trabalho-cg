@@ -25,7 +25,7 @@ let volta = 0;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
-let velocidadeMaxima = 1;
+let velocidadeMaxima = 3;
 let velocidadeMinima = 0.5;
 
 var clockTotal = new THREE.Clock();
@@ -224,9 +224,10 @@ function keyboardUpdate() {
 
 function restartCar(direcao) {
     position = 1;
+
     if(direcao == 3){
         group.position.set(100, 2.6, -600)
-    }if(direcao == 4){
+    }else if(direcao == 4){
         group.position.set(-600, 2.6, 300)
     }else{
     group.position.set(-100, 2.6, -600)
