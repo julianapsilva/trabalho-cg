@@ -20,6 +20,7 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
             else {
                 tesla.position.set(0, -3, 0)
                 tesla = normalizeAndRescale(tesla, 20);
+                tesla.rotateY(degreesToRadians(90))
             }
             resolve(tesla)
         }, onProgress, reject);
