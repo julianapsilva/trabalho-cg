@@ -182,7 +182,7 @@ function keyboardUpdate() {
     }
 
     if (keyboard.pressed("left")) {
-        if (wheels[0].rotation.y > -0.48) {
+        if (wheels[0].rotation.y > -0.45) {
             wheels[0].rotateX(0.01)
             wheels[1].rotateX(0.01)
             wheels[2].rotateX(0.01)
@@ -190,7 +190,7 @@ function keyboardUpdate() {
         }
     }
     if (keyboard.pressed("right")) {
-        if (wheels[0].rotation.y < 0.47999) {
+        if (wheels[0].rotation.y < 0.45) {
             wheels[0].rotateX(-0.01)
             wheels[1].rotateX(-0.01)
             wheels[2].rotateX(-0.01)
@@ -224,7 +224,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(2);
+        var angleCar = degreesToRadians(1);
 
 
         if (keyboard.pressed("left")) {
