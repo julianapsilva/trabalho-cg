@@ -99,38 +99,34 @@ var group3 = mudaPista(scene, 3);
 var group4 = mudaPista(scene, 4);
 
 
-let wheelsInsp = inspectionTesla.children[0].children[0].children[0].children[0]
-
+let wheelsInsp = inspectionTesla.children[0].children[0].children[0].children[0].children.slice(11,15)
 let inspQuaternion1 = new THREE.Quaternion();
 let inspQuaternion2 = new THREE.Quaternion();
 let inspQuaternion3 = new THREE.Quaternion();
 let inspQuaternion4 = new THREE.Quaternion();
 
-
-inspQuaternion1.copy(wheelsInsp.children[11].quaternion)
-inspQuaternion2.copy(wheelsInsp.children[12].quaternion)
-inspQuaternion3.copy(wheelsInsp.children[13].quaternion)
-inspQuaternion4.copy(wheelsInsp.children[14].quaternion)
-
+inspQuaternion1.copy(wheelsInsp[0].quaternion)
+inspQuaternion2.copy(wheelsInsp[1].quaternion)
+inspQuaternion3.copy(wheelsInsp[2].quaternion)
+inspQuaternion4.copy(wheelsInsp[3].quaternion)
 
 
-let wheels = tesla.children[0].children[0].children[0].children[0]
-
+let wheels = tesla.children[0].children[0].children[0].children[0].children.slice(11,15)
 let teslaQuaternion1 = new THREE.Quaternion();
 let teslaQuaternion2 = new THREE.Quaternion();
 let teslaQuaternion3 = new THREE.Quaternion();
 let teslaQuaternion4 = new THREE.Quaternion();
 
-
-teslaQuaternion1.copy(wheels.children[11].quaternion)
-teslaQuaternion2.copy(wheels.children[12].quaternion)
-teslaQuaternion3.copy(wheels.children[13].quaternion)
-teslaQuaternion4.copy(wheels.children[14].quaternion)
+teslaQuaternion1.copy(wheels[0].quaternion)
+teslaQuaternion2.copy(wheels[1].quaternion)
+teslaQuaternion3.copy(wheels[2].quaternion)
+teslaQuaternion4.copy(wheels[3].quaternion)
 
 
 
 
 function keyboardUpdate() {
+    let wheels = car.children[0].children[0].children[0].children[0].children.slice(11,15)
 
     keyboard.update();
 
@@ -149,40 +145,56 @@ function keyboardUpdate() {
     }
 
     if (keyboard.up("left") || keyboard.up("right")) {
-        inspQuaternion1.copy(wheels.children[11].quaternion)
-        inspQuaternion2.copy(wheels.children[12].quaternion)
-        inspQuaternion3.copy(wheels.children[13].quaternion)
-        inspQuaternion4.copy(wheels.children[14].quaternion)
+        if (!toggleCamera) {
+            inspQuaternion1.copy(wheels[0].quaternion)
+            inspQuaternion2.copy(wheels[1].quaternion)
+            inspQuaternion3.copy(wheels[2].quaternion)
+            inspQuaternion4.copy(wheels[3].quaternion)
+        }
+        else {
+            teslaQuaternion1.copy(wheels[0].quaternion)
+            teslaQuaternion2.copy(wheels[1].quaternion)
+            teslaQuaternion3.copy(wheels[2].quaternion)
+            teslaQuaternion4.copy(wheels[3].quaternion)
+        }
     }
 
     if (keyboard.down("left") || keyboard.down("right")) {
-        wheels.children[11].quaternion.copy(inspQuaternion1)
-        wheels.children[12].quaternion.copy(inspQuaternion2)
-        wheels.children[13].quaternion.copy(inspQuaternion3)
-        wheels.children[14].quaternion.copy(inspQuaternion4)
+        if (!toggleCamera) {
+            wheels[0].quaternion.copy(inspQuaternion1)
+            wheels[1].quaternion.copy(inspQuaternion2)
+            wheels[2].quaternion.copy(inspQuaternion3)
+            wheels[3].quaternion.copy(inspQuaternion4)
+        }
+        else {
+            wheels[0].quaternion.copy(teslaQuaternion1)
+            wheels[1].quaternion.copy(teslaQuaternion2)
+            wheels[2].quaternion.copy(teslaQuaternion3)
+            wheels[3].quaternion.copy(teslaQuaternion4)
+        }
     }
 
     if (keyboard.pressed("X")) {
-        wheels.children[11].rotateY(-75)
-        wheels.children[12].rotateY(-75)
-        wheels.children[13].rotateY(75)
-        wheels.children[14].rotateY(75)
+        wheels[0].rotateY(-75)
+        wheels[1].rotateY(-75)
+        wheels[2].rotateY(75)
+        wheels[3].rotateY(75)
     }
 
     if (keyboard.pressed("left")) {
-        if (wheels.children[11].rotation.y > -0.48) {
-            wheels.children[11].rotateX(0.01)
-            wheels.children[12].rotateX(0.01)
-            wheels.children[13].rotateX(0.01)
-            wheels.children[14].rotateX(0.01)
+        if (wheels[0].rotation.y > -0.48) {
+            wheels[0].rotateX(0.01)
+            wheels[1].rotateX(0.01)
+            wheels[2].rotateX(0.01)
+            wheels[3].rotateX(0.01)
         }
     }
     if (keyboard.pressed("right")) {
-        if (wheels.children[11].rotation.y < 0.47999) {
-            wheels.children[11].rotateX(-0.01)
-            wheels.children[12].rotateX(-0.01)
-            wheels.children[13].rotateX(-0.01)
-            wheels.children[14].rotateX(-0.01)
+        if (wheels[0].rotation.y < 0.47999) {
+            wheels[0].rotateX(-0.01)
+            wheels[1].rotateX(-0.01)
+            wheels[2].rotateX(-0.01)
+            wheels[3].rotateX(-0.01)
         }
     }
 
