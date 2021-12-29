@@ -175,10 +175,10 @@ function keyboardUpdate() {
     }
 
     if (keyboard.pressed("X")) {
-        wheels[0].rotateY(-75)
-        wheels[1].rotateY(-75)
-        wheels[2].rotateY(75)
-        wheels[3].rotateY(75)
+        wheels[0].rotateY(75)
+        wheels[1].rotateY(75)
+        wheels[2].rotateY(-75)
+        wheels[3].rotateY(-75)
     }
 
     if (keyboard.pressed("left")) {
