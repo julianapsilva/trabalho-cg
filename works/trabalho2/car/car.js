@@ -36,7 +36,6 @@ function onProgress(xhr, model) {
 
 function normalizeAndRescale(obj, newScale) {
     var scale = getMaxSize(obj); // Available in 'utils.js'
-    console.log(scale)
     obj.scale.set(newScale * (1.0 / scale),
         newScale * (1.0 / scale),
         newScale * (1.0 / scale));
