@@ -26,8 +26,8 @@ let volta = 0;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
-let velocidadeMaxima = 2;
-let velocidadeMinima = 0.5;
+let velocidadeMaxima = 3;
+let velocidadeMinima = 1.5;
 let tesla
 
 var clockTotal = new THREE.Clock();
@@ -43,12 +43,17 @@ renderer.setClearColor("rgb(30, 30, 40)");
 tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
 
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.lookAt(0, 0, 0);
-camera.up.set(0, 1, 0);
-camera.position.set(97, 19, -91)
-scene.add(camera)
+var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(7, 5, -7);
+camera.lookAt(scene.position);
+
+var cameraHolder = new THREE.Object3D();
+
+// adicionar o objeto ao carro
+tesla.add(cameraHolder)
 scene.add(tesla)
+cameraHolder.add(camera)
+
 
 var newScene = new THREE.Scene();
 var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -58,8 +63,13 @@ inspectionCamera.position.set(37, 0, 0)
 let inspectionTesla = await loadGLTFFile('car/', 'scene.gltf', 'inspection');
 newScene.add(inspectionTesla)
 
+
+
 var trackballControls = new TrackballControls(inspectionCamera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(inspectionCamera, renderer) }, false);
+
+// var trackballControls1 = new TrackballControls(camera, renderer.domElement);
+// window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
 var lightNewscene = initDefaultSpotlight(newScene, inspectionCamera.position); // Use default light
@@ -70,7 +80,6 @@ camera.add(light)
 light.target = camera;
 
 lightNewscene.intensity = 6
-
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
@@ -99,36 +108,31 @@ var group3 = mudaPista(scene, 3);
 var group4 = mudaPista(scene, 4);
 
 
-let wheelsInsp = inspectionTesla.children[0].children[0].children[0].children[0].children.slice(11,15)
+let wheelsInsp = inspectionTesla.children[0].children[0].children[0].children[0].children.slice(11, 15)
 let inspQuaternion1 = new THREE.Quaternion();
-let inspQuaternion2 = new THREE.Quaternion();
 let inspQuaternion3 = new THREE.Quaternion();
-let inspQuaternion4 = new THREE.Quaternion();
 
 inspQuaternion1.copy(wheelsInsp[0].quaternion)
-inspQuaternion2.copy(wheelsInsp[1].quaternion)
 inspQuaternion3.copy(wheelsInsp[2].quaternion)
-inspQuaternion4.copy(wheelsInsp[3].quaternion)
 
-
-let wheels = tesla.children[0].children[0].children[0].children[0].children.slice(11,15)
+let wheels = tesla.children[0].children[0].children[0].children[0].children.slice(11, 15)
 let teslaQuaternion1 = new THREE.Quaternion();
-let teslaQuaternion2 = new THREE.Quaternion();
 let teslaQuaternion3 = new THREE.Quaternion();
-let teslaQuaternion4 = new THREE.Quaternion();
 
 teslaQuaternion1.copy(wheels[0].quaternion)
-teslaQuaternion2.copy(wheels[1].quaternion)
 teslaQuaternion3.copy(wheels[2].quaternion)
-teslaQuaternion4.copy(wheels[3].quaternion)
-
 
 
 
 function keyboardUpdate() {
-    let wheels = car.children[0].children[0].children[0].children[0].children.slice(11,15)
+    let wheels = car.children[0].children[0].children[0].children[0].children.slice(11, 15)
 
     keyboard.update();
+
+    if (keyboard.up("8")) {
+        console.log(tesla.position)
+        console.log('camera', camera)
+    }
 
     if (keyboard.down("space")) {
         toggleCamera = !toggleCamera
@@ -147,30 +151,22 @@ function keyboardUpdate() {
     if (keyboard.up("left") || keyboard.up("right")) {
         if (!toggleCamera) {
             inspQuaternion1.copy(wheels[0].quaternion)
-            inspQuaternion2.copy(wheels[1].quaternion)
             inspQuaternion3.copy(wheels[2].quaternion)
-            inspQuaternion4.copy(wheels[3].quaternion)
         }
         else {
             teslaQuaternion1.copy(wheels[0].quaternion)
-            teslaQuaternion2.copy(wheels[1].quaternion)
             teslaQuaternion3.copy(wheels[2].quaternion)
-            teslaQuaternion4.copy(wheels[3].quaternion)
         }
     }
 
     if (keyboard.down("left") || keyboard.down("right")) {
         if (!toggleCamera) {
             wheels[0].quaternion.copy(inspQuaternion1)
-            wheels[1].quaternion.copy(inspQuaternion2)
             wheels[2].quaternion.copy(inspQuaternion3)
-            wheels[3].quaternion.copy(inspQuaternion4)
         }
         else {
             wheels[0].quaternion.copy(teslaQuaternion1)
-            wheels[1].quaternion.copy(teslaQuaternion2)
             wheels[2].quaternion.copy(teslaQuaternion3)
-            wheels[3].quaternion.copy(teslaQuaternion4)
         }
     }
 
@@ -182,19 +178,15 @@ function keyboardUpdate() {
     }
 
     if (keyboard.pressed("left")) {
-        if (wheels[0].rotation.y > -0.45) {
-            wheels[0].rotateX(0.01)
-            wheels[1].rotateX(0.01)
-            wheels[2].rotateX(0.01)
-            wheels[3].rotateX(0.01)
+        if (wheels[0].rotation.y < 0.24) {
+            wheels[0].rotateX(-0.01)
+            wheels[2].rotateX(-0.01)
         }
     }
     if (keyboard.pressed("right")) {
-        if (wheels[0].rotation.y < 0.45) {
-            wheels[0].rotateX(-0.01)
-            wheels[1].rotateX(-0.01)
-            wheels[2].rotateX(-0.01)
-            wheels[3].rotateX(-0.01)
+        if (wheels[0].rotation.y > -0.49) {
+            wheels[0].rotateX(0.01)
+            wheels[2].rotateX(0.01)
         }
     }
 
@@ -481,13 +473,15 @@ render()
 function render() {
     stats.update(); // Update FPS
     trackballControls.update();
+    // trackballControls1.update()
     keyboardUpdate();
     verifyPosition();
+    handleCamera(camera, tesla, isPista);
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
-    handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
+    // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene

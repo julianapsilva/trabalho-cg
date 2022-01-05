@@ -1,4 +1,3 @@
-import * as THREE from '../../../build/three.module.js';
 import { GLTFLoader } from '../../../build/jsm/loaders/GLTFLoader.js'
 import {
     degreesToRadians,
@@ -13,7 +12,7 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
         loader.load(modelPath + modelName, function (gltf) {
             let tesla = gltf.scene;
             if (!mode) {
-                tesla.position.set(-120, 2.6, -600)
+                // tesla.position.set(-120, 1, -600)
                 tesla = normalizeAndRescale(tesla, 20);
                 tesla.rotateY(degreesToRadians(90))
             }
