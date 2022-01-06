@@ -13,6 +13,33 @@ export default function mudaPista(scene, isPista) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
                     group.add(blocoComum(i, j));
+                    var rampa1 = rampa(600, -200);
+                    rampa1.translateZ(25)
+                    rampa1.translateY(-8)
+                    rampa1.rotateX(degreesToRadians(345))
+                    rampa1.rotateY(degreesToRadians(90))
+                    group.add(rampa1);
+
+                    var rampa2 = rampa(250, 600);
+                    rampa2.translateZ(0)
+                    rampa2.translateY(-8)
+                    rampa2.rotateZ(degreesToRadians(345))
+                    rampa2.rotateY(degreesToRadians(180))
+                    group.add(rampa2); 
+                    
+                    var rampa3 = rampa(-200, 600);
+                    rampa3.translateZ(0)
+                    rampa3.translateY(-8)
+                    rampa3.rotateZ(degreesToRadians(345))
+                    rampa3.rotateY(degreesToRadians(180))
+                    group.add(rampa3); 
+
+                    var rampa4 = rampa(-600, 0);
+                    rampa4.translateZ(25)
+                    rampa4.translateY(-9)
+                    rampa4.rotateX(degreesToRadians(25))
+                    rampa4.rotateY(degreesToRadians(90))
+                    group.add(rampa4); 
                 }
                 if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
