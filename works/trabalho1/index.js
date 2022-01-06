@@ -116,7 +116,7 @@ function keyboardUpdate() {
         acc = true
     }
     if (keyboard.up("X")) {
-        acc = false
+        // acc = false
     }
     if (keyboard.pressed("down")) {
         group.translateZ(-velocidade);
@@ -465,7 +465,7 @@ function render() {
     checkVoltaPista2();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
-    handleCamera(position, camera, group, currentPosition, currentLookAt, acc, isPista);
+    handleCamera(camera, group, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene

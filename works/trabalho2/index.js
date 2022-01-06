@@ -6,17 +6,17 @@ import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
-import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock } from './clock/clock.js';
+import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock, criaQuadrante } from './clock/clock.js';
 import {
     initRenderer,
     InfoBox,
     initDefaultSpotlight,
     onWindowResize,
     degreesToRadians,
+    lightFollowingCamera
 } from "../../libs/util/util.js";
 
-let currentPosition = new THREE.Vector3()
-let currentLookAt = new THREE.Vector3()
+
 let position = 1
 let toggleCamera = true
 let path = []
@@ -26,7 +26,7 @@ let volta = 0;
 let saiuPista1 = false;
 let saiuPista2 = false;
 let velocidade = 0;
-let velocidadeMaxima = 3;
+let velocidadeMaxima = 10;
 let velocidadeMinima = 1.5;
 let tesla
 
@@ -43,17 +43,22 @@ renderer.setClearColor("rgb(30, 30, 40)");
 tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
 
-var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(7, 5, -7);
-camera.lookAt(scene.position);
+var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.lookAt(0, 0, 0);
+camera.position.set(5, 15, 50);
+camera.up.set(0, 1, 0);
+var cameraHolder = createSphere(5, 10, 10)
 
-var cameraHolder = new THREE.Object3D();
 
 // adicionar o objeto ao carro
-tesla.add(cameraHolder)
 scene.add(tesla)
-cameraHolder.add(camera)
-
+// var axesHelper = new THREE.AxesHelper(9);
+// tesla.add(axesHelper);
+// scene.add(cameraHolder)
+// cameraHolder.add(camera)
+// cameraHolder.position.set(0, 10, 17)
+// cameraHolder.translateZ(15)
+// adicionar um ponto fixo q translada a camera no X p frente e p tras
 
 var newScene = new THREE.Scene();
 var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -62,7 +67,6 @@ inspectionCamera.position.set(37, 0, 0)
 
 let inspectionTesla = await loadGLTFFile('car/', 'scene.gltf', 'inspection');
 newScene.add(inspectionTesla)
-
 
 
 var trackballControls = new TrackballControls(inspectionCamera, renderer.domElement);
@@ -76,7 +80,7 @@ var lightNewscene = initDefaultSpotlight(newScene, inspectionCamera.position); /
 light.intensity = 7
 
 camera.add(light)
-// light.position.set(0, 0, 1);
+// light.position.set(1, 0, 1);
 light.target = camera;
 
 lightNewscene.intensity = 6
@@ -96,6 +100,7 @@ createPlane(scene);
 showInformation();
 criaBoxRelogio(clockTotal);
 criaBoxRelogioCorrente(clockVolta)
+criaQuadrante()
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
@@ -148,18 +153,18 @@ function keyboardUpdate() {
         }
     }
 
-    if (keyboard.up("left") || keyboard.up("right")) {
-        if (!toggleCamera) {
-            inspQuaternion1.copy(wheels[0].quaternion)
-            inspQuaternion3.copy(wheels[2].quaternion)
-        }
-        else {
-            teslaQuaternion1.copy(wheels[0].quaternion)
-            teslaQuaternion3.copy(wheels[2].quaternion)
-        }
-    }
+    // if (keyboard.up("left") || keyboard.up("right")) {
+        // if (!toggleCamera) {
+        //     inspQuaternion1.copy(wheels[0].quaternion)
+        //     inspQuaternion3.copy(wheels[2].quaternion)
+        // }
+        // else {
+        //     teslaQuaternion1.copy(wheels[0].quaternion)
+        //     teslaQuaternion3.copy(wheels[2].quaternion)
+        // }
+   // }
 
-    if (keyboard.down("left") || keyboard.down("right")) {
+    if (keyboard.up("left") || keyboard.up("right")) {
         if (!toggleCamera) {
             wheels[0].quaternion.copy(inspQuaternion1)
             wheels[2].quaternion.copy(inspQuaternion3)
@@ -216,7 +221,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(1);
+        var angleCar = degreesToRadians(2);
 
 
         if (keyboard.pressed("left")) {
@@ -476,12 +481,11 @@ function render() {
     // trackballControls1.update()
     keyboardUpdate();
     verifyPosition();
-    handleCamera(camera, tesla, isPista);
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
-    // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
+    handleCamera(camera, tesla);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene
