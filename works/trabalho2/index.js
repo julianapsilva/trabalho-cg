@@ -216,7 +216,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(1);
+        var angleCar = degreesToRadians(1.5);
 
 
         if (keyboard.pressed("left")) {
@@ -251,7 +251,7 @@ function keyboardUpdate() {
             clockTotal.start();
             clockVolta.start();
 
-            restartCar()
+            restartCar(2)
             scene.add(group2);
             group1.visible = false
             group2.visible = true
@@ -300,7 +300,9 @@ function keyboardUpdate() {
 function restartCar(direcao) {
     position = 1;
 
-    if (direcao == 3) {
+    if (direcao == 2) {
+        tesla.position.set(600, 2.6, -400)
+    }else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)

@@ -36,10 +36,10 @@ export default function mudaPista(scene, isPista) {
 
                     var rampa4 = rampa(-600, 0);
                     rampa4.translateZ(25)
-                    rampa4.translateY(-9)
-                    rampa4.rotateX(degreesToRadians(25))
+                    rampa4.translateY(-8)
+                    rampa4.rotateX(degreesToRadians(15))
                     rampa4.rotateY(degreesToRadians(90))
-                    group.add(rampa4); 
+                    group.add(rampa4);
                 }
                 if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
@@ -54,6 +54,12 @@ export default function mudaPista(scene, isPista) {
                 if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
+                    var rampa3 = rampa(300, -600);
+                    rampa3.translateZ(0)
+                    rampa3.translateY(-8)
+                    rampa3.rotateZ(degreesToRadians(15))
+                    rampa3.rotateY(degreesToRadians(180))
+                    group.add(rampa3); 
                 }
                 if (i == 600 && j <= 0) // reta 2
                 {
@@ -74,8 +80,21 @@ export default function mudaPista(scene, isPista) {
                 if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
+                    var rampa1 = rampa(-600, 200);
+                    rampa1.translateZ(25)
+                    rampa1.translateY(-8)
+                    rampa1.rotateX(degreesToRadians(15))
+                    rampa1.rotateY(degreesToRadians(90))
+                    group.add(rampa1); 
+        
+                    var rampa2 = rampa(-600, -300);
+                    rampa2.translateZ(25)
+                    rampa2.translateY(-8)
+                    rampa2.rotateX(degreesToRadians(15))
+                    rampa2.rotateY(degreesToRadians(90))
+                    group.add(rampa2); 
                 }
-                if (i == -100 && j == -600) {
+                if (i == 600 && j == -400) {
                     group.add(blocoInicio(i, j));
                 }
             }
