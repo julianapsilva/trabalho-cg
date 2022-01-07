@@ -6,7 +6,7 @@ import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
-import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock } from './clock/clock.js';
+import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock, criaQuadrante } from './clock/clock.js';
 import {
     initRenderer,
     InfoBox,
@@ -44,15 +44,27 @@ tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(7, 5, -7);
-camera.lookAt(scene.position);
+var target = new THREE.Vector3(); // create once an reuse it
+
+// camera.position.set(7, 5, -7);
+// camera.lookAt(scene.position);
 
 var cameraHolder = new THREE.Object3D();
 
 // adicionar o objeto ao carro
-tesla.add(cameraHolder)
+// tesla.add(cameraHolder)
 scene.add(tesla)
-cameraHolder.add(camera)
+let sphere = createSphere(0.5, 20, 20)
+// sphere.position.set(-10, 2.6, -590)
+// camera.position.copy(tesla.position)
+// camera.lookAt(sphere.position)
+//getWorldPosition
+// o objeto na frente do carro
+// pegar a posicao do objeto (do mundo) e apontar (lookat) a camera pro objeto virtual
+tesla.add(sphere);
+camera.position.set(-100, 2.6, -600)
+sphere.position.set(0,1,5)
+
 
 
 var newScene = new THREE.Scene();
@@ -85,7 +97,7 @@ window.addEventListener('resize', function () { onWindowResize(camera, renderer)
 
 function createSphere(radius, widthSegments, heightSegments) {
     var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments, 0, Math.PI * 2, 0, Math.PI);
-    var material = new THREE.MeshBasicMaterial({ color: "rgb(10,10,10)" });
+    var material = new THREE.MeshBasicMaterial({ color: "rgb(255,255,255)" });
     var object = new THREE.Mesh(geometry, material);
     object.castShadow = true;
     return object;
@@ -99,6 +111,7 @@ criaBoxRelogioCorrente(clockVolta)
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
+// criaQuadrante()
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
@@ -193,6 +206,7 @@ function keyboardUpdate() {
     if (toggleCamera) {
         if (keyboard.pressed("X")) {
             tesla.translateZ(velocidade);
+            // sphere.translateX(velocidade)
             if (velocidade <= velocidadeMaxima)
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2) {
@@ -208,6 +222,7 @@ function keyboardUpdate() {
         }
         if (keyboard.pressed("down")) {
             tesla.translateZ(-velocidade);
+            // sphere.translateX(-velocidade)
             if (velocidade <= velocidadeMinima)
                 velocidade -= 0.01;
             if (saiuPista1 || saiuPista2) {
@@ -223,12 +238,15 @@ function keyboardUpdate() {
             pressionadoLeft = true;
             if (acc == true) {
                 tesla.rotateY(angleCar);
+                // sphere.rotateY(angleCar)
             }
         }
         if (keyboard.pressed("right")) {
             pressionadoRight = true;
             if (acc == true) {
                 tesla.rotateY(-angleCar);
+                // sphere.rotateY(-angleCar)
+
             }
         }
 
@@ -479,6 +497,12 @@ function render() {
     keyboardUpdate();
     verifyPosition();
     handleCamera(camera, tesla, isPista);
+    // camera.lookAt(sphere.position.clone().add(new THREE.Vector3(20, 10, -45)))
+    camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-10, 25, -30)))
+    // camera.position.copy(tesla.position)
+    sphere.getWorldPosition(target);
+    camera.lookAt(target)
+
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
