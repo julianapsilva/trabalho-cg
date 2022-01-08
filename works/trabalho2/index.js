@@ -196,9 +196,10 @@ function keyboardUpdate() {
     if (toggleCamera) {
         if (keyboard.pressed("X")) {
             tesla.translateZ(velocidade);
+            console.log(velocidade, "velocidade");
             if (velocidade <= velocidadeMaxima)
                 velocidade += 0.01;
-            if (saiuPista1 || saiuPista2) {
+            if (saiuPista1 || saiuPista2 || saiuPista3 || saiuPista4) {
                  if (velocidade >= velocidadeMinima)
                      velocidade -= 0.02;
             }
@@ -207,13 +208,17 @@ function keyboardUpdate() {
             acc = true
         }
         if (keyboard.up("X")) {
+           // while(velocidade >= 0){
+           //     tesla.translateZ(velocidade);
+                velocidade -= 0.01;
+            }
             // acc = false
-        }
+        //}
         if (keyboard.pressed("down")) {
             tesla.translateZ(-velocidade);
             if (velocidade <= velocidadeMinima)
                 velocidade -= 0.01;
-            if (saiuPista1 || saiuPista2) {
+            if (saiuPista1 || saiuPista2 || saiuPista3 || saiuPista4) {
                 if (velocidade >= velocidadeMaxima)
                     velocidade += 0.02;
             }
@@ -234,7 +239,6 @@ function keyboardUpdate() {
                 tesla.rotateY(-angleCar);
             }
         }
-
 
         // Muda o tipo de pista
         if (keyboard.down("1")) {
@@ -368,6 +372,7 @@ function verifyPosition() {
         }
         else {
             saiuPista1 = true;
+            console.log("saiu")
         }
     }
 
@@ -512,25 +517,39 @@ function verifyPosition() {
                 path4.push(3)
             }
         }
-        else if (tesla.position.z >= -0 && tesla.position.z <= 0
+        else if (tesla.position.z >= -635 && tesla.position.z <= -568
             && tesla.position.x >= -257 && tesla.position.x <= 633) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(4)) {
                 path4.push(4)
             }
         }
-        else if (tesla.position.z >= 0 && tesla.position.z <= 0
-            && tesla.position.x >= -0 && tesla.position.x <= 0) {
+        else if (tesla.position.z >= -640 && tesla.position.z <= -263
+            && tesla.position.x >= 563 && tesla.position.x <= 637) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(5)) {
                 path4.push(5)
             }
         }
-        else if (tesla.position.z >= 553 && tesla.position.z <= 621
-            && tesla.position.x >= -480 && tesla.position.x <= -67) {
+        else if (tesla.position.z >=  -345 && tesla.position.z <= -263
+            && tesla.position.x >= -127 && tesla.position.x <= 643) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(6)) {
                 path4.push(6)
+            }
+        }
+        else if (tesla.position.z >=  -340 && tesla.position.z <= 630
+            && tesla.position.x >= -142 && tesla.position.x <= -67) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(7)) {
+                path4.push(7)
+            }
+        }
+        else if (tesla.position.z >=  560 && tesla.position.z <= 644
+            && tesla.position.x >= -638 && tesla.position.x <= -53) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(8)) {
+                path4.push(8)
             }
         }
         else {
@@ -544,6 +563,7 @@ function checkVoltaPista() {
     if (isPista == 1) {
         if (path.length == 4 && checkStartPosition()) {
             volta++;
+            console.log(volta, "volta");
             path = [];
             clockVolta.stop();
             clockVolta.getElapsedTime();
@@ -608,8 +628,8 @@ function checkVoltaPista() {
 }
 
 function checkStartPosition() {
-    if (tesla.position.x >= -165 && tesla.position.x <= -64
-        && tesla.position.z >=640 && tesla.position.z <= -560) {
+    if (tesla.position.x >= -170 && tesla.position.x <= -60
+        && tesla.position.z >=-640 && tesla.position.z <= -560) {
         return true;
     }
     else
@@ -626,7 +646,7 @@ function showInformation() {
     controls.add("X / Acelera");
     controls.add("<- / -> curvas");
     controls.add("Pressione 'A' para exibir ou esconder Axis");
-    controls.add(" 1 / 2 - Pista 1 / Pista 2");
+    controls.add(" 1/ 2/ 3/ 4 -> Pistas");
     controls.show();
 }
 //-------------------------------------------------------------------------------
