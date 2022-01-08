@@ -25,6 +25,8 @@ var isPista;
 let volta = 0;
 let saiuPista1 = false;
 let saiuPista2 = false;
+let saiuPista3 = false;
+let saiuPista4 = false;
 let velocidade = 0;
 let velocidadeMaxima = 3;
 let velocidadeMinima = 1.5;
@@ -123,7 +125,6 @@ teslaQuaternion1.copy(wheels[0].quaternion)
 teslaQuaternion3.copy(wheels[2].quaternion)
 
 
-
 function keyboardUpdate() {
     let wheels = car.children[0].children[0].children[0].children[0].children.slice(11, 15)
 
@@ -196,8 +197,8 @@ function keyboardUpdate() {
             if (velocidade <= velocidadeMaxima)
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2) {
-                // if (velocidade >= velocidadeMinima)
-                //     velocidade -= 0.02;
+                 if (velocidade >= velocidadeMinima)
+                     velocidade -= 0.02;
             }
         }
         if (keyboard.down("X")) {
@@ -311,7 +312,6 @@ function restartCar(direcao) {
     }
 }
 
-
 function pathAlreadyExists(number) {
     return path.some(n => { return n == number })
 }
@@ -319,35 +319,46 @@ function pathAlreadyExists(number) {
 function pathAlreadyExists2(number) {
     return path2.some(n => { return n == number })
 }
-function verifyPosition() {
-    if (isPista == 1) {
 
-        if (tesla.position.z >= -170 && tesla.position.z <= -125
-            && tesla.position.x >= -171 && tesla.position.x <= 162) {
+function pathAlreadyExists3(number) {
+    return path3.some(n => { return n == number })
+}
+
+function pathAlreadyExists4(number) {
+    return path4.some(n => { return n == number })
+}
+function verifyPosition() {
+    console.log(tesla.position.x, "x")
+    console.log(tesla.position.z, "z")
+
+    if (isPista == 1) {
+        console.log(path, "path")
+        if (tesla.position.z >= -650 && tesla.position.z <= -568
+            && tesla.position.x >= -600 && tesla.position.x <= 600) {
             saiuPista1 = false;
             if (!pathAlreadyExists(1)) {
                 path.push(1)
             }
         }
 
-        else if (tesla.position.z >= -125 && tesla.position.z <= 136
-            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+        else if (tesla.position.z >= -645 && tesla.position.z <= 580
+            && tesla.position.x >= 550 && tesla.position.x <= 650) {
             saiuPista1 = false;
             if (!pathAlreadyExists(2)) {
                 path.push(2)
             }
         }
 
-        else if (tesla.position.z >= 130 && tesla.position.z <= 170
-            && tesla.position.x >= -138 && tesla.position.x <= 125) {
+        else if (tesla.position.z >= 560 && tesla.position.z <= 645
+            && tesla.position.x >= -630 && tesla.position.x <= 645) {
             saiuPista1 = false;
             if (!pathAlreadyExists(3)) {
                 path.push(3)
             }
         }
 
-        else if (tesla.position.z >= -130 && tesla.position.z <= 136
-            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+        else if (tesla.position.z >= -610 && tesla.position.z <= 632
+            && tesla.position.x >= -650 && tesla.position.x <= -570) {
             saiuPista1 = false;
             if (!pathAlreadyExists(4)) {
                 path.push(4)
@@ -357,24 +368,25 @@ function verifyPosition() {
             saiuPista1 = true;
         }
     }
+
     if (isPista == 2) {
-        if (tesla.position.z >= -170 && tesla.position.z <= -120
-            && tesla.position.x >= -171 && tesla.position.x <= 170) {
+        if (tesla.position.z >= -650 && tesla.position.z <= -20
+            && tesla.position.x >= 555 && tesla.position.x <= 640) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(1)) {
                 path2.push(1)
             }
         }
 
-        else if (tesla.position.z >= -170 && tesla.position.z <= 25
-            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+        else if (tesla.position.z >= -20 && tesla.position.z <= 48
+            && tesla.position.x >= -42 && tesla.position.x <= 550) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(2)) {
                 path2.push(2)
             }
         }
-        else if (tesla.position.z >= -30 && tesla.position.z <= 30
-            && tesla.position.x >= 30 && tesla.position.x <= 170) {
+        else if (tesla.position.z >= -45 && tesla.position.z <= 630
+            && tesla.position.x >= -25 && tesla.position.x <= 170) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(3)) {
                 path2.push(3)
@@ -403,13 +415,99 @@ function verifyPosition() {
         }
         else {
             saiuPista2 = true;
+            console.log("saiu")
+        }
+    }
+
+    if (isPista == 3) {
+
+        if (tesla.position.z >= -170 && tesla.position.z <= -125
+            && tesla.position.x >= -171 && tesla.position.x <= 162) {
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(1)) {
+                path3.push(1)
+            }
+        }
+
+        else if (tesla.position.z >= -125 && tesla.position.z <= 136
+            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(2)) {
+                path3.push(2)
+            }
+        }
+
+        else if (tesla.position.z >= 130 && tesla.position.z <= 170
+            && tesla.position.x >= -138 && tesla.position.x <= 125) {
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(3)) {
+                path3.push(3)
+            }
+        }
+
+        else if (tesla.position.z >= -130 && tesla.position.z <= 136
+            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(4)) {
+                path3.push(4)
+            }
+        }
+        else {
+            saiuPista3 = true;
+        }
+    }
+
+    if (isPista == 4) {
+        if (tesla.position.z >= -170 && tesla.position.z <= -120
+            && tesla.position.x >= -171 && tesla.position.x <= 170) {
+            saiuPista4 = false;
+            if (!pathAlreadyExists4(1)) {
+                path4.push(1)
+            }
+        }
+
+        else if (tesla.position.z >= -170 && tesla.position.z <= 25
+            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(2)) {
+                path4.push(2)
+            }
+        }
+        else if (tesla.position.z >= -30 && tesla.position.z <= 30
+            && tesla.position.x >= 30 && tesla.position.x <= 170) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(3)) {
+                path4.push(3)
+            }
+        }
+        else if (tesla.position.z >= -30 && tesla.position.z <= 170
+            && tesla.position.x >= -30 && tesla.position.x <= 30) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(4)) {
+                path4.push(4)
+            }
+        }
+        else if (tesla.position.z >= 140 && tesla.position.z <= 170
+            && tesla.position.x >= -170 && tesla.position.x <= 30) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(5)) {
+                path4.push(5)
+            }
+        }
+        else if (tesla.position.z >= -130 && tesla.position.z <= 136
+            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(6)) {
+                path4.push(6)
+            }
+        }
+        else {
+            saiuPista4 = true;
         }
     }
 }
 
-
-
-function checkVoltaPista1() {
+function checkVoltaPista() {
     if (isPista == 1) {
         if (path.length == 4 && checkStartPosition()) {
             volta++;
@@ -424,9 +522,6 @@ function checkVoltaPista1() {
             clockTotal.getElapsedTime();
         }
     }
-}
-
-function checkVoltaPista2() {
     if (isPista == 2) {
         if (path2.length == 6 && checkStartPosition()) {
             volta++;
@@ -443,11 +538,45 @@ function checkVoltaPista2() {
             clockTotal.getElapsedTime();
         }
     }
+
+    if (isPista == 3) {
+        if (path3.length == 6 && checkStartPosition()) {
+            volta++;
+            path3 = [];
+            clockVolta.stop();
+            clockVolta.getElapsedTime();
+            clockVolta.start();
+
+        }
+
+        if (volta == 4 && checkStartPosition()) {
+            clockTotal.stop();
+            velocidade = 0;
+            clockTotal.getElapsedTime();
+        }
+    }
+
+    if (isPista == 4) {
+        if (path4.length == 6 && checkStartPosition()) {
+            volta++;
+            path4 = [];
+            clockVolta.stop();
+            clockVolta.getElapsedTime();
+            clockVolta.start();
+
+        }
+
+        if (volta == 4 && checkStartPosition()) {
+            clockTotal.stop();
+            velocidade = 0;
+            clockTotal.getElapsedTime();
+        }
+    }
 }
 
 function checkStartPosition() {
-    if (tesla.position.x >= -64 && tesla.position.x <= -20
-        && tesla.position.z >= -169 && tesla.position.z <= -130) {
+    if (tesla.position.x >= -165 && tesla.position.x <= -64
+        && tesla.position.z >=640 && tesla.position.z <= -560) {
         return true;
     }
     else
@@ -455,6 +584,27 @@ function checkStartPosition() {
 
 }
 
+function controlledRender()
+{
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+
+  // Set main viewport
+  renderer.setViewport(0, 0, width, height); // Reset viewport    
+  renderer.setScissorTest(false); // Disable scissor to paint the entire window
+  renderer.setClearColor("rgb(80, 70, 170)");    
+  renderer.clear();   // Clean the window
+  renderer.render(scene, camera);   
+
+  // Set virtual camera viewport 
+  var offset = 30; 
+  renderer.setViewport(offset, height-vcHeidth-offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
+  renderer.setScissor(offset, height-vcHeidth-offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
+  renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
+  renderer.setClearColor("rgb(60, 50, 150)");  // Use a darker clear color in the small viewport 
+  renderer.clear(); // Clean the small viewport
+  renderer.render(scene, virtualCamera);  // Render scene of the virtual camera
+}
 
 
 function showInformation() {
@@ -479,10 +629,10 @@ function render() {
     keyboardUpdate();
     verifyPosition();
     handleCamera(camera, tesla, isPista);
-    checkVoltaPista1();
-    checkVoltaPista2();
+    checkVoltaPista();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
+    //controlledRender();
     // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
