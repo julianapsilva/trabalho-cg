@@ -21,6 +21,8 @@ let position = 1
 let toggleCamera = true
 let path = []
 let path2 = []
+let path3 = []
+let path4 = []
 var isPista;
 let volta = 0;
 let saiuPista1 = false;
@@ -328,8 +330,8 @@ function pathAlreadyExists4(number) {
     return path4.some(n => { return n == number })
 }
 function verifyPosition() {
-    console.log(tesla.position.x, "x")
     console.log(tesla.position.z, "z")
+    console.log(tesla.position.x, "x")
 
     if (isPista == 1) {
         console.log(path, "path")
@@ -342,7 +344,7 @@ function verifyPosition() {
         }
 
         else if (tesla.position.z >= -645 && tesla.position.z <= 580
-            && tesla.position.x >= 550 && tesla.position.x <= 650) {
+            && tesla.position.x >= 550 && tesla.position.x <= 640) {
             saiuPista1 = false;
             if (!pathAlreadyExists(2)) {
                 path.push(2)
@@ -370,44 +372,44 @@ function verifyPosition() {
     }
 
     if (isPista == 2) {
-        if (tesla.position.z >= -650 && tesla.position.z <= -20
-            && tesla.position.x >= 555 && tesla.position.x <= 640) {
+        if (tesla.position.z >= -642 && tesla.position.z <= 29
+            && tesla.position.x >= 558 && tesla.position.x <= 648) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(1)) {
                 path2.push(1)
             }
         }
 
-        else if (tesla.position.z >= -20 && tesla.position.z <= 48
-            && tesla.position.x >= -42 && tesla.position.x <= 550) {
+        else if (tesla.position.z >= -30 && tesla.position.z <= 30
+            && tesla.position.x >= -30 && tesla.position.x <= 642) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(2)) {
                 path2.push(2)
             }
         }
-        else if (tesla.position.z >= -45 && tesla.position.z <= 630
-            && tesla.position.x >= -25 && tesla.position.x <= 170) {
+        else if (tesla.position.z >= -40 && tesla.position.z <= 630
+            && tesla.position.x >= -45 && tesla.position.x <= 45) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(3)) {
                 path2.push(3)
             }
         }
-        else if (tesla.position.z >= -30 && tesla.position.z <= 170
-            && tesla.position.x >= -30 && tesla.position.x <= 30) {
+        else if (tesla.position.z >= 560 && tesla.position.z <= 640
+            && tesla.position.x >= -630 && tesla.position.x <= 30) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(4)) {
                 path2.push(4)
             }
         }
-        else if (tesla.position.z >= 140 && tesla.position.z <= 170
-            && tesla.position.x >= -170 && tesla.position.x <= 30) {
+        else if (tesla.position.z >= -635 && tesla.position.z <= 641
+            && tesla.position.x >= -638 && tesla.position.x <= -550) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(5)) {
                 path2.push(5)
             }
         }
-        else if (tesla.position.z >= -130 && tesla.position.z <= 136
-            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+        else if (tesla.position.z >= -646 && tesla.position.z <= -559
+            && tesla.position.x >= -635 && tesla.position.x <= 630) {
             saiuPista2 = false;
             if (!pathAlreadyExists2(6)) {
                 path2.push(6)
@@ -421,81 +423,111 @@ function verifyPosition() {
 
     if (isPista == 3) {
 
-        if (tesla.position.z >= -170 && tesla.position.z <= -125
-            && tesla.position.x >= -171 && tesla.position.x <= 162) {
+        if (tesla.position.z >= -647 && tesla.position.z <= -560
+            && tesla.position.x >= -338 && tesla.position.x <= 639) {
             saiuPista3 = false;
             if (!pathAlreadyExists3(1)) {
                 path3.push(1)
             }
         }
 
-        else if (tesla.position.z >= -125 && tesla.position.z <= 136
-            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+        else if (tesla.position.z >= -643 && tesla.position.z <= -63
+            && tesla.position.x >= -348 && tesla.position.x <= -260) {
             saiuPista3 = false;
             if (!pathAlreadyExists3(2)) {
                 path3.push(2)
             }
         }
 
-        else if (tesla.position.z >= 130 && tesla.position.z <= 170
-            && tesla.position.x >= -138 && tesla.position.x <= 125) {
+        else if (tesla.position.z >= -140 && tesla.position.z <= -60
+            && tesla.position.x >= -639 && tesla.position.x <= -266) {
             saiuPista3 = false;
             if (!pathAlreadyExists3(3)) {
                 path3.push(3)
             }
         }
 
-        else if (tesla.position.z >= -130 && tesla.position.z <= 136
-            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+        else if (tesla.position.z >= -126 && tesla.position.z <= 640
+            && tesla.position.x >= -626 && tesla.position.x <= -550) {
             saiuPista3 = false;
             if (!pathAlreadyExists3(4)) {
                 path3.push(4)
             }
         }
+        else if (tesla.position.z >= 555 && tesla.position.z <= 647
+            && tesla.position.x >= -642 && tesla.position.x <= 638) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(5)) {
+                path4.push(5)
+            }
+        }
+        else if (tesla.position.z >= -635 && tesla.position.z <= 645
+            && tesla.position.x >= 565 && tesla.position.x <= 638) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(6)) {
+                path4.push(6)
+            }
+        }
+        else if (tesla.position.z >= -342 && tesla.position.z <= 637
+            && tesla.position.x >= 152 && tesla.position.x <= 237) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(7)) {
+                path4.push(7)
+            }
+        }
+        else if (tesla.position.z >= -341 && tesla.position.z <= -232
+            && tesla.position.x >= -155 && tesla.position.x <= 636) {
+                saiuPista4 = false;
+            if (!pathAlreadyExists4(7)) {
+                path4.push(7)
+            }
+        }
         else {
             saiuPista3 = true;
+            console.log("saiu")
         }
     }
+    
 
     if (isPista == 4) {
-        if (tesla.position.z >= -170 && tesla.position.z <= -120
-            && tesla.position.x >= -171 && tesla.position.x <= 170) {
+        if (tesla.position.z >= -38 && tesla.position.z <= 635
+            && tesla.position.x >= -646 && tesla.position.x <= -560) {
             saiuPista4 = false;
             if (!pathAlreadyExists4(1)) {
                 path4.push(1)
             }
         }
 
-        else if (tesla.position.z >= -170 && tesla.position.z <= 25
-            && tesla.position.x >= 133 && tesla.position.x <= 171) {
+        else if (tesla.position.z >= -30 && tesla.position.z <= 40
+            && tesla.position.x >= -640 && tesla.position.x <= 330) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(2)) {
                 path4.push(2)
             }
         }
-        else if (tesla.position.z >= -30 && tesla.position.z <= 30
-            && tesla.position.x >= 30 && tesla.position.x <= 170) {
+        else if (tesla.position.z >= -635 && tesla.position.z <= 41
+            && tesla.position.x >= 260 && tesla.position.x <=345) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(3)) {
                 path4.push(3)
             }
         }
-        else if (tesla.position.z >= -30 && tesla.position.z <= 170
-            && tesla.position.x >= -30 && tesla.position.x <= 30) {
+        else if (tesla.position.z >= -0 && tesla.position.z <= 0
+            && tesla.position.x >= -257 && tesla.position.x <= 633) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(4)) {
                 path4.push(4)
             }
         }
-        else if (tesla.position.z >= 140 && tesla.position.z <= 170
-            && tesla.position.x >= -170 && tesla.position.x <= 30) {
+        else if (tesla.position.z >= 0 && tesla.position.z <= 0
+            && tesla.position.x >= -0 && tesla.position.x <= 0) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(5)) {
                 path4.push(5)
             }
         }
-        else if (tesla.position.z >= -130 && tesla.position.z <= 136
-            && tesla.position.x >= -171 && tesla.position.x <= -131) {
+        else if (tesla.position.z >= 553 && tesla.position.z <= 621
+            && tesla.position.x >= -480 && tesla.position.x <= -67) {
                 saiuPista4 = false;
             if (!pathAlreadyExists4(6)) {
                 path4.push(6)
@@ -503,6 +535,7 @@ function verifyPosition() {
         }
         else {
             saiuPista4 = true;
+            console.log("saiu")
         }
     }
 }
@@ -540,7 +573,7 @@ function checkVoltaPista() {
     }
 
     if (isPista == 3) {
-        if (path3.length == 6 && checkStartPosition()) {
+        if (path3.length >= 6 && checkStartPosition()) {
             volta++;
             path3 = [];
             clockVolta.stop();
@@ -583,29 +616,6 @@ function checkStartPosition() {
         return false;
 
 }
-
-function controlledRender()
-{
-  var width = window.innerWidth;
-  var height = window.innerHeight;
-
-  // Set main viewport
-  renderer.setViewport(0, 0, width, height); // Reset viewport    
-  renderer.setScissorTest(false); // Disable scissor to paint the entire window
-  renderer.setClearColor("rgb(80, 70, 170)");    
-  renderer.clear();   // Clean the window
-  renderer.render(scene, camera);   
-
-  // Set virtual camera viewport 
-  var offset = 30; 
-  renderer.setViewport(offset, height-vcHeidth-offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
-  renderer.setScissor(offset, height-vcHeidth-offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
-  renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
-  renderer.setClearColor("rgb(60, 50, 150)");  // Use a darker clear color in the small viewport 
-  renderer.clear(); // Clean the small viewport
-  renderer.render(scene, virtualCamera);  // Render scene of the virtual camera
-}
-
 
 function showInformation() {
     // Use this to show information onscreen
