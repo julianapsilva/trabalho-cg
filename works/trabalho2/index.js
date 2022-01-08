@@ -2,7 +2,6 @@ import * as THREE from '../../build/three.module.js';
 import Stats from '../../build/jsm/libs/stats.module.js';
 import { TrackballControls } from '../../build/jsm/controls/TrackballControls.js';
 import KeyboardState from '../../libs/util/KeyboardState.js';
-import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
@@ -15,8 +14,7 @@ import {
     degreesToRadians,
 } from "../../libs/util/util.js";
 
-let currentPosition = new THREE.Vector3()
-let currentLookAt = new THREE.Vector3()
+
 let position = 1
 let toggleCamera = true
 let path = []
@@ -52,18 +50,15 @@ var target = new THREE.Vector3(); // create once an reuse it
 var cameraHolder = new THREE.Object3D();
 
 // adicionar o objeto ao carro
-// tesla.add(cameraHolder)
 scene.add(tesla)
-let sphere = createSphere(0.5, 20, 20)
-// sphere.position.set(-10, 2.6, -590)
-// camera.position.copy(tesla.position)
-// camera.lookAt(sphere.position)
 //getWorldPosition
 // o objeto na frente do carro
 // pegar a posicao do objeto (do mundo) e apontar (lookat) a camera pro objeto virtual
-tesla.add(sphere);
+tesla.add(cameraHolder);
 camera.position.set(-100, 2.6, -600)
-sphere.position.set(0,1,5)
+cameraHolder.lookAt(0, 0, 0);
+
+cameraHolder.position.set(0, 1, 4)
 
 
 
@@ -206,7 +201,6 @@ function keyboardUpdate() {
     if (toggleCamera) {
         if (keyboard.pressed("X")) {
             tesla.translateZ(velocidade);
-            // sphere.translateX(velocidade)
             if (velocidade <= velocidadeMaxima)
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2) {
@@ -222,7 +216,6 @@ function keyboardUpdate() {
         }
         if (keyboard.pressed("down")) {
             tesla.translateZ(-velocidade);
-            // sphere.translateX(-velocidade)
             if (velocidade <= velocidadeMinima)
                 velocidade -= 0.01;
             if (saiuPista1 || saiuPista2) {
@@ -231,22 +224,19 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(1.5);
+        var angleCar = degreesToRadians(1);
 
 
         if (keyboard.pressed("left")) {
             pressionadoLeft = true;
             if (acc == true) {
                 tesla.rotateY(angleCar);
-                // sphere.rotateY(angleCar)
             }
         }
         if (keyboard.pressed("right")) {
             pressionadoRight = true;
             if (acc == true) {
                 tesla.rotateY(-angleCar);
-                // sphere.rotateY(-angleCar)
-
             }
         }
 
@@ -320,7 +310,7 @@ function restartCar(direcao) {
 
     if (direcao == 2) {
         tesla.position.set(600, 2.6, -400)
-    }else if (direcao == 3) {
+    } else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)
@@ -496,13 +486,9 @@ function render() {
     // trackballControls1.update()
     keyboardUpdate();
     verifyPosition();
-    handleCamera(camera, tesla, isPista);
-    // camera.lookAt(sphere.position.clone().add(new THREE.Vector3(20, 10, -45)))
-    camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-10, 25, -30)))
-    // camera.position.copy(tesla.position)
-    sphere.getWorldPosition(target);
+    cameraHolder.getWorldPosition(target);
+    camera.position.copy(target.clone().add(new THREE.Vector3(-30, 25, -30)))
     camera.lookAt(target)
-
     checkVoltaPista1();
     checkVoltaPista2();
     checkStartPosition();
