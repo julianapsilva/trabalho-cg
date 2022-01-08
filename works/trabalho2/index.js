@@ -156,25 +156,15 @@ function keyboardUpdate() {
         }
     }
 
-    if (keyboard.up("left") || keyboard.up("right")) {
+    if (keyboard.up("left") || keyboard.up("right")
+        || keyboard.down("left") || keyboard.down("right")) {
         if (!toggleCamera) {
-            inspQuaternion1.copy(wheels[0].quaternion)
-            inspQuaternion3.copy(wheels[2].quaternion)
+            wheels[0].quaternion.slerp(inspQuaternion1, 0.9)
+            wheels[2].quaternion.slerp(inspQuaternion3, 0.9)
         }
         else {
-            teslaQuaternion1.copy(wheels[0].quaternion)
-            teslaQuaternion3.copy(wheels[2].quaternion)
-        }
-    }
-
-    if (keyboard.down("left") || keyboard.down("right")) {
-        if (!toggleCamera) {
-            wheels[0].quaternion.copy(inspQuaternion1)
-            wheels[2].quaternion.copy(inspQuaternion3)
-        }
-        else {
-            wheels[0].quaternion.copy(teslaQuaternion1)
-            wheels[2].quaternion.copy(teslaQuaternion3)
+            wheels[0].quaternion.slerp(teslaQuaternion1, 0.9)
+            wheels[2].quaternion.slerp(teslaQuaternion3, 0.9)
         }
     }
 
@@ -192,7 +182,7 @@ function keyboardUpdate() {
         }
     }
     if (keyboard.pressed("right")) {
-        if (wheels[0].rotation.y > -0.49) {
+        if (wheels[0].rotation.y > -0.24) {
             wheels[0].rotateX(0.01)
             wheels[2].rotateX(0.01)
         }
@@ -205,19 +195,19 @@ function keyboardUpdate() {
             if (velocidade <= velocidadeMaxima)
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2 || saiuPista3 || saiuPista4) {
-                 if (velocidade >= velocidadeMinima)
-                     velocidade -= 0.02;
+                if (velocidade >= velocidadeMinima)
+                    velocidade -= 0.02;
             }
         }
         if (keyboard.down("X")) {
             acc = true
         }
         if (keyboard.up("X")) {
-           // while(velocidade >= 0){
-           //     tesla.translateZ(velocidade);
-                velocidade -= 0.01;
-            }
-            // acc = false
+            // while(velocidade >= 0){
+            //     tesla.translateZ(velocidade);
+            velocidade -= 0.01;
+        }
+        // acc = false
         //}
         if (keyboard.pressed("down")) {
             tesla.translateZ(-velocidade);
@@ -314,7 +304,7 @@ function restartCar(direcao) {
 
     if (direcao == 2) {
         tesla.position.set(600, 2.6, -400)
-    }else if (direcao == 3) {
+    } else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)
@@ -466,28 +456,28 @@ function verifyPosition() {
         }
         else if (tesla.position.z >= 555 && tesla.position.z <= 647
             && tesla.position.x >= -642 && tesla.position.x <= 638) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(5)) {
                 path4.push(5)
             }
         }
         else if (tesla.position.z >= -635 && tesla.position.z <= 645
             && tesla.position.x >= 565 && tesla.position.x <= 638) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(6)) {
                 path4.push(6)
             }
         }
         else if (tesla.position.z >= -342 && tesla.position.z <= 637
             && tesla.position.x >= 152 && tesla.position.x <= 237) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(7)) {
                 path4.push(7)
             }
         }
         else if (tesla.position.z >= -341 && tesla.position.z <= -232
             && tesla.position.x >= -155 && tesla.position.x <= 636) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(7)) {
                 path4.push(7)
             }
@@ -497,7 +487,7 @@ function verifyPosition() {
             console.log("saiu")
         }
     }
-    
+
 
     if (isPista == 4) {
         if (tesla.position.z >= -38 && tesla.position.z <= 635
@@ -510,49 +500,49 @@ function verifyPosition() {
 
         else if (tesla.position.z >= -30 && tesla.position.z <= 40
             && tesla.position.x >= -640 && tesla.position.x <= 330) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(2)) {
                 path4.push(2)
             }
         }
         else if (tesla.position.z >= -635 && tesla.position.z <= 41
-            && tesla.position.x >= 260 && tesla.position.x <=345) {
-                saiuPista4 = false;
+            && tesla.position.x >= 260 && tesla.position.x <= 345) {
+            saiuPista4 = false;
             if (!pathAlreadyExists4(3)) {
                 path4.push(3)
             }
         }
         else if (tesla.position.z >= -635 && tesla.position.z <= -568
             && tesla.position.x >= -257 && tesla.position.x <= 633) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(4)) {
                 path4.push(4)
             }
         }
         else if (tesla.position.z >= -640 && tesla.position.z <= -263
             && tesla.position.x >= 563 && tesla.position.x <= 637) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(5)) {
                 path4.push(5)
             }
         }
-        else if (tesla.position.z >=  -345 && tesla.position.z <= -263
+        else if (tesla.position.z >= -345 && tesla.position.z <= -263
             && tesla.position.x >= -127 && tesla.position.x <= 643) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(6)) {
                 path4.push(6)
             }
         }
-        else if (tesla.position.z >=  -340 && tesla.position.z <= 630
+        else if (tesla.position.z >= -340 && tesla.position.z <= 630
             && tesla.position.x >= -142 && tesla.position.x <= -67) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(7)) {
                 path4.push(7)
             }
         }
-        else if (tesla.position.z >=  560 && tesla.position.z <= 644
+        else if (tesla.position.z >= 560 && tesla.position.z <= 644
             && tesla.position.x >= -638 && tesla.position.x <= -53) {
-                saiuPista4 = false;
+            saiuPista4 = false;
             if (!pathAlreadyExists4(8)) {
                 path4.push(8)
             }
@@ -634,7 +624,7 @@ function checkVoltaPista() {
 
 function checkStartPosition() {
     if (tesla.position.x >= -170 && tesla.position.x <= -60
-        && tesla.position.z >=-640 && tesla.position.z <= -560) {
+        && tesla.position.z >= -640 && tesla.position.z <= -560) {
         return true;
     }
     else
@@ -657,37 +647,36 @@ function showInformation() {
 //-------------------------------------------------------------------------------
 // Setting virtual camera MINIMAPA
 //-------------------------------------------------------------------------------
-var lookAtVec   = new THREE.Vector3( 0.0, 0.0, 0.0 );
-var camPosition = new THREE.Vector3( 0, 550, 0 );
-var upVec       = new THREE.Vector3( 0.0, 600.0, 0.0 );
-var vcWidth = 300; 
-var vcHeidth = 300; 
-var projectionChanged = false; 
+var lookAtVec = new THREE.Vector3(0.0, 0.0, 0.0);
+var camPosition = new THREE.Vector3(0, 550, 0);
+var upVec = new THREE.Vector3(0.0, 600.0, 0.0);
+var vcWidth = 300;
+var vcHeidth = 300;
+var projectionChanged = false;
 var virtualCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-    virtualCamera.position.copy(camPosition);
-    virtualCamera.up.copy(upVec);
-    virtualCamera.lookAt(lookAtVec);
+virtualCamera.position.copy(camPosition);
+virtualCamera.up.copy(upVec);
+virtualCamera.lookAt(lookAtVec);
 
 // Updates de 3D object that represents the virtual camera 
 // and the camera helper
 
-  function controlledRender()
-  {
+function controlledRender() {
     var width = window.innerWidth;
     var height = window.innerHeight;
-  
+
     // Set main viewport
     renderer.setViewport(0, 0, width, height); // Reset viewport    
     renderer.setScissorTest(false); // Disable scissor to paint the entire window
     renderer.render(scene, camera) // Render scene
-  
+
     // Set virtual camera viewport 
-    var offset = 100; 
-    renderer.setViewport(offset-100, height-vcHeidth-offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
-    renderer.setScissor(offset-100, height-vcHeidth-offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
+    var offset = 100;
+    renderer.setViewport(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
+    renderer.setScissor(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
     renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
     renderer.render(scene, virtualCamera);  // Render scene of the virtual camera
-  }
+}
 //-------------------------------------------------------------------------------
 // FIM virtual camera MINIMAPA
 //-------------------------------------------------------------------------------
