@@ -38,7 +38,7 @@ export function criaQuadrante() {
     const newDiv2 = document.createElement("div");
     newDiv.style.color = '#fff'
     newDiv.style.height = '100vh'
-    newDiv.style.border = '3px solid #fff'
+    newDiv.style.border = '1px solid #fff'
     newDiv.style.position = 'absolute';
     newDiv.style.top = '50%';
     newDiv.style.left = '50%';
@@ -46,7 +46,7 @@ export function criaQuadrante() {
 
     newDiv2.style.color = '#fff'
     newDiv2.style.width = '100vw'
-    newDiv2.style.border = '3px solid #fff'
+    newDiv2.style.border = '1px solid #fff'
     newDiv2.style.position = 'absolute';
     newDiv2.style.top = '50%';
     newDiv2.style.left = '50%';
