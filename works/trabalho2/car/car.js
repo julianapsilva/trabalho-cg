@@ -1,4 +1,5 @@
 import { GLTFLoader } from '../../../build/jsm/loaders/GLTFLoader.js'
+import * as THREE from '../../../build/three.module.js';
 import {
     degreesToRadians,
     getMaxSize
@@ -11,8 +12,10 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
     return new Promise((resolve, reject) => {
         loader.load(modelPath + modelName, function (gltf) {
             let tesla = gltf.scene;
+
+            tesla.traverse(child => { if (child) child.castShadow = true });
+            tesla.traverse(node => { if (node.material) node.material.side = THREE.DoubleSide });
             if (!mode) {
-                // tesla.position.set(-120, 1, -600)
                 tesla = normalizeAndRescale(tesla, 20);
                 tesla.rotateY(degreesToRadians(90))
             }
