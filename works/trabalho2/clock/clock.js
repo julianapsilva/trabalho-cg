@@ -22,6 +22,23 @@ export function criaBoxRelogioCorrente(clockVolta) {
     newDiv.style.padding = '0px 10px'
     document.body.appendChild(newDiv);
 }
+export function criaBoxVelocidade(velocidade) {
+    const newDiv = document.createElement("div");
+    newDiv.setAttribute("id", "velocidade");
+    newDiv.innerHTML += `<h1>Velocidade atual: ${velocidade.toFixed(2)} m/s</ h1> `;
+    newDiv.style.position = 'absolute';
+    newDiv.style.top = 0
+    newDiv.style.left = '100'
+    newDiv.style.color = '#fff'
+    newDiv.style.fontSize = '13px'
+    newDiv.style.marginLeft = '240px'
+    document.body.appendChild(newDiv);
+}
+
+export function updateVelocidade(velocidade) {
+    const velId = document.getElementById('velocidade')
+    velId.innerHTML = `<h1>Velocidade atual: ${velocidade.toFixed(2)} m/s</ h1>`
+}
 
 export function updateClock(clockTotal, clockVolta) {
     const clockT = document.getElementById('clockTotal')

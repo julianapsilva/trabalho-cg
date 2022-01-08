@@ -6,7 +6,11 @@ import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
-import { criaBoxRelogio, criaBoxRelogioCorrente, updateClock } from './clock/clock.js';
+import {
+    criaBoxRelogio, criaBoxRelogioCorrente,
+    updateClock, criaBoxVelocidade,
+    updateVelocidade
+} from './clock/clock.js';
 import {
     initRenderer,
     InfoBox,
@@ -100,6 +104,7 @@ createPlane(scene);
 showInformation();
 criaBoxRelogio(clockTotal);
 criaBoxRelogioCorrente(clockVolta)
+criaBoxVelocidade(velocidade)
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
@@ -699,6 +704,7 @@ function render() {
     checkVoltaPista();
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
+    updateVelocidade(velocidade);
     //controlledRender();
     // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
