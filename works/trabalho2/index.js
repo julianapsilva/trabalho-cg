@@ -37,6 +37,7 @@ let velocidadeMaxima = 3;
 let velocidadeMinima = 1.5;
 let tesla
 
+let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
 var clockVolta = new THREE.Clock();
 
@@ -356,7 +357,6 @@ function verifyPosition() {
     console.log(tesla.position.x, "x")
 
     if (isPista == 1) {
-        console.log(path, "path")
         if (tesla.position.z >= -650 && tesla.position.z <= -568
             && tesla.position.x >= -600 && tesla.position.x <= 600) {
             saiuPista1 = false;
@@ -395,6 +395,7 @@ function verifyPosition() {
     }
 
     if (isPista == 2) {
+        console.log(path2, "path")
         if (tesla.position.z >= -642 && tesla.position.z <= 29
             && tesla.position.x >= 558 && tesla.position.x <= 648) {
             saiuPista2 = false;
@@ -445,7 +446,7 @@ function verifyPosition() {
     }
 
     if (isPista == 3) {
-
+        console.log(path, "path")
         if (tesla.position.z >= -647 && tesla.position.z <= -560
             && tesla.position.x >= -338 && tesla.position.x <= 639) {
             saiuPista3 = false;
@@ -501,7 +502,7 @@ function verifyPosition() {
         else if (tesla.position.z >= -341 && tesla.position.z <= -232
             && tesla.position.x >= -155 && tesla.position.x <= 636) {
             saiuPista4 = false;
-            if (!pathAlreadyExists4(7)) {
+            if (!pathAlreadyExists4(8)) {
                 path4.push(7)
             }
         }
@@ -511,8 +512,8 @@ function verifyPosition() {
         }
     }
 
-
     if (isPista == 4) {
+        console.log(path, "path")
         if (tesla.position.z >= -38 && tesla.position.z <= 635
             && tesla.position.x >= -646 && tesla.position.x <= -560) {
             saiuPista4 = false;
@@ -584,7 +585,7 @@ function checkVoltaPista() {
             console.log(volta, "volta");
             path = [];
             clockVolta.stop();
-            clockVolta.getElapsedTime();
+            tempoVoltas.push(clockVolta.getElapsedTime());
             clockVolta.start();
         }
 
@@ -600,7 +601,6 @@ function checkVoltaPista() {
             clockVolta.stop();
             clockVolta.getElapsedTime();
             clockVolta.start();
-
         }
 
         if (volta == 4 && checkStartPosition()) {
@@ -652,7 +652,17 @@ function checkStartPosition() {
     }
     else
         return false;
+}
 
+function voltaMaisRapida()
+{
+    let melhorVolta;
+    console.log("melhor volta", melhorVolta)
+    for(let i = 0; i < tempoVoltas.length; i++)
+    {
+        if (tempoVoltas[i] > tempoVoltas[i+1])
+            melhorVolta = tempoVoltas[i];
+    }
 }
 
 function showInformation() {
@@ -720,10 +730,11 @@ function render() {
 
     // light.position.copy( camera.position.clone().add(new THREE.Vector3(0, 2, -5))) 
 
-
     checkStartPosition();
+    checkVoltaPista();
     updateClock(clockTotal, clockVolta);
     updateVelocidade(velocidade);
+    voltaMaisRapida();
     //controlledRender();
     // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
