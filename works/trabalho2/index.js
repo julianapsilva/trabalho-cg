@@ -789,6 +789,8 @@ function render() {
         controlledRender()
     }
     else {
+        renderer.setViewport(0, 0, window.innerWidth, window.innerHeight); // Reset viewport    
+        renderer.setScissorTest(false); // Disable scissor to paint the entire window
         renderer.render(newScene, inspectionCamera) // Render scene
         lightFollowingCamera(lightNewscene, inspectionCamera)
     }
