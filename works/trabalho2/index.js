@@ -446,7 +446,7 @@ function verifyPosition() {
     }
 
     if (isPista == 3) {
-        console.log(path, "path")
+        console.log(path3, "path")
         if (tesla.position.z >= -647 && tesla.position.z <= -560
             && tesla.position.x >= -338 && tesla.position.x <= 639) {
             saiuPista3 = false;
@@ -471,8 +471,8 @@ function verifyPosition() {
             }
         }
 
-        else if (tesla.position.z >= -126 && tesla.position.z <= 640
-            && tesla.position.x >= -626 && tesla.position.x <= -550) {
+        else if (tesla.position.z >= -146 && tesla.position.z <= 640
+            && tesla.position.x >= -645 && tesla.position.x <= -580) {
             saiuPista3 = false;
             if (!pathAlreadyExists3(4)) {
                 path3.push(4)
@@ -480,30 +480,30 @@ function verifyPosition() {
         }
         else if (tesla.position.z >= 555 && tesla.position.z <= 647
             && tesla.position.x >= -642 && tesla.position.x <= 638) {
-            saiuPista4 = false;
-            if (!pathAlreadyExists4(5)) {
-                path4.push(5)
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(5)) {
+                path3.push(5)
             }
         }
         else if (tesla.position.z >= -635 && tesla.position.z <= 645
             && tesla.position.x >= 565 && tesla.position.x <= 638) {
-            saiuPista4 = false;
-            if (!pathAlreadyExists4(6)) {
-                path4.push(6)
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(6)) {
+                path3.push(6)
             }
         }
         else if (tesla.position.z >= -342 && tesla.position.z <= 637
             && tesla.position.x >= 152 && tesla.position.x <= 237) {
-            saiuPista4 = false;
-            if (!pathAlreadyExists4(7)) {
-                path4.push(7)
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(7)) {
+                path3.push(7)
             }
         }
         else if (tesla.position.z >= -341 && tesla.position.z <= -232
             && tesla.position.x >= -155 && tesla.position.x <= 636) {
-            saiuPista4 = false;
-            if (!pathAlreadyExists4(8)) {
-                path4.push(7)
+            saiuPista3 = false;
+            if (!pathAlreadyExists3(8)) {
+                path3.push(8)
             }
         }
         else {
@@ -513,7 +513,7 @@ function verifyPosition() {
     }
 
     if (isPista == 4) {
-        console.log(path, "path")
+        console.log(path4, "path")
         if (tesla.position.z >= -38 && tesla.position.z <= 635
             && tesla.position.x >= -646 && tesla.position.x <= -560) {
             saiuPista4 = false;
@@ -537,7 +537,7 @@ function verifyPosition() {
             }
         }
         else if (tesla.position.z >= -635 && tesla.position.z <= -568
-            && tesla.position.x >= -257 && tesla.position.x <= 633) {
+            && tesla.position.x >= -560 && tesla.position.x <= 645) {
             saiuPista4 = false;
             if (!pathAlreadyExists4(4)) {
                 path4.push(4)
@@ -599,7 +599,7 @@ function checkVoltaPista() {
             volta++;
             path2 = [];
             clockVolta.stop();
-            clockVolta.getElapsedTime();
+            tempoVoltas.push(clockVolta.getElapsedTime());
             clockVolta.start();
         }
 
@@ -611,13 +611,12 @@ function checkVoltaPista() {
     }
 
     if (isPista == 3) {
-        if (path3.length >= 6 && checkStartPosition()) {
+        if (checkStartPosition() && path3.length >= 6) {
             volta++;
-            path3 = [];
             clockVolta.stop();
-            clockVolta.getElapsedTime();
+            tempoVoltas.push(clockVolta.getElapsedTime());
             clockVolta.start();
-
+            path3 = [];
         }
 
         if (volta == 4 && checkStartPosition()) {
@@ -628,11 +627,11 @@ function checkVoltaPista() {
     }
 
     if (isPista == 4) {
-        if (path4.length == 6 && checkStartPosition()) {
+        if (checkStartPosition() && path4.length == 8) {
             volta++;
             path4 = [];
             clockVolta.stop();
-            clockVolta.getElapsedTime();
+            tempoVoltas.push(clockVolta.getElapsedTime());
             clockVolta.start();
 
         }
@@ -646,21 +645,50 @@ function checkVoltaPista() {
 }
 
 function checkStartPosition() {
-    if (tesla.position.x >= -170 && tesla.position.x <= -60
-        && tesla.position.z >= -640 && tesla.position.z <= -560) {
-        return true;
+    if (isPista == 1)
+    {
+        if (tesla.position.x >= -170 && tesla.position.x <= -60
+            && tesla.position.z >= -640 && tesla.position.z <= -560) {
+            return true;
+        }
+        else
+            return false;
     }
-    else
-        return false;
+    if (isPista == 2)
+    {
+        if (tesla.position.x >= 600
+            && tesla.position.z >= -425) {
+            return true;
+        }
+        else
+            return false;
+    }
+    if (isPista == 3)
+    {
+        if (tesla.position.x > 50 && tesla.position.x < 151
+            && tesla.position.z >-650 && tesla.position.z <-566 ) {
+            return true;
+        }
+        else
+            return false;
+    }
+    if (isPista == 4)
+    {
+        if (tesla.position.x >= -637 && tesla.position.x <= -568
+            && tesla.position.z >= 250 && tesla.position.z <= 350) {
+            return true;
+        }
+        else
+            return false;
+    }
 }
 
 function voltaMaisRapida()
 {
     let melhorVolta;
-    console.log("melhor volta", melhorVolta)
     for(let i = 0; i < tempoVoltas.length; i++)
     {
-        if (tempoVoltas[i] > tempoVoltas[i+1])
+        if (tempoVoltas[i] < tempoVoltas[i+1])
             melhorVolta = tempoVoltas[i];
     }
 }
