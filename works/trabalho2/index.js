@@ -89,7 +89,7 @@ newScene.add(lightSphere2);
 
 var luzDirecional = initDefaultSpotlight(camera, camera.position);
 camera.add(luzDirecional)
-luzDirecional.position.set(0, 1, 4)
+luzDirecional.position.set(0, 1, 1)
 
 
 function createSphere(radius, widthSegments, heightSegments) {
@@ -122,7 +122,7 @@ criaBoxRelogioCorrente(clockVolta)
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
-// criaQuadrante()
+criaQuadrante()
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
@@ -502,7 +502,7 @@ function render() {
     keyboardUpdate();
     verifyPosition();
     cameraHolder.getWorldPosition(target);
-    camera.position.copy(target.clone().add(new THREE.Vector3(-30, 25, -30)))
+    camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-30, 25, -30)))
     camera.lookAt(target)
 
     // luzDirecional.position.copy(camera.position.clone().add(new THREE.Vector3(5, 5, -1)))
