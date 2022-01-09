@@ -6,7 +6,7 @@ export function criaBoxRelogio(clockTotal) {
     newDiv.style.top = 0
     newDiv.style.marginLeft = '40'
     newDiv.style.color = '#fff'
-    newDiv.style.fontSize = '14px'
+    newDiv.style.fontSize = '13px'
     newDiv.style.padding = '40px 10px'
     document.body.appendChild(newDiv);
 }
@@ -18,7 +18,7 @@ export function criaBoxRelogioCorrente(clockVolta) {
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
     newDiv.style.color = '#fff'
-    newDiv.style.fontSize = '14px'
+    newDiv.style.fontSize = '13px'
     newDiv.style.padding = '0px 10px'
     document.body.appendChild(newDiv);
 }
@@ -28,11 +28,31 @@ export function criaBoxVelocidade(velocidade) {
     newDiv.innerHTML += `<h1>Velocidade atual: ${velocidade.toFixed(2)} m/s</ h1> `;
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
-    newDiv.style.left = '100'
     newDiv.style.color = '#fff'
     newDiv.style.fontSize = '13px'
     newDiv.style.marginLeft = '240px'
     document.body.appendChild(newDiv);
+}
+
+export function criaBoxMelhorVolta(melhorVolta) {
+    const newDiv = document.createElement("div");
+    newDiv.setAttribute("id", "melhorVolta");
+    newDiv.innerHTML += `<h1>Melhor Volta: --:--</ h1>`;
+    newDiv.style.position = 'absolute';
+    newDiv.style.top = 0
+    newDiv.style.color = '#fff'
+    newDiv.style.fontSize = '13px'
+    newDiv.style.padding = '40px 0px'
+    newDiv.style.marginLeft = '240px'
+    document.body.appendChild(newDiv);
+}
+
+export function updateMelhorVolta(melhorVolta) {
+    const velId = document.getElementById('melhorVolta')
+    if(melhorVolta)
+        velId.innerHTML = `<h1>Melhor Volta: ${melhorVolta.toFixed(2)}</ h1>`
+    else
+        velId.innerHTML = `<h1>Melhor Volta: --:--</ h1>`
 }
 
 export function updateVelocidade(velocidade) {
