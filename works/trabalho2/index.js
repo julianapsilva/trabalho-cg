@@ -221,6 +221,7 @@ function keyboardUpdate() {
         }
         if (keyboard.down("X")) {
             acc = true
+            ativo = false
         }
         if (keyboard.up("X")) {
             ativo = true
