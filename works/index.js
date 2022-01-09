@@ -1,7 +1,7 @@
-import * as THREE from '../../build/three.module.js';
-import Stats from '../../build/jsm/libs/stats.module.js';
-import { TrackballControls } from '../../build/jsm/controls/TrackballControls.js';
-import KeyboardState from '../../libs/util/KeyboardState.js';
+import * as THREE from '../build/three.module.js';
+import Stats from '../build/jsm/libs/stats.module.js';
+import { TrackballControls } from '../build/jsm/controls/TrackballControls.js';
+import KeyboardState from '../libs/util/KeyboardState.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
@@ -20,7 +20,7 @@ import {
     onWindowResize,
     degreesToRadians,
     lightFollowingCamera
-} from "../../libs/util/util.js";
+} from "../libs/util/util.js";
 
 
 let position = 1

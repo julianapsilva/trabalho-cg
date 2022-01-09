@@ -1,9 +1,9 @@
-import { GLTFLoader } from '../../../build/jsm/loaders/GLTFLoader.js'
-import * as THREE from '../../../build/three.module.js';
+import { GLTFLoader } from '../../build/jsm/loaders/GLTFLoader.js'
+import * as THREE from '../../build/three.module.js';
 import {
     degreesToRadians,
     getMaxSize
-} from "../../../libs/util/util.js";
+} from "../../libs/util/util.js";
 
 
 export default function loadGLTFFile(modelPath, modelName, mode) {

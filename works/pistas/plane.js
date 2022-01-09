@@ -1,8 +1,8 @@
-import * as THREE from '../../../build/three.module.js';
+import * as THREE from '../../build/three.module.js';
 
 import {
     degreesToRadians
-} from "../../../libs/util/util.js"
+} from "../../libs/util/util.js"
 
 export default function createPlane(scene) {
     var planeGeometry = new THREE.PlaneGeometry(1440, 1440);
