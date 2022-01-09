@@ -8,7 +8,9 @@ import mudaPista from './pistas/pistas.js';
 import {
     criaBoxRelogio, criaBoxRelogioCorrente,
     updateClock, criaBoxVelocidade,
-    updateVelocidade
+    updateVelocidade,
+    criaBoxMelhorVolta,
+    updateMelhorVolta
 } from './clock/clock.js';
 import {
     initRenderer,
@@ -36,6 +38,8 @@ let velocidade = 0;
 let velocidadeMaxima = 3;
 let velocidadeMinima = 1.5;
 let tesla
+let melhorVolta
+
 
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
@@ -129,6 +133,7 @@ showInformation();
 criaBoxRelogio(clockTotal);
 criaBoxRelogioCorrente(clockVolta)
 criaBoxVelocidade(velocidade)
+criaBoxMelhorVolta(melhorVolta)
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
@@ -656,7 +661,6 @@ function checkStartPosition() {
 
 function voltaMaisRapida()
 {
-    let melhorVolta;
     console.log("melhor volta", melhorVolta)
     for(let i = 0; i < tempoVoltas.length; i++)
     {
@@ -734,6 +738,7 @@ function render() {
     checkVoltaPista();
     updateClock(clockTotal, clockVolta);
     updateVelocidade(velocidade);
+    updateMelhorVolta(melhorVolta);
     voltaMaisRapida();
     //controlledRender();
     // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
