@@ -165,7 +165,17 @@ var ativo = false
 function animate() {
     if (velocidade > 0) {
         if (ativo) {
-         (velocidade > 1.5) ? velocidade -= 0.005 : velocidade -= 0.01
+            switch (velocidade) {
+                case velocidade > 2:
+                    velocidade -= 0.001
+                    break;
+                case velocidade > 1.4:
+                    velocidade -= 0.005
+                    break;
+                default:
+                    velocidade -= 0.01
+                    break;
+            }
             tesla.translateZ(velocidade);
             requestAnimationFrame(animate);
         }
