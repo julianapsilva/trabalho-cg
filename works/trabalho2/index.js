@@ -690,7 +690,7 @@ function checkStartPosition() {
 
 function voltaMaisRapida()
 {
-    console.log("melhor volta", melhorVolta)
+    melhorVolta = tempoVoltas[0];
     for(let i = 0; i < tempoVoltas.length; i++)
     {
         if (tempoVoltas[i] < tempoVoltas[i+1])
