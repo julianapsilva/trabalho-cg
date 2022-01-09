@@ -2,7 +2,6 @@ import * as THREE from '../../build/three.module.js';
 import Stats from '../../build/jsm/libs/stats.module.js';
 import { TrackballControls } from '../../build/jsm/controls/TrackballControls.js';
 import KeyboardState from '../../libs/util/KeyboardState.js';
-import handleCamera from './camera/handleCamera.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
@@ -17,10 +16,10 @@ import {
     initDefaultSpotlight,
     onWindowResize,
     degreesToRadians,
+    lightFollowingCamera
 } from "../../libs/util/util.js";
 
-let currentPosition = new THREE.Vector3()
-let currentLookAt = new THREE.Vector3()
+
 let position = 1
 let toggleCamera = true
 let path = []
@@ -52,15 +51,23 @@ tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(7, 5, -7);
-camera.lookAt(scene.position);
+var target = new THREE.Vector3(); // create once an reuse it
+
+// camera.position.set(7, 5, -7);
+// camera.lookAt(scene.position);
 
 var cameraHolder = new THREE.Object3D();
 
 // adicionar o objeto ao carro
-tesla.add(cameraHolder)
 scene.add(tesla)
-cameraHolder.add(camera)
+//getWorldPosition
+// o objeto na frente do carro
+// pegar a posicao do objeto (do mundo) e apontar (lookat) a camera pro objeto virtual
+tesla.add(cameraHolder);
+camera.position.set(-100, 2.6, -600)
+cameraHolder.lookAt(0, 0, 0);
+cameraHolder.position.set(0, 1, 3)
+
 
 
 var newScene = new THREE.Scene();
@@ -72,24 +79,26 @@ let inspectionTesla = await loadGLTFFile('car/', 'scene.gltf', 'inspection');
 newScene.add(inspectionTesla)
 
 
-
 var trackballControls = new TrackballControls(inspectionCamera, renderer.domElement);
 window.addEventListener('resize', function () { onWindowResize(inspectionCamera, renderer) }, false);
 
-// var trackballControls1 = new TrackballControls(camera, renderer.domElement);
-// window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
-var lightNewscene = initDefaultSpotlight(newScene, inspectionCamera.position); // Use default light
-light.intensity = 7
-
-camera.add(light)
-// light.position.set(0, 0, 1);
-light.target = camera;
-
+var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
 lightNewscene.intensity = 6
-// Listen window size changes
-window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
+
+var lightSphere = createSphere(0.5, 10, 10);
+lightSphere.position.copy(light.position);
+scene.add(lightSphere);
+
+var lightSphere2 = createSphere(0.5, 10, 10);
+lightSphere2.position.copy(lightNewscene.position);
+newScene.add(lightSphere2);
+
+var luzDirecional = initDefaultSpotlight(camera, camera.position);
+camera.add(luzDirecional)
+luzDirecional.position.set(0, 1, 1)
+
 
 function createSphere(radius, widthSegments, heightSegments) {
     var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments, 0, Math.PI * 2, 0, Math.PI);
@@ -98,6 +107,20 @@ function createSphere(radius, widthSegments, heightSegments) {
     object.castShadow = true;
     return object;
 }
+
+
+// var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
+// light.intensity = 7
+
+
+// camera.add( light.target );
+// light.target.position.set( 0, 0, -1 );
+// light.position.copy( camera.position ); 
+// camera.add(light)
+
+// Listen window size changes
+window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
+
 
 createPlane(scene);
 // Show text information onscreen
@@ -219,7 +242,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(1.5);
+        var angleCar = degreesToRadians(1);
 
 
         if (keyboard.pressed("left")) {
@@ -686,11 +709,18 @@ render()
 function render() {
     stats.update(); // Update FPS
     trackballControls.update();
-    // trackballControls1.update()
     keyboardUpdate();
     verifyPosition();
-    handleCamera(camera, tesla, isPista);
-    checkVoltaPista();
+    cameraHolder.getWorldPosition(target);
+    camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-30, 25, -30)))
+    camera.lookAt(target)
+
+    // luzDirecional.position.copy(camera.position.clone().add(new THREE.Vector3(5, 5, -1)))
+    // luzDirecional.lookAt(target)
+
+    // light.position.copy( camera.position.clone().add(new THREE.Vector3(0, 2, -5))) 
+
+
     checkStartPosition();
     updateClock(clockTotal, clockVolta);
     updateVelocidade(velocidade);
@@ -703,7 +733,7 @@ function render() {
     }
     else {
         renderer.render(newScene, inspectionCamera) // Render scene
-        lightNewscene.position.copy(inspectionCamera.position)
+        lightFollowingCamera(lightNewscene, inspectionCamera)
     }
 }
 
