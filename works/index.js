@@ -12,7 +12,7 @@ import {
     criaBoxMelhorVolta,
     updateMelhorVolta
 } from './clock/clock.js';
-import {adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
+import { adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
 import {
     initRenderer,
     InfoBox,
@@ -58,7 +58,7 @@ let car = tesla
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 var target = new THREE.Vector3();
-var targetLight = new THREE.Vector3(); 
+var targetLight = new THREE.Vector3();
 
 var cameraHolder = new THREE.Object3D();
 scene.add(tesla)
@@ -86,7 +86,7 @@ var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 1
 lightNewscene.intensity = 6
 
 
-var luzDirecional =  setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0,1, 0)))
+var luzDirecional = setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0, 1, 0)))
 luzDirecional.target = tesla;
 
 
@@ -147,20 +147,15 @@ function animate() {
             requestAnimationFrame(animate);
         }
     }
-    else 
+    else
         ativo = false
-  }  
+}
 
 
 function keyboardUpdate() {
     let wheels = car.children[0].children[0].children[0].children[0].children.slice(11, 15)
 
     keyboard.update();
-
-    if (keyboard.up("8")) {
-        console.log(tesla.position)
-        console.log('camera', camera)
-    }
 
     if (keyboard.down("space")) {
         toggleCamera = !toggleCamera
@@ -323,13 +318,20 @@ function restartCar(direcao) {
 
     if (direcao == 2) {
         tesla.position.set(600, 2.6, -400)
+        tesla.rotation.set(0, 0.17, 0)
+
     } else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
+        tesla.rotation.set(0, -1.50, 0)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)
+        tesla.rotation.set(-3.14, 0.12, -3.14)
     } else {
         tesla.position.set(-100, 2.6, -600)
+        tesla.rotation.set(0, 1.57, 0)
     }
+    ativo = false
+    velocidade = 0
 }
 
 function pathAlreadyExists(number) {
@@ -636,8 +638,7 @@ function checkVoltaPista() {
 }
 
 function checkStartPosition() {
-    if (isPista == 1)
-    {
+    if (isPista == 1) {
         if (tesla.position.x >= -170 && tesla.position.x <= -60
             && tesla.position.z >= -640 && tesla.position.z <= -560) {
             return true;
@@ -645,8 +646,7 @@ function checkStartPosition() {
         else
             return false;
     }
-    if (isPista == 2)
-    {
+    if (isPista == 2) {
         if (tesla.position.x >= 600
             && tesla.position.z >= -425) {
             return true;
@@ -654,17 +654,15 @@ function checkStartPosition() {
         else
             return false;
     }
-    if (isPista == 3)
-    {
+    if (isPista == 3) {
         if (tesla.position.x > 50 && tesla.position.x < 151
-            && tesla.position.z >-650 && tesla.position.z <-566 ) {
+            && tesla.position.z > -650 && tesla.position.z < -566) {
             return true;
         }
         else
             return false;
     }
-    if (isPista == 4)
-    {
+    if (isPista == 4) {
         if (tesla.position.x >= -637 && tesla.position.x <= -568
             && tesla.position.z >= 250 && tesla.position.z <= 350) {
             return true;
@@ -674,12 +672,10 @@ function checkStartPosition() {
     }
 }
 
-function voltaMaisRapida()
-{
+function voltaMaisRapida() {
     melhorVolta = tempoVoltas[0];
-    for(let i = 0; i < tempoVoltas.length; i++)
-    {
-        if (tempoVoltas[i] < tempoVoltas[i+1])
+    for (let i = 0; i < tempoVoltas.length; i++) {
+        if (tempoVoltas[i] < tempoVoltas[i + 1])
             melhorVolta = tempoVoltas[i];
     }
 }
