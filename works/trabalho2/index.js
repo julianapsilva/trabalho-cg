@@ -731,7 +731,7 @@ var upVec = new THREE.Vector3(0.0, 600.0, 0.0);
 var vcWidth = 300;
 var vcHeidth = 300;
 var projectionChanged = false;
-var virtualCamera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+var virtualCamera = new THREE.PerspectiveCamera(100, 1, 0.1, 1000);
 virtualCamera.position.copy(camPosition);
 virtualCamera.up.copy(upVec);
 virtualCamera.lookAt(lookAtVec);
