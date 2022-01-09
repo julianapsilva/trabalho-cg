@@ -14,7 +14,11 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
             let tesla = gltf.scene;
 
             tesla.traverse(child => { if (child) child.castShadow = true });
-            tesla.traverse(node => { if (node.material) node.material.side = THREE.DoubleSide });
+            tesla.traverse(node => {
+                if (node.material) node.material.side = THREE.DoubleSide
+                if (node.isMesh || node.isLight) node.castShadow = true;
+                if (node.isMesh || node.isLight) node.receiveShadow = true;
+            });
             if (!mode) {
                 tesla = normalizeAndRescale(tesla, 20);
                 tesla.rotateY(degreesToRadians(90))
