@@ -165,8 +165,8 @@ var ativo = false
 function animate() {
     if (velocidade > 0) {
         if (ativo) {
-            tesla.translateZ(velocidade);
-            velocidade -= 0.0009
+         (velocidade > 1.5) ? velocidade -= 0.005 : velocidade -= 0.01
+         tesla.translateZ(velocidade);
         }
     }
     else 
