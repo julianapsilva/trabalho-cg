@@ -159,6 +159,20 @@ let teslaQuaternion3 = new THREE.Quaternion();
 
 teslaQuaternion1.copy(wheels[0].quaternion)
 teslaQuaternion3.copy(wheels[2].quaternion)
+var ativo = false
+
+
+function animate() {
+    if (velocidade > 0) {
+        if (ativo) {
+            tesla.translateZ(velocidade);
+            velocidade -= 0.01
+        }
+    }
+    else 
+        ativo = false
+    requestAnimationFrame(animate);
+  }  
 
 
 function keyboardUpdate() {
@@ -232,12 +246,10 @@ function keyboardUpdate() {
             acc = true
         }
         if (keyboard.up("X")) {
-            // while(velocidade >= 0){
-            //     tesla.translateZ(velocidade);
-            velocidade -= 0.01;
+            ativo = true
+            animate()
         }
-        // acc = false
-        //}
+
         if (keyboard.pressed("down")) {
             tesla.translateZ(-velocidade);
             if (velocidade <= velocidadeMinima)
