@@ -166,7 +166,7 @@ function animate() {
     if (velocidade > 0) {
         if (ativo) {
             tesla.translateZ(velocidade);
-            velocidade -= 0.01
+            velocidade -= 0.0009
         }
     }
     else 
@@ -757,6 +757,55 @@ function controlledRender() {
 }
 //-------------------------------------------------------------------------------
 // FIM virtual camera MINIMAPA
+//-------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------
+//  ILUMINACAO
+//-------------------------------------------------------------------------------
+ 
+var lightPosition = new THREE.Vector3(0, 2, 0);
+var lightColor = "rgb(255,255,255)";
+ 
+ 
+var spotLight = new THREE.SpotLight(lightColor);
+setSpotLight(lightPosition);
+ 
+function setSpotLight(position)
+{
+  spotLight.position.copy(position);
+  spotLight.shadow.mapSize.width = 512;
+  spotLight.shadow.mapSize.height = 512;
+  spotLight.angle = degreesToRadians(40);    
+  spotLight.castShadow = true;
+  spotLight.decay = 2;
+  spotLight.penumbra = 0.5;
+ 
+  scene.add(spotLight);
+}
+ 
+// var dirLight = new THREE.DirectionalLight(lightColor);
+// setDirectionalLighting(lightPosition);
+ 
+// function setDirectionalLighting(position)
+// {
+//   dirLight.position.copy(position);
+//   dirLight.shadow.mapSize.width = 512;
+//   dirLight.shadow.mapSize.height = 512;
+//   dirLight.castShadow = true;
+ 
+//   dirLight.shadow.camera.near = 1;
+//   dirLight.shadow.camera.far = 600;
+//   dirLight.shadow.camera.left = 600;
+//   dirLight.shadow.camera.right = 600;
+//   dirLight.shadow.camera.top = 600;
+//   dirLight.shadow.camera.bottom = 600;
+// //   dirLight.name = "Direction Light";
+//   dirLight.visible = false;
+ 
+//   camera.add(dirLight);
+// }
+//-------------------------------------------------------------------------------
+// FIM ILUMINAÇAO
 //-------------------------------------------------------------------------------
 
 render()
