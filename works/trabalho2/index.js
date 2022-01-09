@@ -12,6 +12,7 @@ import {
     criaBoxMelhorVolta,
     updateMelhorVolta
 } from './clock/clock.js';
+import {adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
 import {
     initRenderer,
     InfoBox,
@@ -56,23 +57,15 @@ tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-var target = new THREE.Vector3(); // create once an reuse it
-
-// camera.position.set(7, 5, -7);
-// camera.lookAt(scene.position);
+var target = new THREE.Vector3();
+var targetLight = new THREE.Vector3(); 
 
 var cameraHolder = new THREE.Object3D();
-
-// adicionar o objeto ao carro
 scene.add(tesla)
-//getWorldPosition
-// o objeto na frente do carro
-// pegar a posicao do objeto (do mundo) e apontar (lookat) a camera pro objeto virtual
 tesla.add(cameraHolder);
 camera.position.set(-100, 2.6, -600)
 cameraHolder.lookAt(0, 0, 0);
 cameraHolder.position.set(0, 1, 3)
-
 
 
 var newScene = new THREE.Scene();
@@ -88,40 +81,14 @@ var trackballControls = new TrackballControls(inspectionCamera, renderer.domElem
 window.addEventListener('resize', function () { onWindowResize(inspectionCamera, renderer) }, false);
 
 
-var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
+adicionaAmbientLight(scene)
 var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
 lightNewscene.intensity = 6
 
-var lightSphere = createSphere(0.5, 10, 10);
-lightSphere.position.copy(light.position);
-scene.add(lightSphere);
 
-var lightSphere2 = createSphere(0.5, 10, 10);
-lightSphere2.position.copy(lightNewscene.position);
-newScene.add(lightSphere2);
+var luzDirecional =  setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0,1, 0)))
+luzDirecional.target = tesla;
 
-var luzDirecional = initDefaultSpotlight(camera, camera.position);
-camera.add(luzDirecional)
-luzDirecional.position.set(0, 1, 1)
-
-
-function createSphere(radius, widthSegments, heightSegments) {
-    var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments, 0, Math.PI * 2, 0, Math.PI);
-    var material = new THREE.MeshBasicMaterial({ color: "rgb(10,10,10)" });
-    var object = new THREE.Mesh(geometry, material);
-    object.castShadow = true;
-    return object;
-}
-
-
-// var light = initDefaultSpotlight(scene, new THREE.Vector3(100, 100, 100)); // Use default light
-// light.intensity = 7
-
-
-// camera.add( light.target );
-// light.target.position.set( 0, 0, -1 );
-// light.position.copy( camera.position ); 
-// camera.add(light)
 
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
@@ -380,8 +347,7 @@ function pathAlreadyExists4(number) {
     return path4.some(n => { return n == number })
 }
 function verifyPosition() {
-    console.log(tesla.position.z, "z")
-    console.log(tesla.position.x, "x")
+
 
     if (isPista == 1) {
         if (tesla.position.z >= -650 && tesla.position.z <= -568
@@ -422,7 +388,6 @@ function verifyPosition() {
     }
 
     if (isPista == 2) {
-        console.log(path2, "path")
         if (tesla.position.z >= -642 && tesla.position.z <= 29
             && tesla.position.x >= 558 && tesla.position.x <= 648) {
             saiuPista2 = false;
@@ -473,7 +438,6 @@ function verifyPosition() {
     }
 
     if (isPista == 3) {
-        console.log(path3, "path")
         if (tesla.position.z >= -647 && tesla.position.z <= -560
             && tesla.position.x >= -338 && tesla.position.x <= 639) {
             saiuPista3 = false;
@@ -540,7 +504,6 @@ function verifyPosition() {
     }
 
     if (isPista == 4) {
-        console.log(path4, "path")
         if (tesla.position.z >= -38 && tesla.position.z <= 635
             && tesla.position.x >= -646 && tesla.position.x <= -560) {
             saiuPista4 = false;
@@ -769,54 +732,6 @@ function controlledRender() {
 // FIM virtual camera MINIMAPA
 //-------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------
-//  ILUMINACAO
-//-------------------------------------------------------------------------------
- 
-var lightPosition = new THREE.Vector3(0, 2, 0);
-var lightColor = "rgb(255,255,255)";
- 
- 
-var spotLight = new THREE.SpotLight(lightColor);
-setSpotLight(lightPosition);
- 
-function setSpotLight(position)
-{
-  spotLight.position.copy(position);
-  spotLight.shadow.mapSize.width = 512;
-  spotLight.shadow.mapSize.height = 512;
-  spotLight.angle = degreesToRadians(40);    
-  spotLight.castShadow = true;
-  spotLight.decay = 2;
-  spotLight.penumbra = 0.5;
- 
-  scene.add(spotLight);
-}
- 
-// var dirLight = new THREE.DirectionalLight(lightColor);
-// setDirectionalLighting(lightPosition);
- 
-// function setDirectionalLighting(position)
-// {
-//   dirLight.position.copy(position);
-//   dirLight.shadow.mapSize.width = 512;
-//   dirLight.shadow.mapSize.height = 512;
-//   dirLight.castShadow = true;
- 
-//   dirLight.shadow.camera.near = 1;
-//   dirLight.shadow.camera.far = 600;
-//   dirLight.shadow.camera.left = 600;
-//   dirLight.shadow.camera.right = 600;
-//   dirLight.shadow.camera.top = 600;
-//   dirLight.shadow.camera.bottom = 600;
-// //   dirLight.name = "Direction Light";
-//   dirLight.visible = false;
- 
-//   camera.add(dirLight);
-// }
-//-------------------------------------------------------------------------------
-// FIM ILUMINAÇAO
-//-------------------------------------------------------------------------------
 
 render()
 
@@ -828,20 +743,12 @@ function render() {
     cameraHolder.getWorldPosition(target);
     camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-30, 25, -30)))
     camera.lookAt(target)
-
-    // luzDirecional.position.copy(camera.position.clone().add(new THREE.Vector3(5, 5, -1)))
-    // luzDirecional.lookAt(target)
-
-    // light.position.copy( camera.position.clone().add(new THREE.Vector3(0, 2, -5))) 
-
     checkStartPosition();
     checkVoltaPista();
     updateClock(clockTotal, clockVolta);
     updateVelocidade(velocidade);
     updateMelhorVolta(melhorVolta);
     voltaMaisRapida();
-    //controlledRender();
-    // handleCamera(position, camera, tesla, currentPosition, currentLookAt, acc, isPista);
     requestAnimationFrame(render); // Show events
     if (toggleCamera) {
         renderer.render(scene, camera) // Render scene

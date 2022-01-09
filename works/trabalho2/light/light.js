@@ -4,19 +4,19 @@ export function setDirectionalLighting(scene, position) {
     var dirLight = new THREE.DirectionalLight('#fff');
 
     dirLight.position.copy(position);
-    dirLight.shadow.mapSize.width = 512;
-    dirLight.shadow.mapSize.height = 512;
+    dirLight.shadow.mapSize.width = 2064;
+    dirLight.shadow.mapSize.height = 2064;
     dirLight.castShadow = true;
 
     dirLight.shadow.camera.near = 1;
-    dirLight.shadow.camera.far = 20;
+    dirLight.shadow.camera.far = 500;
     dirLight.shadow.camera.left = -5;
     dirLight.shadow.camera.right = 5;
     dirLight.shadow.camera.top = 5;
     dirLight.shadow.camera.bottom = -5;
     dirLight.name = "Direction Light";
     dirLight.visible = true;
-    dirLight.intensity = 5
+    dirLight.intensity = 10
     scene.add(dirLight);
     return dirLight
 }
