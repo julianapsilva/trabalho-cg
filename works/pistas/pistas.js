@@ -13,33 +13,33 @@ export default function mudaPista(scene, isPista) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(600, -200);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(345))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1);
+                    //var rampa1 = rampa(600, -200);
+                    //rampa1.translateZ(25)
+                    //rampa1.translateY(-8)
+                    //rampa1.rotateX(degreesToRadians(345))
+                    //rampa1.rotateY(degreesToRadians(90))
+                    //group.add(rampa1);
 
-                    var rampa2 = rampa(250, 600);
-                    rampa2.translateZ(0)
-                    rampa2.translateY(-8)
-                    rampa2.rotateZ(degreesToRadians(345))
-                    rampa2.rotateY(degreesToRadians(180))
-                    group.add(rampa2); 
+                    //var rampa2 = rampa(250, 600);
+                    //rampa2.translateZ(0)
+                    //rampa2.translateY(-8)
+                    //rampa2.rotateZ(degreesToRadians(345))
+                    //rampa2.rotateY(degreesToRadians(180))
+                    //group.add(rampa2); 
                     
-                    var rampa3 = rampa(-200, 600);
-                    rampa3.translateZ(0)
-                    rampa3.translateY(-8)
-                    rampa3.rotateZ(degreesToRadians(345))
-                    rampa3.rotateY(degreesToRadians(180))
-                    group.add(rampa3); 
+                    //var rampa3 = rampa(-200, 600);
+                    //rampa3.translateZ(0)
+                    //rampa3.translateY(-8)
+                    //rampa3.rotateZ(degreesToRadians(345))
+                    //rampa3.rotateY(degreesToRadians(180))
+                    //group.add(rampa3); 
 
-                    var rampa4 = rampa(-600, 0);
-                    rampa4.translateZ(25)
-                    rampa4.translateY(-8)
-                    rampa4.rotateX(degreesToRadians(15))
-                    rampa4.rotateY(degreesToRadians(90))
-                    group.add(rampa4);
+                    //var rampa4 = rampa(-600, 0);
+                    //rampa4.translateZ(25)
+                    //rampa4.translateY(-8)
+                    //rampa4.rotateX(degreesToRadians(15))
+                    //rampa4.rotateY(degreesToRadians(90))
+                    //group.add(rampa4);
                 }
                 if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
@@ -54,12 +54,12 @@ export default function mudaPista(scene, isPista) {
                 if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
-                    var rampa3 = rampa(300, -600);
-                    rampa3.translateZ(0)
-                    rampa3.translateY(-8)
-                    rampa3.rotateZ(degreesToRadians(15))
-                    rampa3.rotateY(degreesToRadians(180))
-                    group.add(rampa3); 
+                   // var rampa3 = rampa(300, -600);
+                    //rampa3.translateZ(0)
+                    //rampa3.translateY(-8)
+                    //rampa3.rotateZ(degreesToRadians(15))
+                    //rampa3.rotateY(degreesToRadians(180))
+                    //group.add(rampa3); 
                 }
                 if (i == 600 && j <= 0) // reta 2
                 {
@@ -80,19 +80,19 @@ export default function mudaPista(scene, isPista) {
                 if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(-600, 200);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(15))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1); 
+                   // var rampa1 = rampa(-600, 200);
+                   // rampa1.translateZ(25)
+                   // rampa1.translateY(-8)
+                   // rampa1.rotateX(degreesToRadians(15))
+                   // rampa1.rotateY(degreesToRadians(90))
+                   // group.add(rampa1); 
         
-                    var rampa2 = rampa(-600, -300);
-                    rampa2.translateZ(25)
-                    rampa2.translateY(-8)
-                    rampa2.rotateX(degreesToRadians(15))
-                    rampa2.rotateY(degreesToRadians(90))
-                    group.add(rampa2); 
+                   // var rampa2 = rampa(-600, -300);
+                   // rampa2.translateZ(25)
+                   // rampa2.translateY(-8)
+                   // rampa2.rotateX(degreesToRadians(15))
+                   // rampa2.rotateY(degreesToRadians(90))
+                   // group.add(rampa2); 
                 }
                 if (i == 600 && j == -400) {
                     group.add(blocoInicio(i, j));
@@ -112,12 +112,12 @@ export default function mudaPista(scene, isPista) {
                 {
                     group.add(blocoComum(i, j));
 
-                    var rampa3 = rampa(600, 200);
-                    rampa3.translateZ(25)
-                    rampa3.translateY(-8)
-                    rampa3.rotateX(degreesToRadians(25))
-                    rampa3.rotateY(degreesToRadians(90))
-                    group.add(rampa3);
+                  //  var rampa3 = rampa(600, 200);
+                  //  rampa3.translateZ(25)
+                  //  rampa3.translateY(-8)
+                  //  rampa3.rotateX(degreesToRadians(25))
+                  //  rampa3.rotateY(degreesToRadians(90))
+                  //  group.add(rampa3);
                 }
              
                 if (j == -300 && i >= 200) // reta 3
@@ -127,32 +127,32 @@ export default function mudaPista(scene, isPista) {
                 if (i == 200 && j >= -300) // reta 4
                 {
                     group.add(blocoComum(i, j));
-                    var rampa4 = rampa(200, 200);
-                    rampa4.translateZ(25)
-                    rampa4.translateY(-8)
-                    rampa4.rotateX(degreesToRadians(25))
-                    rampa4.rotateY(degreesToRadians(90))
-                    group.add(rampa4);
+                   // var rampa4 = rampa(200, 200);
+                   // rampa4.translateZ(25)
+                   // rampa4.translateY(-8)
+                   // rampa4.rotateX(degreesToRadians(25))
+                   // rampa4.rotateY(degreesToRadians(90))
+                   // group.add(rampa4);
                 }
                 if (j == 600) // reta 5
                 {
                     group.add(blocoComum(i, j));
-                    var rampa2 = rampa(-200, 600);
-                    rampa2.translateZ(0)
-                    rampa2.translateY(-8)
-                    rampa2.rotateZ(degreesToRadians(25))
-                    rampa2.rotateY(degreesToRadians(180))
-                    group.add(rampa2); 
+                   // var rampa2 = rampa(-200, 600);
+                   // rampa2.translateZ(0)
+                   // rampa2.translateY(-8)
+                  //  rampa2.rotateZ(degreesToRadians(25))
+                  //  rampa2.rotateY(degreesToRadians(180))
+                  //  group.add(rampa2); 
                 }
                 if (i == -600 && j >= -100) // reta 6
                 {
                     group.add(blocoComum(i, j));
                     var rampa1 = rampa(-600, 150);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(345))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1);
+                //    rampa1.translateZ(25)
+                //    rampa1.translateY(-8)
+                //    rampa1.rotateX(degreesToRadians(345))
+                //    rampa1.rotateY(degreesToRadians(90))
+                //    group.add(rampa1);
                 }
                 if (j == -100 && i <= -300) // reta 7
                 {
@@ -183,11 +183,11 @@ export default function mudaPista(scene, isPista) {
                 if (j == -300 && i>=400) // reta 3
                 {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(400,-300);
-                    rampa1.translateX(-25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateZ(degreesToRadians(345))
-                    group.add(rampa1); 
+                //    var rampa1 = rampa(400,-300);
+                //    rampa1.translateX(-25)
+                //    rampa1.translateY(-8)
+                //    rampa1.rotateZ(degreesToRadians(345))
+                //    group.add(rampa1); 
                 }
                 if (j <= 0 && i==300) // reta 4
                 {
@@ -204,12 +204,12 @@ export default function mudaPista(scene, isPista) {
                 if (i == -100 && j>=-200) // reta 2/4
                 {
                     group.add(blocoComum(i, j));
-                    var rampa2 = rampa(-100,-100);
-                    rampa2.translateZ(25)
-                    rampa2.translateY(-8)
-                    rampa2.rotateX(degreesToRadians(345))
-                    rampa2.rotateY(degreesToRadians(90))
-                    group.add(rampa2); 
+                //    var rampa2 = rampa(-100,-100);
+                //    rampa2.translateZ(25)
+                //    rampa2.translateY(-8)
+                //    rampa2.rotateX(degreesToRadians(345))
+                //    rampa2.rotateY(degreesToRadians(90))
+                //    group.add(rampa2); 
                 }
                 if (i <= -100 && j == 600) // reta 6
                 {
