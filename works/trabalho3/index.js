@@ -5,6 +5,8 @@ import KeyboardState from '../../libs/util/KeyboardState.js';
 import createPlane from './pistas/plane.js';
 import loadGLTFFile from './car/car.js';
 import mudaPista from './pistas/pistas.js';
+import createSkybox from './skybox/skybox.js';
+
 import {
     criaBoxRelogio, criaBoxRelogioCorrente,
     updateClock, criaBoxVelocidade,
@@ -104,6 +106,8 @@ criaBoxMelhorVolta(melhorVolta)
 // To use the keyboard
 var keyboard = new KeyboardState();
 mudaPista(scene, 2);
+
+createSkybox(scene);
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
