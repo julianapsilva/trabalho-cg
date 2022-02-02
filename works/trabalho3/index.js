@@ -43,7 +43,6 @@ let velocidadeMinima = 1.5;
 let tesla
 let melhorVolta
 
-
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
 var clockVolta = new THREE.Clock();
@@ -737,6 +736,10 @@ function controlledRender() {
 // FIM virtual camera MINIMAPA
 //-------------------------------------------------------------------------------
 
+
+//mouseControls.addEventListener('change', renderer);
+//mouseControls.minDistance = 500;
+//1mouseControls.maxDistance = 1500;
 
 render()
 
