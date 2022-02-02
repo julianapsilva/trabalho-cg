@@ -14,7 +14,7 @@ import {
     criaBoxMelhorVolta,
     updateMelhorVolta
 } from './clock/clock.js';
-import {adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
+import { adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
 import {
     initRenderer,
     InfoBox,
@@ -26,7 +26,7 @@ import {
 
 
 let position = 1
-let toggleCamera = true
+var toggleCamera = 0
 let path = []
 let path2 = []
 let path3 = []
@@ -59,14 +59,22 @@ let car = tesla
 
 var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 var target = new THREE.Vector3();
-var targetLight = new THREE.Vector3(); 
+var targetLight = new THREE.Vector3();
+scene.add(tesla)
 
 var cameraHolder = new THREE.Object3D();
-scene.add(tesla)
 tesla.add(cameraHolder);
 camera.position.set(-100, 2.6, -600)
 cameraHolder.lookAt(0, 0, 0);
 cameraHolder.position.set(0, 1, 3)
+
+
+let thirdCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+tesla.add(thirdCamera);
+thirdCamera.position.set(0, 3, -10)
+thirdCamera.rotateY(Math.PI)
+let thirdPerson = true
+
 
 
 var newScene = new THREE.Scene();
@@ -87,7 +95,7 @@ var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 1
 lightNewscene.intensity = 6
 
 
-var luzDirecional =  setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0,1, 0)))
+var luzDirecional = setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0, 1, 0)))
 luzDirecional.target = tesla;
 
 
@@ -150,9 +158,9 @@ function animate() {
             requestAnimationFrame(animate);
         }
     }
-    else 
+    else
         ativo = false
-  }  
+}
 
 
 function keyboardUpdate() {
@@ -160,28 +168,27 @@ function keyboardUpdate() {
 
     keyboard.update();
 
-    if (keyboard.up("8")) {
-        console.log(tesla.position)
-        console.log('camera', camera)
-    }
-
     if (keyboard.down("space")) {
-        toggleCamera = !toggleCamera
-        if (!toggleCamera) {
+        toggleCamera < 2 ? toggleCamera++ : (toggleCamera = 0)
+
+        if (toggleCamera == 1) {
             car = inspectionTesla
             scene.visible = false
             renderer.setClearColor("rgb(30, 100, 40)");
         }
-        else {
+        else if (toggleCamera == 0 || toggleCamera == 2) {
             scene.visible = true
             renderer.setClearColor("rgb(30, 30, 40)");
             car = tesla
         }
+        console.log('visible', scene.visible, toggleCamera)
+
+
     }
 
     if (keyboard.up("left") || keyboard.up("right")
         || keyboard.down("left") || keyboard.down("right")) {
-        if (!toggleCamera) {
+        if (toggleCamera === 1) {
             wheels[0].quaternion.slerp(inspQuaternion1, 0.9)
             wheels[2].quaternion.slerp(inspQuaternion3, 0.9)
         }
@@ -211,7 +218,7 @@ function keyboardUpdate() {
         }
     }
 
-    if (toggleCamera) {
+    if (toggleCamera == 0 || toggleCamera == 2) {
         if (keyboard.pressed("X")) {
             tesla.translateZ(velocidade);
             console.log(velocidade, "velocidade");
@@ -639,8 +646,7 @@ function checkVoltaPista() {
 }
 
 function checkStartPosition() {
-    if (isPista == 1)
-    {
+    if (isPista == 1) {
         if (tesla.position.x >= -170 && tesla.position.x <= -60
             && tesla.position.z >= -640 && tesla.position.z <= -560) {
             return true;
@@ -648,8 +654,7 @@ function checkStartPosition() {
         else
             return false;
     }
-    if (isPista == 2)
-    {
+    if (isPista == 2) {
         if (tesla.position.x >= 600
             && tesla.position.z >= -425) {
             return true;
@@ -657,17 +662,15 @@ function checkStartPosition() {
         else
             return false;
     }
-    if (isPista == 3)
-    {
+    if (isPista == 3) {
         if (tesla.position.x > 50 && tesla.position.x < 151
-            && tesla.position.z >-650 && tesla.position.z <-566 ) {
+            && tesla.position.z > -650 && tesla.position.z < -566) {
             return true;
         }
         else
             return false;
     }
-    if (isPista == 4)
-    {
+    if (isPista == 4) {
         if (tesla.position.x >= -637 && tesla.position.x <= -568
             && tesla.position.z >= 250 && tesla.position.z <= 350) {
             return true;
@@ -677,12 +680,10 @@ function checkStartPosition() {
     }
 }
 
-function voltaMaisRapida()
-{
+function voltaMaisRapida() {
     melhorVolta = tempoVoltas[0];
-    for(let i = 0; i < tempoVoltas.length; i++)
-    {
-        if (tempoVoltas[i] < tempoVoltas[i+1])
+    for (let i = 0; i < tempoVoltas.length; i++) {
+        if (tempoVoltas[i] < tempoVoltas[i + 1])
             melhorVolta = tempoVoltas[i];
     }
 }
@@ -748,9 +749,6 @@ function render() {
     trackballControls.update();
     keyboardUpdate();
     verifyPosition();
-    cameraHolder.getWorldPosition(target);
-    camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-30, 25, -30)))
-    camera.lookAt(target)
     checkStartPosition();
     checkVoltaPista();
     updateClock(clockTotal, clockVolta);
@@ -758,7 +756,15 @@ function render() {
     updateMelhorVolta(melhorVolta);
     voltaMaisRapida();
     requestAnimationFrame(render); // Show events
-    if (toggleCamera) {
+    if (toggleCamera === 2) {
+        renderer.setViewport(0, 0, window.innerWidth, window.innerHeight); // Reset viewport    
+        renderer.setScissorTest(false); // Disable scissor to paint the entire window
+        renderer.render(scene, thirdCamera) // Render scene
+    }
+    else if (toggleCamera === 0) {
+        cameraHolder.getWorldPosition(target);
+        camera.position.copy(tesla.position.clone().add(new THREE.Vector3(-30, 25, -30)))
+        camera.lookAt(target)
         renderer.render(scene, camera) // Render scene
         controlledRender()
     }
