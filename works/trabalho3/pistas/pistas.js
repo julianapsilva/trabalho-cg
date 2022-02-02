@@ -13,33 +13,7 @@ export default function mudaPista(scene, isPista) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(600, -200);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(345))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1);
-
-                    var rampa2 = rampa(250, 600);
-                    rampa2.translateZ(0)
-                    rampa2.translateY(-8)
-                    rampa2.rotateZ(degreesToRadians(345))
-                    rampa2.rotateY(degreesToRadians(180))
-                    group.add(rampa2); 
-                    
-                    var rampa3 = rampa(-200, 600);
-                    rampa3.translateZ(0)
-                    rampa3.translateY(-8)
-                    rampa3.rotateZ(degreesToRadians(345))
-                    rampa3.rotateY(degreesToRadians(180))
-                    group.add(rampa3); 
-
-                    var rampa4 = rampa(-600, 0);
-                    rampa4.translateZ(25)
-                    rampa4.translateY(-8)
-                    rampa4.rotateX(degreesToRadians(15))
-                    rampa4.rotateY(degreesToRadians(90))
-                    group.add(rampa4);
+         
                 }
                 if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
@@ -54,12 +28,7 @@ export default function mudaPista(scene, isPista) {
                 if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
-                    var rampa3 = rampa(300, -600);
-                    rampa3.translateZ(0)
-                    rampa3.translateY(-8)
-                    rampa3.rotateZ(degreesToRadians(15))
-                    rampa3.rotateY(degreesToRadians(180))
-                    group.add(rampa3); 
+                  
                 }
                 if (i == 600 && j <= 0) // reta 2
                 {
@@ -80,19 +49,7 @@ export default function mudaPista(scene, isPista) {
                 if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(-600, 200);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(15))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1); 
-        
-                    var rampa2 = rampa(-600, -300);
-                    rampa2.translateZ(25)
-                    rampa2.translateY(-8)
-                    rampa2.rotateX(degreesToRadians(15))
-                    rampa2.rotateY(degreesToRadians(90))
-                    group.add(rampa2); 
+                  
                 }
                 if (i == 600 && j == -400) {
                     group.add(blocoInicio(i, j));
@@ -112,12 +69,6 @@ export default function mudaPista(scene, isPista) {
                 {
                     group.add(blocoComum(i, j));
 
-                    var rampa3 = rampa(600, 200);
-                    rampa3.translateZ(25)
-                    rampa3.translateY(-8)
-                    rampa3.rotateX(degreesToRadians(25))
-                    rampa3.rotateY(degreesToRadians(90))
-                    group.add(rampa3);
                 }
              
                 if (j == -300 && i >= 200) // reta 3
@@ -127,32 +78,17 @@ export default function mudaPista(scene, isPista) {
                 if (i == 200 && j >= -300) // reta 4
                 {
                     group.add(blocoComum(i, j));
-                    var rampa4 = rampa(200, 200);
-                    rampa4.translateZ(25)
-                    rampa4.translateY(-8)
-                    rampa4.rotateX(degreesToRadians(25))
-                    rampa4.rotateY(degreesToRadians(90))
-                    group.add(rampa4);
+                 
                 }
                 if (j == 600) // reta 5
                 {
                     group.add(blocoComum(i, j));
-                    var rampa2 = rampa(-200, 600);
-                    rampa2.translateZ(0)
-                    rampa2.translateY(-8)
-                    rampa2.rotateZ(degreesToRadians(25))
-                    rampa2.rotateY(degreesToRadians(180))
-                    group.add(rampa2); 
+                  
                 }
                 if (i == -600 && j >= -100) // reta 6
                 {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(-600, 150);
-                    rampa1.translateZ(25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateX(degreesToRadians(345))
-                    rampa1.rotateY(degreesToRadians(90))
-                    group.add(rampa1);
+                 
                 }
                 if (j == -100 && i <= -300) // reta 7
                 {
@@ -183,11 +119,7 @@ export default function mudaPista(scene, isPista) {
                 if (j == -300 && i>=400) // reta 3
                 {
                     group.add(blocoComum(i, j));
-                    var rampa1 = rampa(400,-300);
-                    rampa1.translateX(-25)
-                    rampa1.translateY(-8)
-                    rampa1.rotateZ(degreesToRadians(345))
-                    group.add(rampa1); 
+               
                 }
                 if (j <= 0 && i==300) // reta 4
                 {
@@ -204,12 +136,7 @@ export default function mudaPista(scene, isPista) {
                 if (i == -100 && j>=-200) // reta 2/4
                 {
                     group.add(blocoComum(i, j));
-                    var rampa2 = rampa(-100,-100);
-                    rampa2.translateZ(25)
-                    rampa2.translateY(-8)
-                    rampa2.rotateX(degreesToRadians(345))
-                    rampa2.rotateY(degreesToRadians(90))
-                    group.add(rampa2); 
+                    
                 }
                 if (i <= -100 && j == 600) // reta 6
                 {
@@ -232,31 +159,44 @@ export default function mudaPista(scene, isPista) {
     }
   return group;
     function blocoComum(x, z) {
-        var cubeGeometry = new THREE.BoxGeometry(99.75, 0.3, 99.75);
-        var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(50,50,50)' });
-        var cube;
+        var blocoCGeometry = new THREE.BoxGeometry(100, 0.3, 100);
+        var blocoCMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(70,70,70)' });
+        var blocoC;
 
-        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.set(x, 0.15, z);
-        return cube;
-    }
-    function rampa(x, z) {
-        var cubeGeometry = new THREE.BoxGeometry(49.75, 25, 99.75);
-        var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(20,20,20)' });
-        var cube;
+        blocoC = new THREE.Mesh(blocoCGeometry, blocoCMaterial);
+        blocoC.position.set(x, 0.15, z);
+        
+        var textureLoader = new THREE.TextureLoader();
+        var asfalto = textureLoader.load('./pistas/textures/asfalto3.jpg');
+    
+        // Apply texture to the 'map' property of the blocoCs
+        blocoC.material.map = asfalto;
+        //blocoC.material.map.repeat.set(5, 5);
+        blocoC.material.map.wrapS = THREE.RepeatWrapping;
+        blocoC.material.map.wrapT = THREE.RepeatWrapping;
 
-        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.set(x, 0.15, z);
-        return cube;
+        return blocoC;
     }
+ 
     function blocoInicio(x, z) {
-        var cubeGeometry = new THREE.BoxGeometry(99.75, 0.4, 99.75);
-        var cubeMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 0, 0)', });
-        var cube;
+        var inicioGeometry = new THREE.BoxGeometry(99.75, 0.4, 99.75);
+        var inicioMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(255, 255, 255)', });
+        var inicio;
 
-        cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.set(x, 0.15, z);
-        return cube;
+        inicio = new THREE.Mesh(inicioGeometry, inicioMaterial);
+        inicio.position.set(x, 0.15, z);
+        
+        var textureLoader = new THREE.TextureLoader();
+        var asfalto = textureLoader.load('./pistas/textures/inicio.png');
+    
+        // Apply texture to the 'map' property of the blocoCs
+        inicio.material.map = asfalto;
+        //inicio.material.map.repeat.set(5, 5);
+        inicio.material.map.wrapS = THREE.RepeatWrapping;
+        inicio.material.map.wrapT = THREE.RepeatWrapping;
+
+        return inicio;
+
     }
 
 }
