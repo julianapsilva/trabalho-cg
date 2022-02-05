@@ -49,7 +49,7 @@ export function criaBoxMelhorVolta(melhorVolta) {
 
 export function updateMelhorVolta(melhorVolta) {
     const velId = document.getElementById('melhorVolta')
-    if(melhorVolta)
+    if (melhorVolta)
         velId.innerHTML = `<h1>Melhor Volta: ${melhorVolta.toFixed(2)}</ h1>`
     else
         velId.innerHTML = `<h1>Melhor Volta: --:--</ h1>`
@@ -67,6 +67,17 @@ export function updateClock(clockTotal, clockVolta) {
     const tCorrente = clockVolta.getElapsedTime()
     clockT.innerHTML = `<h1>Tempo total: ${t.toFixed(2)}</ h1> `
     clockC.innerHTML = `<h1>Volta atual: ${tCorrente.toFixed(2)}</ h1> `
+}
+
+export function showOrHideInformation(display) {
+    const d1 = document.getElementById('clockTotal')
+    const d2 = document.getElementById('clockCorrente')
+    const d3 = document.getElementById('velocidade')
+    const d4 = document.getElementById('melhorVolta')
+    d1.style.display = display
+    d2.style.display = display
+    d3.style.display = display
+    d4.style.display = display
 }
 
 
