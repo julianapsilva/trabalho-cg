@@ -28,3 +28,11 @@ export function adicionaAmbientLight(scene) {
     ambientLight.intensity = 0.5
     scene.add(ambientLight);
 }
+
+export function initCamera(initialPosition) {
+    var position = (initialPosition !== undefined) ? initialPosition : new THREE.Vector3(-30, 40, 30);
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.copy(position);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    return camera;
+}

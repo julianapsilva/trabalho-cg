@@ -15,7 +15,7 @@ import {
     updateMelhorVolta,
     showOrHideInformation
 } from './clock/clock.js';
-import { adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
+import { adicionaAmbientLight, setDirectionalLighting, initCamera } from './light/light.js';
 import {
     initRenderer,
     InfoBox,
@@ -69,20 +69,24 @@ tesla.add(cameraHolder);
 camera.position.set(-100, 2.6, -600)
 cameraHolder.lookAt(0, 0, 0);
 cameraHolder.position.set(0, 1, 3)
+adicionaAmbientLight(scene)
 
 
 let thirdCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 tesla.add(thirdCamera);
 thirdCamera.position.set(0, 3, -10)
 thirdCamera.rotateY(Math.PI)
-let thirdPerson = true
-
 
 
 var newScene = new THREE.Scene();
-var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
-inspectionCamera.lookAt(0, 1, 0)
-inspectionCamera.position.set(37, 0, 0)
+// var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
+// inspectionCamera.lookAt(0, 1, 0)
+// inspectionCamera.position.set(37, 0, 0)
+var inspectionCamera = initCamera(new THREE.Vector3(50, 0, 0)); // Init camera in this position
+var lightPosition = new THREE.Vector3(0.0, 0.0, 3.0);
+var lightNewscene = initDefaultSpotlight(newScene, lightPosition); // Use default light
+lightNewscene.intensity = 6
+
 
 let inspectionTesla = await loadGLTFFile('car/', 'scene.gltf', 'inspection');
 newScene.add(inspectionTesla)
@@ -92,17 +96,12 @@ var trackballControls = new TrackballControls(inspectionCamera, renderer.domElem
 window.addEventListener('resize', function () { onWindowResize(inspectionCamera, renderer) }, false);
 
 
-adicionaAmbientLight(scene)
-var lightNewscene = initDefaultSpotlight(newScene, new THREE.Vector3(100, 100, 100)); // Use default light
-lightNewscene.intensity = 6
-
-
 var luzDirecional = setDirectionalLighting(tesla, tesla.position.clone().add(new THREE.Vector3(0, 1, 0)))
 luzDirecional.target = tesla;
 
 
 // Listen window size changes
-window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
+// window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 
 createPlane(scene);
@@ -225,7 +224,7 @@ function keyboardUpdate() {
         if (keyboard.pressed("X")) {
             tesla.translateZ(velocidade);
             console.log(velocidade, "velocidade");
-            if (velocidade <= velocidadeMaxima)
+            if (velocidade <= velocidadeMaxima && !reduziu)
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2 || saiuPista3 || saiuPista4) {
                 if (velocidade >= velocidadeMinima)
