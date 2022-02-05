@@ -5,7 +5,7 @@ export function criaBoxRelogio(clockTotal) {
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
     newDiv.style.marginLeft = '40'
-    newDiv.style.color = '#fff'
+    newDiv.style.color = '#000'
     newDiv.style.fontSize = '13px'
     newDiv.style.padding = '40px 10px'
     document.body.appendChild(newDiv);
@@ -17,7 +17,7 @@ export function criaBoxRelogioCorrente(clockVolta) {
     newDiv.innerHTML += `<h1>Volta atual: ${clockVolta.getElapsedTime()}</ h1> `;
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
-    newDiv.style.color = '#fff'
+    newDiv.style.color = '#000'
     newDiv.style.fontSize = '13px'
     newDiv.style.padding = '0px 10px'
     document.body.appendChild(newDiv);
@@ -28,7 +28,7 @@ export function criaBoxVelocidade(velocidade) {
     newDiv.innerHTML += `<h1>Velocidade atual: ${velocidade.toFixed(2)} m/s</ h1> `;
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
-    newDiv.style.color = '#fff'
+    newDiv.style.color = '#000'
     newDiv.style.fontSize = '13px'
     newDiv.style.marginLeft = '240px'
     document.body.appendChild(newDiv);
@@ -40,7 +40,7 @@ export function criaBoxMelhorVolta(melhorVolta) {
     newDiv.innerHTML += `<h1>Melhor Volta: --:--</ h1>`;
     newDiv.style.position = 'absolute';
     newDiv.style.top = 0
-    newDiv.style.color = '#fff'
+    newDiv.style.color = '#000'
     newDiv.style.fontSize = '13px'
     newDiv.style.padding = '40px 0px'
     newDiv.style.marginLeft = '240px'
@@ -73,7 +73,7 @@ export function updateClock(clockTotal, clockVolta) {
 export function criaQuadrante() {
     const newDiv = document.createElement("div");
     const newDiv2 = document.createElement("div");
-    newDiv.style.color = '#fff'
+    newDiv.style.color = '#000'
     newDiv.style.height = '100vh'
     newDiv.style.border = '1px solid #fff'
     newDiv.style.position = 'absolute';
@@ -81,7 +81,7 @@ export function criaQuadrante() {
     newDiv.style.left = '50%';
     newDiv.style.transform = 'translate(-50%, -50%)';
 
-    newDiv2.style.color = '#fff'
+    newDiv2.style.color = '#000'
     newDiv2.style.width = '100vw'
     newDiv2.style.border = '1px solid #fff'
     newDiv2.style.position = 'absolute';
