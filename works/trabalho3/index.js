@@ -42,6 +42,7 @@ let velocidadeMaxima = 3;
 let velocidadeMinima = 1.5;
 let tesla
 let melhorVolta
+let reduziu = false
 
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
@@ -248,7 +249,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(1);
+        var angleCar = degreesToRadians(velocidade);
 
 
         if (keyboard.pressed("left")) {
@@ -327,6 +328,21 @@ function keyboardUpdate() {
     }
 
 }
+
+function verifyCollision() {
+    let firstBB = new THREE.Box3().setFromObject(tesla);
+    let secondBB = new THREE.Box3().setFromObject(scene.children[4]);
+    var collision = firstBB.intersectsBox(secondBB);
+    if (collision && !reduziu) {
+        velocidade -= velocidade * 0.2
+        reduziu = true
+    }
+    else if (!collision) {
+        reduziu = false
+    }
+}
+
+
 
 function restartCar(direcao) {
     position = 1;
@@ -755,6 +771,7 @@ function render() {
     updateVelocidade(velocidade);
     updateMelhorVolta(melhorVolta);
     voltaMaisRapida();
+    verifyCollision();
     requestAnimationFrame(render); // Show events
     if (toggleCamera === 2) {
         renderer.setViewport(0, 0, window.innerWidth, window.innerHeight); // Reset viewport    
