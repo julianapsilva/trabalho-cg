@@ -11,11 +11,11 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
+        cone(scene, 0, -600);
         for (let i = -600; i < 602; i += 100) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
                     group.add(blocoComum(i, j));
-                    cone(scene, 0, -600);
                 }
                 if (i == -100 && j == -600) {
                     group.add(blocoInicio(i, j));
