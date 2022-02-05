@@ -12,7 +12,8 @@ import {
     updateClock, criaBoxVelocidade,
     updateVelocidade,
     criaBoxMelhorVolta,
-    updateMelhorVolta
+    updateMelhorVolta,
+    showOrHideInformation
 } from './clock/clock.js';
 import { adicionaAmbientLight, setDirectionalLighting } from './light/light.js';
 import {
@@ -79,7 +80,7 @@ let thirdPerson = true
 
 
 var newScene = new THREE.Scene();
-var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+var inspectionCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000);
 inspectionCamera.lookAt(0, 1, 0)
 inspectionCamera.position.set(37, 0, 0)
 
@@ -116,6 +117,8 @@ var keyboard = new KeyboardState();
 mudaPista(scene, 2);
 
 createSkybox(scene);
+createSkybox(newScene);
+
 
 var pressionadoLeft = false;
 var pressionadoRight = false;
@@ -175,15 +178,14 @@ function keyboardUpdate() {
         if (toggleCamera == 1) {
             car = inspectionTesla
             scene.visible = false
-            renderer.setClearColor("rgb(30, 100, 40)");
+            showOrHideInformation('none')
         }
         else if (toggleCamera == 0 || toggleCamera == 2) {
             scene.visible = true
             renderer.setClearColor("rgb(30, 30, 40)");
             car = tesla
+            showOrHideInformation('block')
         }
-        console.log('visible', scene.visible, toggleCamera)
-
 
     }
 
