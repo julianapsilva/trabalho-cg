@@ -772,7 +772,7 @@ function addJoysticks() {
         zone: document.getElementById('joystickWrapper1'),
         mode: 'static',
         lockX: true, // only move on the Y axis				
-        position: { top: '-80px', left: '80px' }
+        position: { top: '-70px', left: '60px' }
     });
 
     joystickL.on('move', function (evt, data) {
@@ -795,10 +795,14 @@ function onButtonDown(event) {
         case "B":
             buttonB = true
             break;
+        case "C":
+            toggleCamera == 0 ? toggleCamera = 2 : (toggleCamera = 0)
+            break;
     }
 }
 
 function onButtonUp(event) {
+    joystickRight = joystickLeft = false;
     switch (event.target.id) {
         case "A":
             buttonA = false
@@ -810,10 +814,6 @@ function onButtonUp(event) {
             break;
     }
 }
-
-
-
-
 
 
 render()
