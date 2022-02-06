@@ -1,11 +1,13 @@
 import * as THREE from '../../../build/three.module.js';
 import {ARjs}    from  '../../../libs/AR/ar.js';
+import { TrackballControls } from '../../../build/jsm/controls/TrackballControls.js';
 import {GLTFLoader} from '../../../build/jsm/loaders/GLTFLoader.js';
 import { adicionaAmbientLight, setDirectionalLighting, initCamera } from '.././light/light.js';
 import {SecondaryBox,
     getMaxSize, 
     createGroundPlane,
     degreesToRadians,
+      lightFollowingCamera
     } from "../../../libs/util/util.js";
 
 var clock = new THREE.Clock();
@@ -13,10 +15,25 @@ var clock = new THREE.Clock();
 var renderer	= new THREE.WebGLRenderer({antialias: true, alpha: true});
 renderer.setSize( 640, 480 );
 document.body.appendChild( renderer.domElement );
+
 //inicia camera e a cena
 var raScene	= new THREE.Scene();
-var camera = new THREE.Camera();
-raScene.add(camera);
+var inspectionCamera = initCamera(new THREE.Vector3(50, 0, 0)); // Init camera in this position
+raScene.add(inspectionCamera);
+
+function onWindowResize() {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+
+  controls.handleResize(); // for TrackballControls
+
+  render();
+
+}
+
 
 // array of functions for the rendering loop
 var onRenderFcts= [];
@@ -35,11 +52,6 @@ arToolkitSource.init(function onReady(){
 	setTimeout(() => {
 		onResize()
 	}, 2000);
-})
-
-// handle resize
-window.addEventListener('resize', function(){
-	onResize()
 })
 
 function onResize(){
@@ -63,7 +75,7 @@ var arToolkitContext = new ARjs.Context({
 // initialize it
 arToolkitContext.init(function onCompleted(){
 	// copy projection matrix to camera
-	camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+	inspectionCamera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
 })
 
 // update artoolkit on every frame
@@ -71,7 +83,7 @@ onRenderFcts.push(function(){
 	if( arToolkitSource.ready === false )	return
 	arToolkitContext.update( arToolkitSource.domElement )
 	// update raScene.visible if the marker is seen
-	raScene.visible = camera.visible
+	raScene.visible = inspectionCamera.visible
 })
 
 //----------------------------------------------------------------------------
@@ -79,7 +91,7 @@ onRenderFcts.push(function(){
 //
 // init controls for camera
 //var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-    var markerControls = new ARjs.MarkerControls(arToolkitContext, camera, {	
+    var markerControls = new ARjs.MarkerControls(arToolkitContext, inspectionCamera, {	
         type : 'pattern',
         patternUrl : '../../../libs/AR/data/patt.kanji',
         changeMatrixMode: 'cameraTransformMatrix' // as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
@@ -89,6 +101,10 @@ onRenderFcts.push(function(){
 
     //----------------------------------------------------------------------------
 // Adding object to the raScene
+
+
+var trackballControls = new TrackballControls(inspectionCamera, renderer.domElement);
+window.addEventListener('resize', function () { onWindowResize(inspectionCamera, renderer) }, true);
 
 let windowMat = new THREE.MeshPhongMaterial({
   color: 0xF0F0F0,
@@ -137,8 +153,6 @@ function loadGLTFFile(modelPath, modelFolder, desiredScale, angle, visibility) {
       mixerLocal.clipAction( gltf.animations[0] ).play();
       mixer.push(mixerLocal);
       var textureLoader = new THREE.TextureLoader();
-      //var pele  = textureLoader.load('../assets/objects/dogao/dogao_baseColor.jpeg');
-      //obj.material.map = pele
   
       }, onProgress, onError);
   }
@@ -199,7 +213,10 @@ onRenderFcts.push(function(){
 	var delta = clock.getDelta();
 	for(var i = 0; i<mixer.length; i++)
       mixer[i].update( delta );
-	renderer.render( raScene, camera );
+	renderer.render( raScene, inspectionCamera );
+  lightFollowingCamera(raScene, inspectionCamera)
+  trackballControls.update();
+
 })
 
 // run the rendering loop
@@ -215,5 +232,6 @@ requestAnimationFrame(function animate(nowMsec)
 	// call each update function
 	onRenderFcts.forEach(function(onRenderFct){
 		onRenderFct(deltaMsec/1000, nowMsec/1000)
+    
 	})
 })
