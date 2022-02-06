@@ -24,7 +24,8 @@ import {
     degreesToRadians,
     lightFollowingCamera
 } from "../../libs/util/util.js";
-
+import { Buttons } from "../../libs/other/buttons.js";
+var buttons = new Buttons(onButtonDown, onButtonUp);
 
 let position = 1
 var toggleCamera = 0
@@ -44,6 +45,10 @@ let velocidadeMinima = 1.5;
 let tesla
 let melhorVolta
 let reduziu = false
+let buttonA
+let buttonB
+let joystickLeft
+let joystickRight
 
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
@@ -55,6 +60,7 @@ var scene = new THREE.Scene();    // Create main scene
 var stats = new Stats();          // To show FPS information
 var renderer = initRenderer();    // View function in util/utils
 renderer.setClearColor("rgb(30, 30, 40)");
+
 
 tesla = await loadGLTFFile('car/', 'scene.gltf');
 let car = tesla
@@ -143,6 +149,7 @@ teslaQuaternion3.copy(wheels[2].quaternion)
 var ativo = false
 
 
+
 function animate() {
     if (velocidade > 0) {
         if (ativo) {
@@ -221,7 +228,7 @@ function keyboardUpdate() {
     }
 
     if (toggleCamera == 0 || toggleCamera == 2) {
-        if (keyboard.pressed("X")) {
+        if (keyboard.pressed("X") || buttonA) {
             tesla.translateZ(velocidade);
             console.log(velocidade, "velocidade");
             if (velocidade <= velocidadeMaxima && !reduziu)
@@ -231,7 +238,7 @@ function keyboardUpdate() {
                     velocidade -= 0.02;
             }
         }
-        if (keyboard.down("X")) {
+        if (keyboard.down("X") || buttonA) {
             acc = true
             ativo = false
         }
@@ -240,7 +247,7 @@ function keyboardUpdate() {
             animate()
         }
 
-        if (keyboard.pressed("down")) {
+        if (keyboard.pressed("down") || buttonB) {
             tesla.translateZ(-velocidade);
             if (velocidade <= velocidadeMinima)
                 velocidade -= 0.01;
@@ -253,13 +260,13 @@ function keyboardUpdate() {
         var angleCar = degreesToRadians(velocidade);
 
 
-        if (keyboard.pressed("left")) {
+        if (keyboard.pressed("left") || joystickLeft) {
             pressionadoLeft = true;
             if (acc == true) {
                 tesla.rotateY(angleCar);
             }
         }
-        if (keyboard.pressed("right")) {
+        if (keyboard.pressed("right") || joystickRight) {
             pressionadoRight = true;
             if (acc == true) {
                 tesla.rotateY(-angleCar);
@@ -737,18 +744,19 @@ virtualCamera.lookAt(lookAtVec);
 function controlledRender() {
     var width = window.innerWidth;
     var height = window.innerHeight;
+    if (width > 600) {
+        // Set main viewport
+        renderer.setViewport(0, 0, width, height); // Reset viewport    
+        renderer.setScissorTest(false); // Disable scissor to paint the entire window
+        renderer.render(scene, camera) // Render scene
 
-    // Set main viewport
-    renderer.setViewport(0, 0, width, height); // Reset viewport    
-    renderer.setScissorTest(false); // Disable scissor to paint the entire window
-    renderer.render(scene, camera) // Render scene
-
-    // Set virtual camera viewport 
-    var offset = 100;
-    renderer.setViewport(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
-    renderer.setScissor(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
-    renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
-    renderer.render(scene, virtualCamera);  // Render scene of the virtual camera
+        // Set virtual camera viewport 
+        var offset = 100;
+        renderer.setViewport(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth);  // Set virtual camera viewport  
+        renderer.setScissor(offset - 100, height - vcHeidth - offset, vcWidth, vcHeidth); // Set scissor with the same size as the viewport
+        renderer.setScissorTest(true); // Enable scissor to paint only the scissor are (i.e., the small viewport)
+        renderer.render(scene, virtualCamera);  // Render scene of the virtual camera
+    }
 }
 //-------------------------------------------------------------------------------
 // FIM virtual camera MINIMAPA
@@ -759,7 +767,58 @@ function controlledRender() {
 //mouseControls.minDistance = 500;
 //1mouseControls.maxDistance = 1500;
 
+function addJoysticks() {
+    let joystickL = nipplejs.create({
+        zone: document.getElementById('joystickWrapper1'),
+        mode: 'static',
+        lockX: true, // only move on the Y axis				
+        position: { top: '-80px', left: '80px' }
+    });
+
+    joystickL.on('move', function (evt, data) {
+        const steer = data.vector.x;
+        joystickRight = joystickLeft = false;
+        if (steer > 0) joystickRight = true;
+        if (steer < 0) joystickLeft = true;
+    })
+
+    joystickL.on('end', function (evt) {
+        joystickRight = joystickLeft = false;
+    })
+}
+
+function onButtonDown(event) {
+    switch (event.target.id) {
+        case "A":
+            buttonA = true
+            break;
+        case "B":
+            buttonB = true
+            break;
+    }
+}
+
+function onButtonUp(event) {
+    switch (event.target.id) {
+        case "A":
+            buttonA = false
+            ativo = true
+            animate()
+            break;
+        case "B":
+            buttonB = false
+            break;
+    }
+}
+
+
+
+
+
+
 render()
+addJoysticks()
+
 
 function render() {
     stats.update(); // Update FPS
