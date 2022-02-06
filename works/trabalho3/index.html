@@ -21,8 +21,13 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      display: none;
       touch-action: manipulation;
+    }
+
+    #joystickWrapper1,
+    #A,
+    #B {
+      display: none;
     }
 
     @media (max-width: 600px) {
@@ -30,8 +35,27 @@
         display: none;
       }
 
-      #joystickWrapper1 {
+      #joystickWrapper1,
+      #A,
+      #B {
         display: block;
+      }
+
+      #melhorVolta,
+      #velocidade {
+        margin-left: 170px !important;
+      }
+
+      #melhorVolta,
+      #velocidade,
+      #clockCorrente,
+      #clockTotal {
+        font-size: 9.5px !important;
+      }
+
+      #melhorVolta,
+      #clockTotal {
+        padding-top: 35px !important;
       }
 
     }
@@ -39,11 +63,12 @@
 </head>
 
 <body>
-  <div id="joystickWrapper1">
-    <button style="bottom:20px; right: 120px;" id="A" class="video-game-button">A</button>
-    <button style="bottom:20px; right: 20px;" id="B" class="video-game-button">B</button>
+  <div id="joystickWrapper1"></div>
+  <button style="bottom:20px; right: 100px;" id="A" class="video-game-button">A</button>
+  <button style="bottom:20px; right: 10px;" id="B" class="video-game-button">B</button>
+  <button style="bottom:20px; right: 190px;" id="C" class="video-game-button">C</button>
 
-  </div>
+
 
   <div id="webgl-output">
     <script src="../../libs/other/ammo.wasm.js"></script>
