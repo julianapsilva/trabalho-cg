@@ -1,11 +1,12 @@
 import * as THREE from '../../../build/three.module.js';
 import {ARjs}    from  '../../../libs/AR/ar.js';
 import {GLTFLoader} from '../../../build/jsm/loaders/GLTFLoader.js';
+import { adicionaAmbientLight, setDirectionalLighting, initCamera } from '.././light/light.js';
 import {SecondaryBox,
     getMaxSize, 
     createGroundPlane,
-    initDefaultSpotlight,
-    degreesToRadians} from "../../../libs/util/util.js";
+    degreesToRadians,
+    } from "../../../libs/util/util.js";
 
 var clock = new THREE.Clock();
 
@@ -89,22 +90,22 @@ onRenderFcts.push(function(){
     //----------------------------------------------------------------------------
 // Adding object to the raScene
 
-
-initDefaultSpotlight(raScene, new THREE.Vector3(10, 6, 8)) // Use default light
-
 let windowMat = new THREE.MeshPhongMaterial({
-	color: 0xF0F0F0,
-  })
-  windowMat.transparent = true
-  windowMat.opacity = 0.3
-  windowMat.castShadow = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.shadowMap.enabled = true;
+  color: 0xF0F0F0,
+})
+windowMat.transparent = true
+windowMat.opacity = 0.3
+windowMat.castShadow = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = true;
 
 var plane = createGroundPlane(2,2);
 plane.material = windowMat;
 plane.rotateX(degreesToRadians(-90))
 raScene.add(plane);
+
+var luzDirecional = setDirectionalLighting(raScene, new THREE.Vector3(0, 1, 0))
+luzDirecional.target = plane;
 
 var infoBox = new SecondaryBox('')
 loadGLTFFile('../car/', '', 1.5, 0, true);
