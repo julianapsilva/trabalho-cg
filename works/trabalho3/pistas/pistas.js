@@ -1,5 +1,5 @@
 import * as THREE from '../../../build/three.module.js';
-import cone from '../obj/objetos.js';
+import objetos from '../obj/objetos.js';
 import {
     degreesToRadians
 } from "../../../libs/util/util.js";
@@ -11,7 +11,11 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
-        cone(scene, 0, -600);
+        objetos(scene, 0, -575);
+        objetos(scene, 150, -625);
+        objetos(scene, 625, -575);
+        objetos(scene, 575, -300);
+        objetos(scene, 575, 100);
         for (let i = -600; i < 602; i += 100) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {

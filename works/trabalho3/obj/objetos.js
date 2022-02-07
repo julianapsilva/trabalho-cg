@@ -3,34 +3,71 @@ import {
     degreesToRadians
 } from "../../../libs/util/util.js";
 
-export default function cone(scene, x, z) {
+export default function objetos(scene, x, z) {
     // Start setting the group
-    var groupCone = new THREE.Group();
+    var groupObjs = new THREE.Group();
+    var barril = new THREE.Group();
+   
+    var barrilMeio  = corpoBarril();
+    barril.add(barrilMeio)
 
-    var base = baseCone();
-    base.position.set(x, 0.16, z)
-    groupCone.add(base)
+    var barrilTopo = topoBarril()
+    barrilTopo.rotateX(degreesToRadians(90))
+    barrilTopo.position.y = 10/ 2;
+    barril.add(barrilTopo)
 
-    var cone = corpoCone();
-    cone.position.set(x, 0.16, z)
-    groupCone.add(cone)
-  
-    scene.add(groupCone)
+    barril.position.set(x, 5.16, z)
+    groupObjs.add(barril);
+
+    var caixote = caixa();
+    caixote.position.set(x+12, 5.16, z+12)
+    groupObjs.add(caixote)
+    
+    scene.add(groupObjs)
     // return group;
-
+    function corpoBarril(){
+        var Geometry = new THREE.CylinderGeometry(5, 5, 10, 30, 10, true);
+        var Material = new THREE.MeshLambertMaterial({ color: "rgb(255,255,255)", side: THREE.DoubleSide });
+        var barrilMeio = new THREE.Mesh(Geometry, Material);
+        barrilMeio.castShadow = true
+        return barrilMeio
+    }
+    function topoBarril(){
+        var Geometry = new THREE.CircleGeometry(5, 30);
+        var Material = new THREE.MeshLambertMaterial({ color: "rgb(255,255,255)", side: THREE.DoubleSide });
+        var barrilTopo = new THREE.Mesh(Geometry, Material);
+        barrilTopo.castShadow = true
+        return barrilTopo   
+    }
     function baseCone() {
         var geometry = new THREE.BoxGeometry(5, 2, 5);
         var material = new THREE.MeshBasicMaterial({ color: 'rgb(250,90,000)' });
-        var object = new THREE.Mesh(geometry, material)
-        object.castShadow = true
-        return object
+        var objectCone = new THREE.Mesh(geometry, material)
+        objectCone.castShadow = true
+        return objectCone
     }
     function corpoCone() {
         var geometry = new THREE.CylinderGeometry(1, 4, 15,64)
         var material = new THREE.MeshBasicMaterial({ color: 'rgb(250,90,000)' });
-        var object = new THREE.Mesh(geometry, material)
-        object.castShadow = true
-        return object
+        var objectCone = new THREE.Mesh(geometry, material)
+        objectCone.castShadow = true
+        return objectCone
     }
-
+    function caixa() {
+        var geometry = new THREE.BoxGeometry(10, 10, 10);
+        var material = new THREE.MeshBasicMaterial({ color: 'rgb(150,75,015)' });
+        var objectCaixa = new THREE.Mesh(geometry, material)
+        objectCaixa.castShadow = true
+        objectCaixa.position.set(0, 10, 0)
+        return objectCaixa
+    }
+    var textureLoader = new THREE.TextureLoader();
+    var madeiraCaixote = textureLoader.load('./obj/textures/caixote.jpg');
+    var barrilCilindro = textureLoader.load('./obj/textures/barril.jpg');
+    var barrilCirculo = textureLoader.load('./obj/textures/topobarril.jpg');
+     
+    // Apply texture to the 'map' property of the blocoCs
+    caixote.material.map = madeiraCaixote;
+    barrilTopo.material.map = barrilCirculo;
+    barrilMeio.material.map = barrilCilindro;
 }
