@@ -1,5 +1,5 @@
 import * as THREE from '../../../build/three.module.js';
-import cone from '../obj/objetos.js';
+import objetos from '../obj/objetos.js';
 import {
     degreesToRadians
 } from "../../../libs/util/util.js";
@@ -11,7 +11,6 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
-        cone(scene, 0, -600);
         for (let i = -600; i < 602; i += 100) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
@@ -22,6 +21,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 600, -425));
+        group.add(objetos( 600, 575));
+        group.add(objetos( 100, 600));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     //Pista 2
     if (isPista == 2) {
@@ -58,7 +67,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 575, -50));
+        group.add(objetos( 0, 25));
+        group.add(objetos( 0, 575));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     if (isPista == 3) {
         for (let i = -600; i < 601; i += 100) {
@@ -105,7 +123,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 575, 200));
+        group.add(objetos( 200, 25));
+        group.add(objetos( 200, 600));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -75));
+        group.add(objetos( -375, -125));
+        group.add(objetos( -325, -525));
     }
     if (isPista == 4) {
         for (let i = -600; i < 601; i += 100) {
@@ -157,7 +184,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( -600, 75));
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 300, -300));
+        group.add(objetos( 200, 25));
+        group.add(objetos( -100, 200));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -375, -25));
+        group.add(objetos( -125, -125));
     }
     return group;
     function blocoComum(x, z) {
