@@ -123,7 +123,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 575, 200));
+        group.add(objetos( 200, 25));
+        group.add(objetos( 200, 600));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -75));
+        group.add(objetos( -375, -125));
+        group.add(objetos( -325, -525));
     }
     if (isPista == 4) {
         for (let i = -600; i < 601; i += 100) {
@@ -175,7 +184,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( -600, 75));
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 300, -300));
+        group.add(objetos( 200, 25));
+        group.add(objetos( -100, 200));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -375, -25));
+        group.add(objetos( -125, -125));
     }
     return group;
     function blocoComum(x, z) {
