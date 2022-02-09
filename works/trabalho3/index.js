@@ -330,18 +330,18 @@ function keyboardUpdate() {
 
 }
 
-function verifyCollision() {
-    let firstBB = new THREE.Box3().setFromObject(tesla);
-    let secondBB = new THREE.Box3().setFromObject(scene.children[4]);
-    var collision = firstBB.intersectsBox(secondBB);
-    if (collision && !reduziu) {
-        velocidade -= velocidade * 0.2
-        reduziu = true
-    }
-    else if (!collision) {
-        reduziu = false
-    }
-}
+// function verifyCollision() {
+//     let firstBB = new THREE.Box3().setFromObject(tesla);
+//     let secondBB = new THREE.Box3().setFromObject(scene.children[4]);
+//     var collision = firstBB.intersectsBox(secondBB);
+//     if (collision && !reduziu) {
+//         velocidade -= velocidade * 0.2
+//         reduziu = true
+//     }
+//     else if (!collision) {
+//         reduziu = false
+//     }
+// }
 
 
 
@@ -772,7 +772,7 @@ function render() {
     updateVelocidade(velocidade);
     updateMelhorVolta(melhorVolta);
     voltaMaisRapida();
-    verifyCollision();
+    // verifyCollision();
     requestAnimationFrame(render); // Show events
     if (toggleCamera === 2) {
         renderer.setViewport(0, 0, window.innerWidth, window.innerHeight); // Reset viewport    

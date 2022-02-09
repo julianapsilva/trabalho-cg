@@ -11,11 +11,6 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
-        objetos(scene, 0, -575);
-        objetos(scene, 150, -625);
-        objetos(scene, 625, -575);
-        objetos(scene, 575, -300);
-        objetos(scene, 575, 100);
         for (let i = -600; i < 602; i += 100) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
@@ -26,6 +21,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 600, -425));
+        group.add(objetos( 600, 575));
+        group.add(objetos( 100, 600));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     //Pista 2
     if (isPista == 2) {
@@ -62,7 +67,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 575, -50));
+        group.add(objetos( 0, 25));
+        group.add(objetos( 0, 575));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     if (isPista == 3) {
         for (let i = -600; i < 601; i += 100) {
