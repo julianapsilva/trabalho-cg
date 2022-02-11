@@ -56,6 +56,6 @@ export default function objetos(x, z) {
     caixote.material.map = madeiraCaixote;
     barrilTopo.material.map = barrilCirculo;
     barrilMeio.material.map = barrilCilindro;
-
+    groupObjs.name = 'Obstaculo'
     return groupObjs;
 }
