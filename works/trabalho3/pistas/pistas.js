@@ -198,7 +198,7 @@ export default function mudaPista(scene, isPista) {
     return group;
     function blocoComum(x, z) {
         var blocoCGeometry = new THREE.BoxGeometry(100, 0.3, 100);
-        var blocoCMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(70,70,70)' });
+        var blocoCMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(100,100,100)' });
         var blocoC;
 
         blocoC = new THREE.Mesh(blocoCGeometry, blocoCMaterial);
@@ -209,10 +209,21 @@ export default function mudaPista(scene, isPista) {
 
         // Apply texture to the 'map' property of the blocoCs
         blocoC.material.map = asfalto;
-        //blocoC.material.map.repeat.set(5, 5);
-        blocoC.material.map.wrapS = THREE.RepeatWrapping;
-        blocoC.material.map.wrapT = THREE.RepeatWrapping;
-
+          // Set defaults
+        var repeatFactor = 1;
+        var wrapModeS  = THREE.RepeatWrapping;
+        var wrapModeT  = THREE.RepeatWrapping;
+        var minFilter = THREE.LinearFilter;
+        var magFilter = THREE.LinearFilter;
+        updateTexture();
+        
+        function updateTexture()
+        {
+            blocoC.material.map.repeat.set(repeatFactor,repeatFactor);
+            blocoC.material.map.wrapS = wrapModeS;
+            blocoC.material.map.wrapT = wrapModeT;
+  
+        }
         return blocoC;
     }
 
