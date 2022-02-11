@@ -23,8 +23,8 @@ raScene.add(inspectionCamera);
 
 function onWindowResize() {
 
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+  inspectionCamera.aspect = window.innerWidth / window.innerHeight;
+  inspectionCamera.updateProjectionMatrix();
 
   renderer.setSize( window.innerWidth, window.innerHeight );
 
