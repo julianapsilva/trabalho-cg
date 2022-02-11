@@ -28,6 +28,17 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
                 tesla = normalizeAndRescale(tesla, 20);
                 tesla.rotateY(degreesToRadians(90))
             }
+            console.log(tesla);
+            let capo = tesla.children[0].children[0].children[0].children[0].children[1].children[0]
+            let teto = tesla.children[0].children[0].children[0].children[0].children[1].children[1] //.material.color
+            let lateral = tesla.children[0].children[0].children[0].children[0].children[1].children[2]
+            var textureLoader = new THREE.TextureLoader();
+            var vaca = textureLoader.load('./car/textures/vaca.jpg');
+
+            capo.material.map = vaca;
+            teto.material.map = vaca;
+            // console.log(teto);
+            lateral.material.map = vaca;
             resolve(tesla)
         }, onProgress, reject);
     });
