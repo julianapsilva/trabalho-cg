@@ -39,7 +39,6 @@ export default function mudaPista(scene, isPista) {
                 if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == 600 && j <= 0) // reta 2
                 {
@@ -60,7 +59,6 @@ export default function mudaPista(scene, isPista) {
                 if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == 600 && j == -400) {
                     group.add(blocoInicio(i, j));
@@ -98,17 +96,14 @@ export default function mudaPista(scene, isPista) {
                 if (i == 200 && j >= -300) // reta 4
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (j == 600) // reta 5
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == -600 && j >= -100) // reta 6
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (j == -100 && i <= -300) // reta 7
                 {

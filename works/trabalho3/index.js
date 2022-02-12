@@ -371,13 +371,20 @@ function restartCar(direcao) {
 
     if (direcao == 2) {
         tesla.position.set(600, 2.6, -400)
+        tesla.rotation.set(0, 0.17, 0)
+
     } else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
+        tesla.rotation.set(0, -1.50, 0)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)
+        tesla.rotation.set(-3.14, 0.12, -3.14)
     } else {
         tesla.position.set(-100, 2.6, -600)
+        tesla.rotation.set(0, 1.57, 0)
     }
+    ativo = false
+    velocidade = 0
 }
 
 function pathAlreadyExists(number) {
