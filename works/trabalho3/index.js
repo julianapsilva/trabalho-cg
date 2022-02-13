@@ -49,6 +49,7 @@ let buttonA
 let buttonB
 let joystickLeft
 let joystickRight
+let mobile = 0
 
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
@@ -274,7 +275,7 @@ function keyboardUpdate() {
         }
 
         // Muda o tipo de pista
-        if (keyboard.down("1")) {
+        if (keyboard.down("1") || mobile == 1) {
             isPista = 1;
             clockTotal.start();
             clockVolta.start();
@@ -286,7 +287,7 @@ function keyboardUpdate() {
             group3.visible = false
             group4.visible = false
         }
-        if (keyboard.down("2")) {
+        if (keyboard.down("2") || mobile == 2) {
             isPista = 2;
             clockTotal.start();
             clockVolta.start();
@@ -298,7 +299,7 @@ function keyboardUpdate() {
             group3.visible = false
             group4.visible = false
         }
-        if (keyboard.down("3")) {
+        if (keyboard.down("3") || mobile == 3) {
             isPista = 3;
             clockTotal.start();
             clockVolta.start();
@@ -310,7 +311,7 @@ function keyboardUpdate() {
             group3.visible = true
             group4.visible = false
         }
-        if (keyboard.down("4")) {
+        if (keyboard.down("4") || mobile == 4) {
             isPista = 4;
             clockTotal.start();
             clockVolta.start();
@@ -798,6 +799,9 @@ function onButtonDown(event) {
         case "C":
             toggleCamera == 0 ? toggleCamera = 2 : (toggleCamera = 0)
             break;
+        case "D":
+            mobile < 4 ? mobile++ : (mobile = 1)
+            break;
     }
 }
 
@@ -812,6 +816,8 @@ function onButtonUp(event) {
         case "B":
             buttonB = false
             break;
+        
+
     }
 }
 
