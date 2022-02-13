@@ -50,6 +50,8 @@ let buttonB
 let joystickLeft
 let joystickRight
 let mobile = 0
+let obstaculos = []
+let BBs = []
 
 let tempoVoltas = [];
 var clockTotal = new THREE.Clock();
@@ -193,7 +195,6 @@ function keyboardUpdate() {
             car = tesla
             showOrHideInformation('block')
         }
-
     }
 
     if (keyboard.up("left") || keyboard.up("right")
@@ -231,8 +232,8 @@ function keyboardUpdate() {
     if (toggleCamera == 0 || toggleCamera == 2) {
         if (keyboard.pressed("X") || buttonA) {
             tesla.translateZ(velocidade);
-            console.log(velocidade, "velocidade");
-            if (velocidade <= velocidadeMaxima && !reduziu)
+            if (velocidade <= velocidadeMaxima
+                && !BBs.some(box => box.reduziu == true))
                 velocidade += 0.01;
             if (saiuPista1 || saiuPista2 || saiuPista3 || saiuPista4) {
                 if (velocidade >= velocidadeMinima)
@@ -258,7 +259,7 @@ function keyboardUpdate() {
             }
 
         }
-        var angleCar = degreesToRadians(velocidade);
+        var angleCar = degreesToRadians(velocidade / 2);
 
 
         if (keyboard.pressed("left") || joystickLeft) {
@@ -286,6 +287,9 @@ function keyboardUpdate() {
             group2.visible = false
             group3.visible = false
             group4.visible = false
+
+            setBoundingBox(group1)
+
         }
         if (keyboard.down("2") || mobile == 2) {
             isPista = 2;
@@ -298,6 +302,9 @@ function keyboardUpdate() {
             group2.visible = true
             group3.visible = false
             group4.visible = false
+
+            setBoundingBox(group2)
+
         }
         if (keyboard.down("3") || mobile == 3) {
             isPista = 3;
@@ -310,6 +317,8 @@ function keyboardUpdate() {
             group2.visible = false
             group3.visible = true
             group4.visible = false
+
+            setBoundingBox(group3)
         }
         if (keyboard.down("4") || mobile == 4) {
             isPista = 4;
@@ -322,6 +331,8 @@ function keyboardUpdate() {
             group2.visible = false
             group3.visible = false
             group4.visible = true
+
+            setBoundingBox(group4)
         }
         // Guarda a mudança de estado das teclas
         if (keyboard.up("left")) {
@@ -340,31 +351,48 @@ function keyboardUpdate() {
 
 function verifyCollision() {
     let firstBB = new THREE.Box3().setFromObject(tesla);
-    let secondBB = new THREE.Box3().setFromObject(scene.children[4]);
-    var collision = firstBB.intersectsBox(secondBB);
-    if (collision && !reduziu) {
-        velocidade -= velocidade * 0.2
-        reduziu = true
-    }
-    else if (!collision) {
-        reduziu = false
-    }
+    BBs.forEach(({ obstaculo, reduziu }, index) => {
+        let collision = obstaculo.intersectsBox(firstBB)
+        if (!collision) {
+            BBs[index].reduziu = false
+        }
+        else if (collision && !reduziu) {
+            velocidade -= velocidade * 0.2
+            BBs[index].reduziu = true
+        }
+    })
 }
 
-
+function setBoundingBox(group) {
+    obstaculos = group.children
+        .filter(child => child.name == 'Obstaculo')
+    BBs = obstaculos.map(obstaculo => {
+        return {
+            obstaculo: new THREE.Box3().setFromObject(obstaculo),
+            reduziu: false
+        }
+    })
+}
 
 function restartCar(direcao) {
     position = 1;
 
     if (direcao == 2) {
         tesla.position.set(600, 2.6, -400)
+        tesla.rotation.set(0, 0.17, 0)
+
     } else if (direcao == 3) {
         tesla.position.set(100, 2.6, -600)
+        tesla.rotation.set(0, -1.50, 0)
     } else if (direcao == 4) {
         tesla.position.set(-600, 2.6, 300)
+        tesla.rotation.set(-3.14, 0.12, -3.14)
     } else {
         tesla.position.set(-100, 2.6, -600)
+        tesla.rotation.set(0, 1.57, 0)
     }
+    ativo = false
+    velocidade = 0
 }
 
 function pathAlreadyExists(number) {
@@ -419,7 +447,6 @@ function verifyPosition() {
         }
         else {
             saiuPista1 = true;
-            console.log("saiu")
         }
     }
 
@@ -469,7 +496,6 @@ function verifyPosition() {
         }
         else {
             saiuPista2 = true;
-            console.log("saiu")
         }
     }
 
@@ -535,7 +561,6 @@ function verifyPosition() {
         }
         else {
             saiuPista3 = true;
-            console.log("saiu")
         }
     }
 
@@ -599,7 +624,6 @@ function verifyPosition() {
         }
         else {
             saiuPista4 = true;
-            console.log("saiu")
         }
     }
 }
@@ -608,7 +632,6 @@ function checkVoltaPista() {
     if (isPista == 1) {
         if (path.length == 4 && checkStartPosition()) {
             volta++;
-            console.log(volta, "volta");
             path = [];
             clockVolta.stop();
             tempoVoltas.push(clockVolta.getElapsedTime());

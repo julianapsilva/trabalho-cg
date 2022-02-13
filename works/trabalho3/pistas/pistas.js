@@ -1,5 +1,5 @@
 import * as THREE from '../../../build/three.module.js';
-import cone from '../obj/objetos.js';
+import objetos from '../obj/objetos.js';
 import {
     degreesToRadians
 } from "../../../libs/util/util.js";
@@ -11,7 +11,6 @@ export default function mudaPista(scene, isPista) {
 
     //Pista 1
     if (isPista == 1) {
-        cone(scene, 0, -600);
         for (let i = -600; i < 602; i += 100) {
             for (let j = -600; j < 602; j += 100) {
                 if (i == -600 || i == 600 || j == -600 || j == 600) {
@@ -22,6 +21,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 600, -425));
+        group.add(objetos( 600, 575));
+        group.add(objetos( 100, 600));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     //Pista 2
     if (isPista == 2) {
@@ -30,7 +39,6 @@ export default function mudaPista(scene, isPista) {
                 if (j == -600) // reta 1
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == 600 && j <= 0) // reta 2
                 {
@@ -51,14 +59,22 @@ export default function mudaPista(scene, isPista) {
                 if (i == -600) // reta 6
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == 600 && j == -400) {
                     group.add(blocoInicio(i, j));
                 }
             }
         }
-
+        group.add(objetos( 200, -625));
+        group.add(objetos( 600, -575));
+        group.add(objetos( 575, -50));
+        group.add(objetos( 0, 25));
+        group.add(objetos( 0, 575));
+        group.add(objetos(-500, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -175));
+        group.add(objetos( -575, -575));
+        group.add(objetos( -375, -625));
     }
     if (isPista == 3) {
         for (let i = -600; i < 601; i += 100) {
@@ -80,17 +96,14 @@ export default function mudaPista(scene, isPista) {
                 if (i == 200 && j >= -300) // reta 4
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (j == 600) // reta 5
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (i == -600 && j >= -100) // reta 6
                 {
                     group.add(blocoComum(i, j));
-
                 }
                 if (j == -100 && i <= -300) // reta 7
                 {
@@ -105,7 +118,16 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 575, 200));
+        group.add(objetos( 200, 25));
+        group.add(objetos( 200, 600));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -600, -75));
+        group.add(objetos( -375, -125));
+        group.add(objetos( -325, -525));
     }
     if (isPista == 4) {
         for (let i = -600; i < 601; i += 100) {
@@ -157,12 +179,21 @@ export default function mudaPista(scene, isPista) {
                 }
             }
         }
-
+        group.add(objetos( -600, 75));
+        group.add(objetos( 400, -600));
+        group.add(objetos( 600, -325));
+        group.add(objetos( 300, -300));
+        group.add(objetos( 200, 25));
+        group.add(objetos( -100, 200));
+        group.add(objetos(-300, 575));
+        group.add(objetos( -625, 425));
+        group.add(objetos( -375, -25));
+        group.add(objetos( -125, -125));
     }
     return group;
     function blocoComum(x, z) {
         var blocoCGeometry = new THREE.BoxGeometry(100, 0.3, 100);
-        var blocoCMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(70,70,70)' });
+        var blocoCMaterial = new THREE.MeshBasicMaterial({ color: 'rgb(100,100,100)' });
         var blocoC;
 
         blocoC = new THREE.Mesh(blocoCGeometry, blocoCMaterial);
@@ -173,10 +204,21 @@ export default function mudaPista(scene, isPista) {
 
         // Apply texture to the 'map' property of the blocoCs
         blocoC.material.map = asfalto;
-        //blocoC.material.map.repeat.set(5, 5);
-        blocoC.material.map.wrapS = THREE.RepeatWrapping;
-        blocoC.material.map.wrapT = THREE.RepeatWrapping;
-
+          // Set defaults
+        var repeatFactor = 1;
+        var wrapModeS  = THREE.RepeatWrapping;
+        var wrapModeT  = THREE.RepeatWrapping;
+        var minFilter = THREE.LinearFilter;
+        var magFilter = THREE.LinearFilter;
+        updateTexture();
+        
+        function updateTexture()
+        {
+            blocoC.material.map.repeat.set(repeatFactor,repeatFactor);
+            blocoC.material.map.wrapS = wrapModeS;
+            blocoC.material.map.wrapT = wrapModeT;
+  
+        }
         return blocoC;
     }
 

@@ -20,7 +20,7 @@ for (let i = 0; i < 6; i++)
   materialArray[i].side = THREE.BackSide;
    
 let skyboxGeo = new THREE.BoxGeometry( 1500, 1500, 1500);
-let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+let skybox = new THREE.Mesh( skyboxGeo, materialArray ); 
 scene.add( skybox );
 
 }

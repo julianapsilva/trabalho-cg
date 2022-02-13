@@ -28,6 +28,36 @@ export default function loadGLTFFile(modelPath, modelName, mode) {
                 tesla = normalizeAndRescale(tesla, 20);
                 tesla.rotateY(degreesToRadians(90))
             }
+            console.log(tesla);
+            let capo = tesla.children[0].children[0].children[0].children[0].children[1].children[0]
+            let teto = tesla.children[0].children[0].children[0].children[0].children[1].children[1] //.material.color
+            let lateral = tesla.children[0].children[0].children[0].children[0].children[1].children[2]
+            var textureLoader = new THREE.TextureLoader();
+            var vaca = textureLoader.load('./car/textures/vaca.jpg');
+
+            capo.material.map = vaca;
+            teto.material.map = vaca;
+            // console.log(teto);
+            lateral.material.map = vaca;
+            var branco = '100'
+            tesla.children[0].children[0].children[0].children[0].children[1].children[0].material.color.r = branco; 
+            tesla.children[0].children[0].children[0].children[0].children[1].children[0].material.color.g = branco; 
+            tesla.children[0].children[0].children[0].children[0].children[1].children[0].material.color.b = branco;   
+            // Set defaults
+            var repeatFactor = 4;
+            var wrapModeS  = THREE.RepeatWrapping;
+            var wrapModeT  = THREE.RepeatWrapping;
+            var minFilter = THREE.LinearFilter;
+            var magFilter = THREE.LinearFilter;
+            updateTexture();
+            function updateTexture()
+            {
+            teto.material.map.repeat.set(repeatFactor,repeatFactor);
+            teto.material.map.wrapS = wrapModeS;
+            teto.material.map.wrapT = wrapModeT;
+            teto.material.map.minFilter = minFilter;
+            teto.material.map.magFilter = magFilter;
+            }
             resolve(tesla)
         }, onProgress, reject);
     });
